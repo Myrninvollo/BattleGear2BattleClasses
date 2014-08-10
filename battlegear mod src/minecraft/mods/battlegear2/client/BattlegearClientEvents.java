@@ -32,6 +32,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -41,8 +42,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.*;
-
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+
 import org.lwjgl.opengl.GL11;
 
 public class BattlegearClientEvents {
@@ -110,7 +111,10 @@ public class BattlegearClientEvents {
 	@SubscribeEvent
 	public void render3rdPersonBattlemode(RenderPlayerEvent.Specials.Post event) {
 
-		ModelBiped biped = (ModelBiped) event.renderer.mainModel;
+		ModelBiped biped = null;
+		if(event.renderer instanceof RenderPlayer) {
+			biped = ((RenderPlayer) event.renderer).modelBipedMain;
+		}
 		BattlegearRenderHelper.renderItemIn3rdPerson(event.entityPlayer, biped, event.partialRenderTick);
 
 		ItemStack mainhand = event.entityPlayer.getHeldItem();
@@ -153,7 +157,7 @@ public class BattlegearClientEvents {
      */
 	@SubscribeEvent
 	public void renderLiving(RenderLivingEvent.Post event) {
-
+		/*
 		if (BattlegearConfig.enableSkeletonQuiver && event.entity instanceof EntitySkeleton
 				&& event.renderer instanceof RenderSkeleton) {
 
@@ -205,6 +209,7 @@ public class BattlegearClientEvents {
 			GL11.glEnable(GL11.GL_CULL_FACE);
 			GL11.glPopMatrix();
 		}
+		*/
 	}
 
     /**

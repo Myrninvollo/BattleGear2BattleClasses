@@ -61,7 +61,7 @@ public class BattlegearInGameGUI extends Gui {
 	                }else{
                         Class<?> currentGui = mc.currentScreen.getClass();
                         if(currentGui!=previousGui && (currentGui.equals(GuiContainerCreative.class) || currentGui.equals(GuiInventory.class))){
-                            BattlegearClientEvents.onOpenGui(mc.currentScreen.buttonList, ((GuiContainer) mc.currentScreen).guiLeft-30, ((GuiContainer)mc.currentScreen).guiTop);
+                            //BattlegearClientEvents.onOpenGui(mc.currentScreen.buttonList, ((GuiContainer) mc.currentScreen).guiLeft-30, ((GuiContainer)mc.currentScreen).guiTop);
                             previousGui = currentGui;
                         }
                     }

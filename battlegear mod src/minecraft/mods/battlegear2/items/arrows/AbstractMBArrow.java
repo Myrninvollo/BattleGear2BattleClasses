@@ -35,10 +35,11 @@ public abstract class AbstractMBArrow extends EntityArrow {
     @Override
     public void onUpdate() {
         super.onUpdate();
-
+        /*
         if(ticksInGround == 1){
             onHitGround(field_145791_d, field_145792_e, field_145789_f);
         }
+        */
     }
 
     /**
@@ -62,7 +63,7 @@ public abstract class AbstractMBArrow extends EntityArrow {
     
     @Override//Fixes picking up arrows
     public void onCollideWithPlayer(EntityPlayer par1EntityPlayer){
-        if (!this.worldObj.isRemote && this.ticksInGround>0 && this.arrowShake <= 0){
+        if (!this.worldObj.isRemote && /*this.ticksInGround>0 &&*/ this.arrowShake <= 0){
             boolean flag = this.canBePickedUp == 1 || this.canBePickedUp == 2 && par1EntityPlayer.capabilities.isCreativeMode;
             if (flag && !tryPickArrow(par1EntityPlayer)){
             	flag = false;
