@@ -21,29 +21,5 @@ public class BattleClassesPacketHandeler extends BattlegearPacketHandeler {
 		side = FMLCommonHandler.instance().getEffectiveSide();
 		map.put(BattleClassesPacketPlayerClassSnyc.packetName, new BattleClassesPacketPlayerClassSnyc());
 	}
-	
-	/*
-    public void sendPacketToPlayer(FMLProxyPacket packet, EntityPlayerMP player){
-    	if(side == Side.SERVER) {
-    		System.out.println("asd");
-			super.sendPacketToPlayer(packet,player);
-		}
-    }
 
-    public void sendPacketToServer(FMLProxyPacket packet){
-    	if(side == Side.CLIENT) {
-			super.sendPacketToServer(packet);
-		}
-    }
-
-    public void sendPacketAround(Entity entity, double range, FMLProxyPacket packet){
-    	if(side == Side.SERVER) {
-			super.sendPacketAround(entity, range, packet);
-		}
-    }
-
-    public void sendPacketToAll(FMLProxyPacket packet){
-        channels.get(packet.channel()).sendToAll(packet);
-    }
-    */
 }
