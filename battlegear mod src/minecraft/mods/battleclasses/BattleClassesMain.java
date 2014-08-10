@@ -1,28 +1,20 @@
 package mods.battleclasses;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import mods.battleclasses.BattleClassesUtils.LogType;
+import mods.battlegear2.api.weapons.CommandWeaponWield;
 
 //BattleClasses registration goes here
 public class BattleClassesMain {
 	
-	public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes");
+	public static void init() {
+		BattleClassesUtils.Log("Starting Battle Classes initizalization!", LogType.INIT);
+		
+	}
 	
-	public enum LogType {
-    	GUI,
-    	CORE,
-    	ABILITY,
-    	ATTRIBUTE,
-    	AMPLIFIER,
-    	COMMAND
+	public static void serverStart(FMLServerStartingEvent event){
+		BattleClassesUtils.Log("FMLServerStartingEvent!", LogType.INIT);
+        BattleClassesCommand.registerCommands();
     }
-    
-    public static void Log(String message, LogType logType) {
-    	Side side = FMLCommonHandler.instance().getEffectiveSide();
-    	String logString = new String("[" + side.toString() + "/" + logType.toString() + "] " + ": " + message);
-    	battleClassesLogger.info(logString);
-    }
+	
 }

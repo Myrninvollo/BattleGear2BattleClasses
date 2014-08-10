@@ -1,5 +1,6 @@
 package mods.battlegear2.api.core;
 
+import mods.battleclasses.core.BattleClassesPlayerHooks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -28,11 +29,13 @@ public class InventoryPlayerBattle extends InventoryPlayer {
     public static int EXTRA_INV_SIZE = EXTRA_ITEMS + 6 + 6;
 
     public ItemStack[] extraItems;
-
+    
+    public BattleClassesPlayerHooks battleClassesPlayerHooks;
 
     public InventoryPlayerBattle(EntityPlayer entityPlayer) {
         super(entityPlayer);
         extraItems = new ItemStack[EXTRA_INV_SIZE];
+        battleClassesPlayerHooks = new BattleClassesPlayerHooks(entityPlayer);
     }
 
     public boolean isBattlemode() {

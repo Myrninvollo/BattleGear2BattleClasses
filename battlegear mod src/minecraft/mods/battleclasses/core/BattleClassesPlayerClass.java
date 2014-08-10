@@ -1,6 +1,7 @@
 package mods.battleclasses.core;
 
 import mods.battleclasses.BattleClassesUtils;
+import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.EnumBattleClassesPlayerClass;
 
 public class BattleClassesPlayerClass implements ICooldownHolder {
@@ -17,8 +18,10 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	
 	public void switchToPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
 		this.setPlayerClass(parPlayerClass);
-		//TO DO 
-		//Set Class cooldown
+
+		this.setToCooldown();
+		
+		BattleClassesUtils.Log(playerHooks.ownerPlayer.getDisplayName() + " switched to class: " + parPlayerClass.toString(), LogType.CORE);
 	}
 	
 	protected void setPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
