@@ -18,6 +18,7 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 		INIT,
     	GUI,
     	CORE,
+    	PACKET,
     	ABILITY,
     	ATTRIBUTE,
     	AMPLIFIER,

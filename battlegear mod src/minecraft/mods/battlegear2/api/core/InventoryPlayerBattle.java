@@ -23,7 +23,7 @@ public class InventoryPlayerBattle extends InventoryPlayer {
     public boolean hasChanged = true;
     public static int ARMOR_OFFSET = 100;
     public static int OFFSET = 150;
-    public static int WEAPON_SETS = 3;
+    public static int WEAPON_SETS = 1;
 
     public static int EXTRA_ITEMS = WEAPON_SETS * 2;
     public static int EXTRA_INV_SIZE = EXTRA_ITEMS + 6 + 6;

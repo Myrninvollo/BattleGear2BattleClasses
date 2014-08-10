@@ -1,8 +1,14 @@
 package mods.battleclasses.core;
 
+import net.minecraft.entity.player.EntityPlayerMP;
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.EnumBattleClassesPlayerClass;
+import mods.battleclasses.packet.BattleClassesPacketPlayerClassSnyc;
+import mods.battlegear2.Battlegear;
+import mods.battlegear2.packet.BattlegearAnimationPacket;
+import mods.battlegear2.utils.EnumBGAnimations;
 
 public class BattleClassesPlayerClass implements ICooldownHolder {
 	
@@ -20,6 +26,20 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 		this.setPlayerClass(parPlayerClass);
 
 		this.setToCooldown();
+		
+		FMLProxyPacket p = new BattleClassesPacketPlayerClassSnyc(playerHooks.ownerPlayer, playerClass).generatePacket();
+		
+		if(playerHooks.ownerPlayer instanceof EntityPlayerMP) {
+			EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.ownerPlayer;
+			if(entityPlayerMP != null) {
+				BattleClassesUtils.Log("Sending class switch sync to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
+				Battlegear.packetHandler.sendPacketToPlayer(p, entityPlayerMP);
+			}
+		}
+		
+		
+		
+        
 		
 		BattleClassesUtils.Log(playerHooks.ownerPlayer.getDisplayName() + " switched to class: " + parPlayerClass.toString(), LogType.CORE);
 	}
@@ -39,7 +59,7 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	
 	// -------------------- ICooldownHolder implementation --------------------
 
-	public float setTime;
+	private float setTime;
 	
 	@Override
 	public float getCooldown() {
@@ -49,7 +69,7 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	@Override
 	public void setToCooldown() {
 		if(!isOnCooldown()) {
-			setToCooldownForced();
+			this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
 		}
 	}
 

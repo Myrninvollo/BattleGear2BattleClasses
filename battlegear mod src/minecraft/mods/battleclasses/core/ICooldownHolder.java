@@ -5,7 +5,7 @@ public interface ICooldownHolder {
 	/*
 	 * Each class implementing this interface, should have a field like this to store the last time (/date) when it was set to cooldown
 	 */
-	//public float setTime
+	//private float setTime
 	
 	/**
 	 * Returns the ammount of cooldown time in seconds

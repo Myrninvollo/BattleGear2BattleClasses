@@ -6,6 +6,7 @@ import cpw.mods.fml.common.event.FMLInterModComms.IMCEvent;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 import cpw.mods.fml.common.network.FMLEventChannel;
 import mods.battleclasses.BattleClassesMain;
+import mods.battleclasses.packet.BattleClassesPacketHandeler;
 import mods.battlegear2.api.core.BattlegearUtils;
 import mods.battlegear2.api.quiver.IArrowFireHandler;
 import mods.battlegear2.api.quiver.IQuiverSelection;
@@ -48,7 +49,7 @@ public class Battlegear {
     public static boolean debug = false;
 
 	public static org.apache.logging.log4j.Logger logger;
-    public static BattlegearPacketHandeler packetHandler;
+    public static BattleClassesPacketHandeler packetHandler;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -84,7 +85,7 @@ public class Battlegear {
 	        	QuiverArrowRegistry.addArrowToRegistry(BattlegearConfig.MbArrows, i, ItemMBArrow.arrows[i]);
 	        }
         }
-        packetHandler = new BattlegearPacketHandeler();
+        packetHandler = new BattleClassesPacketHandeler();
         FMLEventChannel eventChannel;
         for(String channel:packetHandler.map.keySet()){
             eventChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(channel);
