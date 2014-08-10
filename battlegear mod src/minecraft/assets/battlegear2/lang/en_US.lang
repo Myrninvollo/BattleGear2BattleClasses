@@ -1,0 +1,137 @@
+name.title=M&B Battlegear 2
+config.battlegear.title=Mine&Blade Battlegear 2 Configuration
+config.battlegear.category=Disabled Custom Item Renderers
+config.battlegear.warn.part1=A restart is needed
+config.battlegear.warn.part2=for changes to take effect
+use.gui.buttons=Enable buttons for inventory
+use.gui.keys=Enable keys for inventory
+render.quiver.skeleton=Render quiver on skeletons
+render.arrow.bow=Render selected arrow on bow
+render.back.sheathed=Force sheathed rendering on player's back
+gui.open.fake=Open Screen Customizer
+gui.fake.help1=Move screen components by click and drag
+gui.fake.help2=Quiver Slots
+gui.fake.help3=Shield Stamina Bar
+gui.fake.help4=Offhand Slots
+gui.fake.help5=Mainhand Slots
+flag.design.save=Save
+flag.design.load=Load
+flag.design.load.sections=Load Section
+
+item.battlegear2:heraldric.name=Heraldic Icon
+item.battlegear2:chain.name=Chain
+item.battlegear2:quiver.name=Quiver
+
+item.battlegear2:mb.arrow.ender.name=Ender Arrow
+item.battlegear2:mb.arrow.explosive.name=Explosive Arrow
+item.battlegear2:mb.arrow.flame.name=Flaming Arrow
+item.battlegear2:mb.arrow.piercing.name=Piercing Arrow
+item.battlegear2:mb.arrow.poison.name=Poison Arrow
+item.battlegear2:mb.arrow.mystery.name=Mystery Arrow
+item.battlegear2:mb.arrow.leech.name=Leech Arrow
+
+item.battlegear2:dagger.wood.name=Wood Dagger
+item.battlegear2:dagger.stone.name=Stone Dagger
+item.battlegear2:dagger.iron.name=Iron Dagger
+item.battlegear2:dagger.diamond.name=Diamond Dagger
+item.battlegear2:dagger.gold.name=Gold Dagger
+
+item.battlegear2:waraxe.wood.name=Wood Waraxe
+item.battlegear2:waraxe.stone.name=Stone Waraxe
+item.battlegear2:waraxe.iron.name=Iron Waraxe
+item.battlegear2:waraxe.diamond.name=Diamond Waraxe
+item.battlegear2:waraxe.gold.name=Gold Waraxe
+
+item.battlegear2:mace.wood.name=Wood Mace
+item.battlegear2:mace.stone.name=Stone Mace
+item.battlegear2:mace.iron.name=Iron Mace
+item.battlegear2:mace.diamond.name=Diamond Mace
+item.battlegear2:mace.gold.name=Gold Mace
+
+item.battlegear2:spear.wood.name=Wood Spear
+item.battlegear2:spear.stone.name=Stone Spear
+item.battlegear2:spear.iron.name=Iron Spear
+item.battlegear2:spear.diamond.name=Diamond Spear
+item.battlegear2:spear.gold.name=Gold Spear
+
+item.battlegear2:shield.wood.name=Wood Shield
+item.battlegear2:shield.hide.name=Hide Shield
+item.battlegear2:shield.iron.name=Iron Shield
+item.battlegear2:shield.diamond.name=Diamond Shield
+item.battlegear2:shield.gold.name=Gold Shield
+
+item.battlegear2:knights_armour.helmet.name=Knight's Helmet
+item.battlegear2:knights_armour.plate.name=Knight's Plate
+item.battlegear2:knights_armour.legs.name=Knight's Leggings
+item.battlegear2:knights_armour.boots.name=Knight's Boots
+
+item.battlegear2:cloak.name=Cloak
+
+enchantment.bash.weightless=Bash Weightless
+enchantment.bash.power=Bash Power
+enchantment.bash.damage=Bash Damage
+enchantment.shield.usage=Shield Efficiency
+enchantment.shield.recover=Shield Recovery
+enchantment.bow.loot=Bow Luck
+enchantment.bow.charge=Bow Drawnback
+
+tile.battlegear2:flagpole.oak.name=Oak Flag Pole
+tile.battlegear2:flagpole.spruce.name=Spruce Flag Pole
+tile.battlegear2:flagpole.birch.name=Birch Flag Pole
+tile.battlegear2:flagpole.jungle.name=Jungle Flag Pole
+tile.battlegear2:flagpole.iron.name=Iron Flag Pole
+tile.battlegear2:flagpole.acacia.name=Acacia Flag Pole
+tile.battlegear2:flagpole.big_oak.name=Dark Oak Flag Pole
+
+sigil.pattern.title=Pattern
+sigil.icon.title=Sigil
+sigil.icon_pos.title=Sigil Position
+sigil.colour1.title=Color 1
+sigil.colour2.title=Color 2
+sigil.icon_colour1.title=Sigil%nColor 1
+sigil.icon_colour2.title=Sigil%nColor 2
+sigil.banner.title=Banner
+sigil.helm.title=Helmet
+sigil.colour.select=Select
+
+gui.sigil.add=Add
+gui.sigil.remove=Remove
+gui.sigil.crest=Crest
+gui.sigil.pattern=Background
+
+
+attribute.name.weapon.penetrateArmor=Armor Penetration
+attribute.name.weapon.daze=Daze
+attribute.name.weapon.extendedReach=Reach
+attribute.name.weapon.attackSpeed=Attack Speed
+attribute.name.weapon.backstab=Backstab
+attribute.name.weapon.mountedBonus=Mounted Damage
+attribute.shield.block.time=s Block
+attribute.shield.arrow.count=Arrows
+attribute.quiver.arrow.empty=Empty
+attribute.quiver.arrow.count=Arrows
+
+lore.base.arrow.explosive=Packs some explosive power
+lore.base.arrow.ender=This Ender Eye seems in pain...
+lore.base.arrow.flame=Flint and Steel ? No need
+lore.base.arrow.piercing=Uncommon cutting ability
+lore.base.arrow.poison=Expensive, heh ?
+lore.base.arrow.mystery=Everyone loves a cookie !
+lore.base.arrow.leech=Makes you feel weak and sad
+lore.advanced.arrow.explosive=Explosion strength depends on arrow critical hit
+lore.advanced.arrow.ender=Instant travel or block transportation
+lore.advanced.arrow.flame=Set mobs, players and blocks on fire
+lore.advanced.arrow.piercing=Shears sheeps with style
+lore.advanced.arrow.poison=Deals Wither effect
+lore.advanced.arrow.mystery=Sends a peace and love message
+lore.advanced.arrow.leech=Has a vampire touch
+
+tooltip.armour.points=Armor
+
+commands.weaponwield.usage=/weaponwield <itemSearch:current/name> <handWielding:both/right/left> <player or item name>
+commands.weaponwield.set=Item successfully set as wieldable weapon
+
+death.attack.battlegearExtra.backstab=%1$s was stabbed from behind by %2$s
+death.attack.battlegearExtra.backstab.item=%1$s was stabbed from behind by %2$s using %3$s
+death.attack.battlegearExtra.mounted=%1$s was pierced by %2$s and his mount
+death.attack.battlegearExtra.mounted.item=%1$s was pierced by %2$s and his mount using %3$s
