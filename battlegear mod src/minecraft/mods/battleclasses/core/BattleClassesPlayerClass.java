@@ -11,14 +11,13 @@ import mods.battlegear2.packet.BattlegearAnimationPacket;
 import mods.battlegear2.utils.EnumBGAnimations;
 
 public class BattleClassesPlayerClass implements ICooldownHolder {
-	
-	public static final float CLASS_SWITCH_COOLDOWN = 30.0F;
-	
+		
 	protected BattleClassesPlayerHooks playerHooks;
 	protected EnumBattleClassesPlayerClass playerClass;
 	
 	public BattleClassesPlayerClass(BattleClassesPlayerHooks parPlayerHooks, EnumBattleClassesPlayerClass parPlayerClass) {
 		this.playerHooks = parPlayerHooks;
+		parPlayerHooks.mainCooldownMap.put(this.getCooldownHashCode(), this);
 		this.setPlayerClass(parPlayerClass);
 	}
 	
@@ -58,12 +57,15 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	}
 	
 	// -------------------- ICooldownHolder implementation --------------------
+	
+	public static final float CLASS_SWITCH_COOLDOWN_VALUE = 30.0F;
+	public static final int CLASS_SWITCH_COOLDOWN_HASHCODE = 2000;
 
 	private float setTime;
 	
 	@Override
 	public float getCooldown() {
-		return CLASS_SWITCH_COOLDOWN;
+		return CLASS_SWITCH_COOLDOWN_VALUE;
 	}
 
 	@Override
@@ -90,6 +92,11 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	@Override
 	public boolean isOnCooldown() {
 		return getCooldownRemaining() > 0;
+	}
+
+	@Override
+	public int getCooldownHashCode() {
+		return CLASS_SWITCH_COOLDOWN_HASHCODE;
 	}
 	
 }

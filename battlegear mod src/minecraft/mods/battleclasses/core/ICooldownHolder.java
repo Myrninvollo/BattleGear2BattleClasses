@@ -18,6 +18,7 @@ public interface ICooldownHolder {
 	 */
 	public void setToCooldown();
 	
+	
 	/**
 	 * Sets the cooldownSetTime to the current Time, regardless if there is a cooldown going on at the moment
 	 */
@@ -34,5 +35,11 @@ public interface ICooldownHolder {
 	 * @return - is implementer on cooldown
 	 */
 	public boolean isOnCooldown();
+	
+	/**
+	 * Returns the key (int) to get this cooldown holder from the main cooldown map
+	 * @return - main cooldown map key
+	 */
+	public int getCooldownHashCode();
 	
 }
