@@ -35,14 +35,15 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 		return ((float) Minecraft.getSystemTime()) / 1000;
 	}
 	
-	public static BattleClassesPlayerHooks getPlayerHooks(EntityPlayer entityplayer) {
+	public static BattleClassesPlayerHooks getPlayerHooks(EntityPlayer entityplayer) throws NullPointerException {
 		if(entityplayer.inventory instanceof InventoryPlayerBattle) {
 			InventoryPlayerBattle battleInventory = (InventoryPlayerBattle)entityplayer.inventory;
 			return battleInventory.battleClassesPlayerHooks;
 		}
 		else {
 			battleClassesLogger.error("Couldn't find InventoryPlayerBattle of player:" + entityplayer.getDisplayName());
-			return null;
+			throw(new NullPointerException());
+			//return null;
 		}
 	}
 	

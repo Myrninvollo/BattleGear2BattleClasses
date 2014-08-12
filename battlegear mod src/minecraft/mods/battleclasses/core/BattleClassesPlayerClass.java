@@ -5,6 +5,7 @@ import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.EnumBattleClassesPlayerClass;
+import mods.battleclasses.packet.BattleClassesPacketCooldownSet;
 import mods.battleclasses.packet.BattleClassesPacketPlayerClassSnyc;
 import mods.battlegear2.Battlegear;
 import mods.battlegear2.packet.BattlegearAnimationPacket;
@@ -19,13 +20,12 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 		this.playerHooks = parPlayerHooks;
 		parPlayerHooks.mainCooldownMap.put(this.getCooldownHashCode(), this);
 		this.setPlayerClass(parPlayerClass);
+		this.initCooldownHolder();
 	}
 	
 	public void switchToPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
 		this.setPlayerClass(parPlayerClass);
 
-		this.setToCooldown();
-		
 		FMLProxyPacket p = new BattleClassesPacketPlayerClassSnyc(playerHooks.ownerPlayer, playerClass).generatePacket();
 		
 		if(playerHooks.ownerPlayer instanceof EntityPlayerMP) {
@@ -36,11 +36,9 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 			}
 		}
 		
-		
-		
-        
-		
 		BattleClassesUtils.Log(playerHooks.ownerPlayer.getDisplayName() + " switched to class: " + parPlayerClass.toString(), LogType.CORE);
+		
+		this.setToCooldownForced();
 	}
 	
 	protected void setPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
@@ -59,12 +57,17 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	// -------------------- ICooldownHolder implementation --------------------
 	
 	public static final float CLASS_SWITCH_COOLDOWN_VALUE = 30.0F;
-	public static final int CLASS_SWITCH_COOLDOWN_HASHCODE = 2000;
+	public static final int CLASS_SWITCH_COOLDOWN_HASHCODE = 1399;
 
 	private float setTime;
 	
 	@Override
-	public float getCooldown() {
+	public void initCooldownHolder() {
+		setTime = BattleClassesUtils.getCurrentTimeInSeconds() - COOLDOWN_INITIALIZER;
+	}
+	
+	@Override
+	public float getCooldownDuration() {
 		return CLASS_SWITCH_COOLDOWN_VALUE;
 	}
 
@@ -72,17 +75,38 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	public void setToCooldown() {
 		if(!isOnCooldown()) {
 			this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
+			System.out.println("Cooldown set 1");
+			if(playerHooks.ownerPlayer instanceof EntityPlayerMP) {
+				System.out.println("Cooldown set 2");
+				EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.ownerPlayer;
+				if(entityPlayerMP != null) {
+					System.out.println("Cooldown set 3");
+					BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
+					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.ownerPlayer, this.getCooldownHashCode(), false).generatePacket();
+					Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
+				}
+			}
+			
 		}
 	}
 
 	@Override
 	public void setToCooldownForced() {
 		this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
+		
+		if(playerHooks.ownerPlayer instanceof EntityPlayerMP) {
+			EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.ownerPlayer;
+			if(entityPlayerMP != null) {
+				BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
+				FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.ownerPlayer, this.getCooldownHashCode(), true).generatePacket();
+				Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
+			}
+		}
 	}
 
 	@Override
 	public float getCooldownRemaining() {
-		float timeRemaining = BattleClassesUtils.getCurrentTimeInSeconds() - getCooldown();
+		float timeRemaining = getSetTime() + getCooldownDuration() - BattleClassesUtils.getCurrentTimeInSeconds();
 		if(timeRemaining < 0 ) {
 			timeRemaining = 0;
 		}
@@ -97,6 +121,16 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	@Override
 	public int getCooldownHashCode() {
 		return CLASS_SWITCH_COOLDOWN_HASHCODE;
+	}
+
+	@Override
+	public float getSetTime() {
+		return setTime;
+	}
+
+	@Override
+	public void setSetTime(float t) {
+		setTime = t;
 	}
 	
 }

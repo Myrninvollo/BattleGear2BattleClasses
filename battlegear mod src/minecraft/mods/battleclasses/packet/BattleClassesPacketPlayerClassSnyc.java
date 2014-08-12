@@ -40,7 +40,7 @@ public class BattleClassesPacketPlayerClassSnyc extends AbstractMBPacket {
 
 	@Override
 	public void process(ByteBuf in, EntityPlayer player) {
-		BattleClassesUtils.Log("Trying to process BattleClassesPacketPlayerClassSnyc" , LogType.PACKET);
+		BattleClassesUtils.Log("Trying to process " + this.getClass() , LogType.PACKET);
 		playerClass = EnumBattleClassesPlayerClass.values()[in.readInt()];
         username = ByteBufUtils.readUTF8String(in);
         if (username != null && playerClass != null) {

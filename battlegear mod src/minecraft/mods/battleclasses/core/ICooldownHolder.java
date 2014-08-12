@@ -7,11 +7,18 @@ public interface ICooldownHolder {
 	 */
 	//private float setTime
 	
+	public static final float COOLDOWN_INITIALIZER = 3600;
+	
 	/**
-	 * Returns the ammount of cooldown time in seconds
+	 * Initializes the cooldownHolder by setting the setTime field to currentTime.
+	 */
+	public void initCooldownHolder();
+	
+	/**
+	 * Returns the duration of cooldown time in seconds
 	 * @return - cooldown time in seconds
 	 */
-	public float getCooldown();
+	public float getCooldownDuration();
 	
 	/**
 	 * Sets the cooldownSetTime to the current Time, if there is no cooldown going on at the moment
@@ -41,5 +48,19 @@ public interface ICooldownHolder {
 	 * @return - main cooldown map key
 	 */
 	public int getCooldownHashCode();
+	
+	
+	// Methods for TotalCooldownSync
+	/**
+	 * Used for TotalCooldownSync
+	 * @return the last time (/date) when it was set to cooldown 
+	 */
+	public float getSetTime();
+	
+	/**
+	 * Sets the setTime of the cooldown. Used for TotalCooldownSync.
+	 */
+	public void setSetTime(float t);
+	
 	
 }
