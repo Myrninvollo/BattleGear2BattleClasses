@@ -39,7 +39,7 @@ public class Battlegear {
     @Mod.Instance("battlegear2")
     public static Battlegear INSTANCE;
 
-    @SidedProxy(modId="battlegear2", clientSide = "mods.battleclasses.client.ClientProxy", serverSide = "mods.battleclasses.BattleClassesCommonProxy")
+    @SidedProxy(modId="battlegear2", clientSide = "mods.battleclasses.client.BattleClassesClientProxy", serverSide = "mods.battleclasses.BattleClassesCommonProxy")
     public static BattleClassesCommonProxy proxy;
 
     public static final String imageFolder = "battlegear2:textures/";

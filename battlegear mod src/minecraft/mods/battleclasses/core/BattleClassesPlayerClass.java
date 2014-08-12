@@ -5,6 +5,7 @@ import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.EnumBattleClassesPlayerClass;
+import mods.battleclasses.EnumBattleClassesWeaponAccess;
 import mods.battleclasses.packet.BattleClassesPacketCooldownSet;
 import mods.battleclasses.packet.BattleClassesPacketPlayerClassSnyc;
 import mods.battlegear2.Battlegear;
@@ -48,6 +49,49 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 		//Set SpellBook content
 		//Set Talents content
 		//Set Weapon skill abilities
+	}
+	
+	public void setWeaponAccessByClass(EnumBattleClassesPlayerClass parPlayerClass) {
+		this.playerHooks.weaponHitHandler.initAccessSet();
+		
+		switch (parPlayerClass) {
+			case PlayerClass_NONE : {
+				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWeaponAccess.WeaponAccess_DUALWIELD);
+				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWeaponAccess.WeaponAccess_SHIELD);
+			}
+				break;
+			case PlayerClass_MAGE : {
+				//
+			}
+				break;
+			case PlayerClass_PRIEST : {
+				//
+			}
+				break;
+			case PlayerClass_WARLOCK : {
+				//
+			}
+				break;
+			case PlayerClass_ROGUE : {
+				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWeaponAccess.WeaponAccess_DUALWIELD);
+			}
+				break;
+			case PlayerClass_HUNTER : {
+				//
+			}
+				break;
+			case PlayerClass_PALADIN : {
+				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWeaponAccess.WeaponAccess_SHIELD);
+			}
+				break;
+			case PlayerClass_WARRIOR : {
+				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWeaponAccess.WeaponAccess_DUALWIELD);
+				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWeaponAccess.WeaponAccess_SHIELD);
+			}
+				break;
+		default:
+			break;
+		}
 	}
 	
 	public EnumBattleClassesPlayerClass getPlayerClass() {
