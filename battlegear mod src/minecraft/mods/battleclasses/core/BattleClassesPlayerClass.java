@@ -75,12 +75,9 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	public void setToCooldown() {
 		if(!isOnCooldown()) {
 			this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
-			System.out.println("Cooldown set 1");
 			if(playerHooks.ownerPlayer instanceof EntityPlayerMP) {
-				System.out.println("Cooldown set 2");
 				EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.ownerPlayer;
 				if(entityPlayerMP != null) {
-					System.out.println("Cooldown set 3");
 					BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
 					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.ownerPlayer, this.getCooldownHashCode(), false).generatePacket();
 					Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);

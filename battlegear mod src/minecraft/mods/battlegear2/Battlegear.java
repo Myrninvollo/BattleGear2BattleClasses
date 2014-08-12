@@ -5,6 +5,7 @@ import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCEvent;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 import cpw.mods.fml.common.network.FMLEventChannel;
+import mods.battleclasses.BattleClassesCommonProxy;
 import mods.battleclasses.BattleClassesMain;
 import mods.battleclasses.packet.BattleClassesPacketHandeler;
 import mods.battlegear2.api.core.BattlegearUtils;
@@ -38,8 +39,8 @@ public class Battlegear {
     @Mod.Instance("battlegear2")
     public static Battlegear INSTANCE;
 
-    @SidedProxy(modId="battlegear2", clientSide = "mods.battlegear2.client.ClientProxy", serverSide = "mods.battlegear2.CommonProxy")
-    public static CommonProxy proxy;
+    @SidedProxy(modId="battlegear2", clientSide = "mods.battleclasses.client.ClientProxy", serverSide = "mods.battleclasses.BattleClassesCommonProxy")
+    public static BattleClassesCommonProxy proxy;
 
     public static final String imageFolder = "battlegear2:textures/";
     public static final String CUSTOM_DAMAGE_SOURCE = "battlegearExtra";

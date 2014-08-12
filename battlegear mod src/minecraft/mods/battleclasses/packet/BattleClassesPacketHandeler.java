@@ -25,9 +25,7 @@ public class BattleClassesPacketHandeler extends BattlegearPacketHandeler {
 	
 	public void sendPacketToPlayerWithSideCheck(FMLProxyPacket packet, EntityPlayerMP player){
 		Side side = FMLCommonHandler.instance().getEffectiveSide();
-		System.out.println("PacketToPlayerWithSideCheck 1");
 		if(side == Side.SERVER) {
-			System.out.println("PacketToPlayerWithSideCheck 2");
 			sendPacketToPlayer(packet,player);
 		}
 	}
