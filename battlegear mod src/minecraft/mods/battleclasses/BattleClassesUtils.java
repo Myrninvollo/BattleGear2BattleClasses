@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
+import mods.battleclasses.core.ICooldownHolder;
 import mods.battlegear2.api.core.InventoryPlayerBattle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,6 +36,10 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 		return ((float) Minecraft.getSystemTime()) / 1000;
 	}
 	
+	public static float getCooldownPercentage(ICooldownHolder coolDownHolder) {
+		return coolDownHolder.getCooldownRemaining() / coolDownHolder.getCooldownDuration();
+	}
+	
 	public static BattleClassesPlayerHooks getPlayerHooks(EntityPlayer entityplayer) throws NullPointerException {
 		if(entityplayer.inventory instanceof InventoryPlayerBattle) {
 			InventoryPlayerBattle battleInventory = (InventoryPlayerBattle)entityplayer.inventory;
@@ -46,5 +51,5 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 			//return null;
 		}
 	}
-	
+		
 }
