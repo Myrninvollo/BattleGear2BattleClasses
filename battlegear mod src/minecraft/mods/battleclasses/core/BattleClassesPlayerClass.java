@@ -27,17 +27,17 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	public void switchToPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
 		this.setPlayerClass(parPlayerClass);
 
-		FMLProxyPacket p = new BattleClassesPacketPlayerClassSnyc(playerHooks.ownerPlayer, playerClass).generatePacket();
+		FMLProxyPacket p = new BattleClassesPacketPlayerClassSnyc(playerHooks.getOwnerPlayer(), playerClass).generatePacket();
 		
-		if(playerHooks.ownerPlayer instanceof EntityPlayerMP) {
-			EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.ownerPlayer;
+		if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {
+			EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.getOwnerPlayer();
 			if(entityPlayerMP != null) {
 				BattleClassesUtils.Log("Sending class switch sync to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
 				Battlegear.packetHandler.sendPacketToPlayer(p, entityPlayerMP);
 			}
 		}
 		
-		BattleClassesUtils.Log(playerHooks.ownerPlayer.getDisplayName() + " switched to class: " + parPlayerClass.toString(), LogType.CORE);
+		BattleClassesUtils.Log(playerHooks.getOwnerPlayer().getDisplayName() + " switched to class: " + parPlayerClass.toString(), LogType.CORE);
 		
 		this.setToCooldownForced();
 	}
@@ -119,11 +119,11 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	public void setToCooldown() {
 		if(!isOnCooldown()) {
 			this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
-			if(playerHooks.ownerPlayer instanceof EntityPlayerMP) {
-				EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.ownerPlayer;
+			if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {
+				EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.getOwnerPlayer();
 				if(entityPlayerMP != null) {
 					BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
-					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.ownerPlayer, this.getCooldownHashCode(), false).generatePacket();
+					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(), false).generatePacket();
 					Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
 				}
 			}
@@ -135,11 +135,11 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	public void setToCooldownForced() {
 		this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
 		
-		if(playerHooks.ownerPlayer instanceof EntityPlayerMP) {
-			EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.ownerPlayer;
+		if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {
+			EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.getOwnerPlayer();
 			if(entityPlayerMP != null) {
 				BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
-				FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.ownerPlayer, this.getCooldownHashCode(), true).generatePacket();
+				FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(), true).generatePacket();
 				Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
 			}
 		}
