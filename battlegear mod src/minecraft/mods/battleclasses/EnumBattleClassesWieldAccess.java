@@ -1,6 +1,6 @@
 package mods.battleclasses;
 
-public enum EnumBattleClassesWeaponAccess {
+public enum EnumBattleClassesWieldAccess {
 	WeaponAccess_DUALWIELD,
 	WeaponAccess_SHIELD
 }

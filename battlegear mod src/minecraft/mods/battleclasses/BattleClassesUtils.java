@@ -47,7 +47,7 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 		}
 		else {
 			battleClassesLogger.error("Couldn't find InventoryPlayerBattle of player:" + entityplayer.getDisplayName());
-			throw(new NullPointerException());
+			throw(new NullPointerException("Error when looking for InventoryPlayerBattle!"));
 			//return null;
 		}
 	}
