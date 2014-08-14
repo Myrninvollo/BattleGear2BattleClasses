@@ -9,7 +9,7 @@ import mods.battleclasses.core.ICooldownHolder;
 import mods.battleclasses.packet.BattleClassesPacketCooldownSet;
 import mods.battlegear2.Battlegear;
 
-public abstract class BattleClassesAbilityCooldownHolder implements ICooldownHolder {
+public abstract class BattleClassesAbstractActiveAbility implements ICooldownHolder {
 	
 	private int abilityID;
 	
@@ -19,12 +19,12 @@ public abstract class BattleClassesAbilityCooldownHolder implements ICooldownHol
 		return abilityID;
 	}
 	
-	public BattleClassesAbilityCooldownHolder(int parAbilityID, BattleClassesPlayerHooks parPlayerHooks) {
+	public BattleClassesAbstractActiveAbility(int parAbilityID, BattleClassesPlayerHooks parPlayerHooks) {
 		this.abilityID = parAbilityID;
 		this.playerHooks = parPlayerHooks;
 	}
 	
-	protected BattleClassesAbilityCooldownHolder(int parAbilityI) {
+	protected BattleClassesAbstractActiveAbility(int parAbilityI) {
 		
 	}
 	
