@@ -9,5 +9,8 @@ public enum EnumBattleClassesTargetType {
 	TargetType_OPTIONAL_OFFENSIVE,
 	
 	TargetType_UNNECESSARY_UNIVERSAL,
-	TargetType_UNNECESSARY_AREAEFFECT
+	
+	TargetType_AREAEFFECT_UNIVERSAL,
+	TargetType_AREAEFFECT_SUPPORTIVE,
+	TargetType_AREAEFFECT_OFFENSIVE
 }
