@@ -30,7 +30,7 @@ import cpw.mods.fml.relauncher.FMLInjectionData;
 
 import java.net.URL;
 
-@Mod(modid = "battlegear2", useMetadata = true, guiFactory = "mods.battlegear2.gui.BattlegearGuiFactory")
+@Mod(modid = "battlegear2", useMetadata = true, guiFactory = "mods.battleclasses.gui.BattleClassesGuiFactory")
 public class Battlegear {
 
 	public static final String MODID = "battlegear2";

@@ -1,6 +1,8 @@
 package mods.battlegear2.client.gui;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 import mods.battlegear2.Battlegear;
 import mods.battlegear2.api.core.IBattlePlayer;
@@ -14,6 +16,7 @@ import mods.battlegear2.api.core.InventoryPlayerBattle;
 import mods.battlegear2.client.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
@@ -74,11 +77,23 @@ public class BattlegearInGameGUI extends Gui {
                             	int guiLeft = (guiContainer.width - xSize) / 2;
                             	int guiTop = (guiContainer.height - ySize) / 2;
                                 
-                            	//ArrayList buttonList = mc.currentScreen.buttonList;
-                            	ArrayList buttonList = new ArrayList();
-                                
-                                BattlegearClientEvents.onOpenGui(buttonList, guiLeft, guiTop);
-                                previousGui = currentGui;
+                            	
+                            	Field f;
+								try {
+									
+									f = GuiScreen.class.getDeclaredField("buttonList");
+									f.setAccessible(true);
+	                            	List buttonListRefl = (List) f.get( ((GuiScreen)guiContainer) );
+	                            	
+	                                
+	                                BattlegearClientEvents.onOpenGui(buttonListRefl, guiLeft, guiTop);
+	                                previousGui = currentGui;
+	                                
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+                            	
                         	}
                         }
                     }
