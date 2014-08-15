@@ -1,5 +1,7 @@
 package mods.battlegear2.client.gui;
 
+import java.util.ArrayList;
+
 import mods.battlegear2.Battlegear;
 import mods.battlegear2.api.core.IBattlePlayer;
 import mods.battlegear2.api.shield.IShield;
@@ -61,8 +63,23 @@ public class BattlegearInGameGUI extends Gui {
 	                }else{
                         Class<?> currentGui = mc.currentScreen.getClass();
                         if(currentGui!=previousGui && (currentGui.equals(GuiContainerCreative.class) || currentGui.equals(GuiInventory.class))){
-                            //BattlegearClientEvents.onOpenGui(mc.currentScreen.buttonList, ((GuiContainer) mc.currentScreen).guiLeft-30, ((GuiContainer)mc.currentScreen).guiTop);
-                            previousGui = currentGui;
+                        	
+                        	GuiContainer guiContainer = ((GuiContainer) mc.currentScreen);
+                        	
+                        	if(guiContainer != null) {
+                        		/** The X size of the inventory window in pixels. */
+                            	int xSize = 176;
+                                /** The Y size of the inventory window in pixels. */
+                                int ySize = 166;
+                            	int guiLeft = (guiContainer.width - xSize) / 2;
+                            	int guiTop = (guiContainer.height - ySize) / 2;
+                                
+                            	//ArrayList buttonList = mc.currentScreen.buttonList;
+                            	ArrayList buttonList = new ArrayList();
+                                
+                                BattlegearClientEvents.onOpenGui(buttonList, guiLeft, guiTop);
+                                previousGui = currentGui;
+                        	}
                         }
                     }
                 }
