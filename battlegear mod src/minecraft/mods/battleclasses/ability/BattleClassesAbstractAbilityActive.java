@@ -2,7 +2,10 @@ package mods.battleclasses.ability;
 
 import java.util.HashSet;
 
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
@@ -62,6 +65,10 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		}
 	}
 	
+	protected void startCasting(EntityPlayer entityPlayer, ItemStack itemStack) {
+		BattleClassesUtils.setEntityPlayerItemInUseInSeconds(entityPlayer, itemStack, this.castTime);
+	}
+	
 	/**
 	 * Called when player holds down Mouse-Right button
 	 */
@@ -88,6 +95,10 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		default:
 			break;
 		}
+	}
+	
+	public void cancelCasting(EntityPlayer entityPlayer) {
+		entityPlayer.clearItemInUse();
 	}
 	
 	/**
@@ -117,6 +128,14 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 			break;
 		}
 	}
+	
+	public abstract boolean performEffect(EntityLiving targetEntity);
+	
+	public void onFinishedCasting() {
+		this.setToCooldown();
+		//ADD Global coolDown here!
+	}
+	
 	
 	// -------------------- ICooldownHolder implementation --------------------
 

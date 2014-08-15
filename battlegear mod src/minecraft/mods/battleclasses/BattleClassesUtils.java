@@ -10,6 +10,7 @@ import mods.battleclasses.core.ICooldownHolder;
 import mods.battlegear2.api.core.InventoryPlayerBattle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
 public class BattleClassesUtils {
 	
@@ -38,6 +39,11 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 	
 	public static float getCooldownPercentage(ICooldownHolder coolDownHolder) {
 		return coolDownHolder.getCooldownRemaining() / coolDownHolder.getCooldownDuration();
+	}
+	
+	public static void setEntityPlayerItemInUseInSeconds(EntityPlayer entityPlayer, ItemStack itemStack, float time) {
+		int countDownTickStart = (int) (72000 + time*20);
+		entityPlayer.setItemInUse(itemStack, countDownTickStart);
 	}
 	
 	public static BattleClassesPlayerHooks getPlayerHooks(EntityPlayer entityplayer) throws NullPointerException {
