@@ -40,8 +40,8 @@ public class BattlegearInGameGUI extends Gui {
     public static final RenderItem itemRenderer = new RenderItem();
     public static final ResourceLocation resourceLocation = new ResourceLocation("textures/gui/widgets.png");
     public static final ResourceLocation resourceLocationShield = new ResourceLocation("battlegear2", "textures/gui/Shield Bar.png");
-    private Class<?> previousGui;
-    private Minecraft mc;
+    protected Class<?> previousGui;
+    protected Minecraft mc;
 
     public BattlegearInGameGUI() {
         super();
