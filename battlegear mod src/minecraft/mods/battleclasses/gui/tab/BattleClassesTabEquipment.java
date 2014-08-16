@@ -34,7 +34,7 @@ public class BattleClassesTabEquipment extends BattleEquipGUI {
     public void initGui ()
     {
         super.initGui();
-        BattleClassesClientEvents.onOpenGui(this.buttonList, guiLeft-30, guiTop);
+        BattleClassesClientEvents.onOpenGui(this.buttonList, guiLeft-28, guiTop);
         if(ClientProxy.tconstructEnabled){
             this.buttonList.clear();
             try{

@@ -1,8 +1,12 @@
 package mods.battleclasses.gui;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
+import mods.battleclasses.client.BattleClassesClientEvents;
 import mods.battleclasses.gui.tab.BattleClassesTabEquipment;
 import mods.battlegear2.Battlegear;
 import mods.battlegear2.client.gui.BattleEquipGUI;
@@ -25,6 +29,8 @@ public class BattleClassesGUIHandler extends BattlegearGUIHandeler {
     public Object getServerGuiElement(int ID, EntityPlayer player, World world,
                                       int x, int y, int z) {
         switch (ID) {
+        	case vanillaInventoryID:
+        		BattleClassesClientEvents.returnToInventory(player);
             case equipID:
                 return new ContainerBattle(player.inventory, !world.isRemote, player);
             default:
@@ -37,12 +43,15 @@ public class BattleClassesGUIHandler extends BattlegearGUIHandeler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world,
                                       int x, int y, int z) {
         switch (ID) {
+        	case vanillaInventoryID:
+        		return new GuiInventory(player);
             case equipID:
                 return new BattleClassesTabEquipment(player, world.isRemote);
             default:
                 return null;
         }
     }
+
 
 }
 

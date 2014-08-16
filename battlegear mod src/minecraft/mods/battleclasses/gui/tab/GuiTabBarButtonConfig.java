@@ -11,6 +11,10 @@ public class GuiTabBarButtonConfig extends BattleClassesGuiTabBarButton {
 		// TODO Auto-generated constructor stub
 	}
 
+	public GuiTabBarButtonConfig(int par1, int par2, int par3, boolean parHorizontal) {
+		super(par1, par2, par3, "Battle Classes Mod Settings", parHorizontal);
+	}
+
 	@Override
 	protected void openGui(Minecraft mc) {
 		BattleEquipGUI.open(mc.thePlayer);
