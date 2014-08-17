@@ -28,6 +28,9 @@ import mods.battlegear2.client.gui.BattlegearInGameGUI;
 
 public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 	
+    public static Class<?> previousGui;
+    //public static Minecraft mc;
+	
     public void renderGameOverlay(float frame, int mouseX, int mouseY) {
     	
         if(Battlegear.battlegearEnabled){

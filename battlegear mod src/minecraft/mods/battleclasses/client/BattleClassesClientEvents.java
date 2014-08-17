@@ -122,6 +122,46 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
         }
 	}
 	
+	public static void showButtonsFromGuiInventory(GuiInventory guiInventory) {
+		if(guiInventory instanceof GuiContainer ) {
+			
+			GuiContainer guiContiner = (GuiContainer)guiInventory;
+			
+			BattleClassesUtils.Log("Gui Opened1", LogType.GUI);
+			
+			Minecraft mc = Minecraft.getMinecraft();
+			GuiContainer guiContainer = ((GuiContainer) mc.currentScreen);
+        	
+        	if(guiContainer != null) {
+        		/** The X size of the inventory window in pixels. */
+            	int xSize = 176;
+                /** The Y size of the inventory window in pixels. */
+                int ySize = 166;
+            	int guiLeft = (guiContainer.width - xSize) / 2 - 32;
+            	int guiTop = (guiContainer.height - ySize) / 2;
+                
+            	System.out.println("Current gui class:" + guiInventory);
+            	
+            	Field f;
+				try {
+					
+					f = GuiScreen.class.getDeclaredField("buttonList");
+					f.setAccessible(true);
+                	List buttonListRefl = (List) f.get( ((GuiScreen)guiContainer) );
+                	
+                    
+                    //BattleClassesClientEvents.onOpenGui(buttonListRefl, guiLeft, guiTop);
+                    
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	
+        	}
+			
+		}
+	}
+	
 	/**
      * Helper method to return to Inventory from displayed tabs
      */

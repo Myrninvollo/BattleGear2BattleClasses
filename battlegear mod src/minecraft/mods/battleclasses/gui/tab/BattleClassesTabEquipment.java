@@ -6,9 +6,13 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import mods.battleclasses.client.BattleClassesClientEvents;
+import mods.battleclasses.gui.BattleClassesGUIHandler;
+import mods.battlegear2.Battlegear;
 import mods.battlegear2.client.BattlegearClientEvents;
 import mods.battlegear2.client.ClientProxy;
 import mods.battlegear2.client.gui.BattleEquipGUI;
+import mods.battlegear2.gui.BattlegearGUIHandeler;
+import mods.battlegear2.packet.BattlegearGUIPacket;
 
 public class BattleClassesTabEquipment extends BattleEquipGUI {
 	
@@ -29,6 +33,11 @@ public class BattleClassesTabEquipment extends BattleEquipGUI {
 		super(entityPlayer, isRemote);
 		// TODO Auto-generated constructor stub
 	}
+	
+    public static void open(EntityPlayer player){
+    	//send packet to open container on server
+        Battlegear.packetHandler.sendPacketToServer(new BattlegearGUIPacket(BattleClassesGUIHandler.equipID).generatePacket());
+    }
 	
     @Override
     public void initGui ()
