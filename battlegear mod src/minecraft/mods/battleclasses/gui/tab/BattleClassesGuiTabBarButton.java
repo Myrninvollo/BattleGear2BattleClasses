@@ -84,7 +84,13 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
         if (this.visible)
         {	
             FontRenderer fontrenderer = mc.fontRenderer;
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            if(isAccessAble()) {
+            	GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            }
+            else {
+            	GL11.glColor4f(0.5F, 0.5F, 0.5F, 1.0F);
+            }
+            
             mc.getTextureManager().bindTexture(barButtonTexture);
             
             //InWindow

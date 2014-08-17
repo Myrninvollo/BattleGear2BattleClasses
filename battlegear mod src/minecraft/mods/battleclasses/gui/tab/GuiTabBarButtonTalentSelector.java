@@ -1,5 +1,7 @@
 package mods.battleclasses.gui.tab;
 
+import mods.battleclasses.BattleClassesUtils;
+import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battlegear2.client.gui.BattleEquipGUI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -19,6 +21,11 @@ public class GuiTabBarButtonTalentSelector extends BattleClassesGuiTabBarButton 
 	@Override
 	protected Class<? extends GuiScreen> getGUIClass() {
 		return BattleClassesTabTalents.class;
+	}
+	
+	@Override
+	public boolean isAccessAble() {
+		return BattleClassesUtils.getPlayerClass(Minecraft.getMinecraft().thePlayer) != EnumBattleClassesPlayerClass.PlayerClass_NONE ;
 	}
 	
 	@Override

@@ -59,8 +59,16 @@ public class BattleClassesGuiButtonClassSelector extends BattleClassesGuiButton 
             	stringList.add(BattleClassesTabClassSelector.getClassDescription(playerClass));
             	this.drawHoveringText(stringList, p_146112_2_, p_146112_3_, fontrenderer);
             }
-            
         }
     }
+    
+	@Override
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+		boolean inWindow = super.mousePressed(mc, mouseX, mouseY);
+		if (inWindow) {
+			BattleClassesUtils.getPlayerHooks(Minecraft.getMinecraft().thePlayer).playerClass.switchToPlayerClass(this.playerClass);
+		}
+		return inWindow;
+	}
 
 }
