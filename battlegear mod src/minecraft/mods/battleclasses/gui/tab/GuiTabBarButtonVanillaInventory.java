@@ -27,6 +27,7 @@ public class GuiTabBarButtonVanillaInventory extends BattleClassesGuiTabBarButto
 		BattleClassesUtils.Log("GuiTabBarButtonVanillaInventory openGui", LogType.GUI);
 		BattleClassesInGameGUI.previousGui = mc.currentScreen.getClass();
         mc.thePlayer.sendQueue.addToSendQueue(new C0DPacketCloseWindow(mc.thePlayer.openContainer.windowId));
+		mc.getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.OPEN_INVENTORY_ACHIEVEMENT));
 		GuiInventory guiInventory = new GuiInventory(mc.thePlayer);
 		mc.displayGuiScreen(guiInventory);
 	}
