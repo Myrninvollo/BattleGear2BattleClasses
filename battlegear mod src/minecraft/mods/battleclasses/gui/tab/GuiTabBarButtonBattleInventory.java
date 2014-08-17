@@ -21,4 +21,9 @@ public class GuiTabBarButtonBattleInventory extends BattleClassesGuiTabBarButton
 	protected Class<? extends GuiScreen> getGUIClass() {
 		return BattleClassesTabEquipment.class;
 	}
+	
+	@Override
+	public String getIconName() {
+		return "tab_equipment";
+	}
 }

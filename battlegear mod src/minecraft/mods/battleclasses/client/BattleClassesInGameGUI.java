@@ -28,22 +28,6 @@ import mods.battlegear2.client.gui.BattlegearInGameGUI;
 
 public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 	
-	public static void popGUI(Minecraft mc) {
-		/*
-		Minecraft mcc = FMLClientHandler.instance().getClient();
-		GuiScreen currentGui = mcc.currentScreen;
-		if(currentGui != null) {
-			EntityPlayerMP entityPlayerMP = FMLClientHandler.instance().getClient();
-			if(entityPlayerMP != null) {
-				entityPlayerMP.closeScreen();
-				entityPlayerMP.closeContainer();
-			}
-			//currentGui.onGuiClosed();
-			//mcc.currentScreen = null;
-		}
-		*/
-	}
-	
     public void renderGameOverlay(float frame, int mouseX, int mouseY) {
     	
         if(Battlegear.battlegearEnabled){
@@ -61,7 +45,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 	                	    previousGui=null;
 	                }else{
                         Class<?> currentGui = mc.currentScreen.getClass();
-                        if(currentGui!=previousGui && (currentGui.equals(GuiContainerCreative.class) || currentGui.equals(GuiInventory.class))){
+                        if(currentGui!=previousGui /*&& !(currentGui.equals(GuiContainerCreative.class)*/ && currentGui.equals(GuiInventory.class) ){
                         	
                         	GuiContainer guiContainer = ((GuiContainer) mc.currentScreen);
                         	

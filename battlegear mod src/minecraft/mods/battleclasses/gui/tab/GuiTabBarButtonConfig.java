@@ -25,4 +25,9 @@ public class GuiTabBarButtonConfig extends BattleClassesGuiTabBarButton {
 		return BattleEquipGUI.class;
 	}
 
+	@Override
+	public String getIconName() {
+		return "tab_config";
+	}
+
 }

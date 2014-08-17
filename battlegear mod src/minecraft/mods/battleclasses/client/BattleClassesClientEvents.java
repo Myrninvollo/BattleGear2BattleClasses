@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
@@ -136,6 +137,21 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 			mc.displayGuiScreen(new GuiInventory(entityPlayer));
 			*/
     	}
+	}
+	
+	@SubscribeEvent
+	public void preStitch(TextureStitchEvent.Pre event) {
+		super.preStitch(event);
+		if (event.map.getTextureType() == 1) {
+			//Registering Tab Bar Button Icons
+			int i = 0;
+			for (BattleClassesGuiTabBarButton button : tabsList) {
+				BattleClassesUtils.Log("Registering " + button.getIconRegisterPath(), LogType.GUI);
+				button.tabButtonIcon = event.map.registerIcon(button.getIconRegisterPath());
+				i++;
+			}
+		}
+		
 	}
 	
 }

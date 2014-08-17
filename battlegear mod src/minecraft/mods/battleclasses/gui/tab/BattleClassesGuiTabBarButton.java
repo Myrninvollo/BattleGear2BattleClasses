@@ -1,13 +1,29 @@
 package mods.battleclasses.gui.tab;
 
-import org.lwjgl.opengl.GL11;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
+import scala.reflect.internal.Trees.This;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import mods.battleclasses.BattleClassesUtils;
+import mods.battleclasses.BattleClassesUtils.LogType;
+import mods.battleclasses.client.BattleClassesClientEvents;
 import mods.battlegear2.client.gui.BattleEquipGUI;
 import mods.battlegear2.client.gui.controls.GuiPlaceableButton;
 
@@ -68,8 +84,10 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
         if (this.visible)
         {
             FontRenderer fontrenderer = p_146112_1_.fontRenderer;
-            p_146112_1_.getTextureManager().bindTexture(barButtonTexture);
+          
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            p_146112_1_.getTextureManager().bindTexture(barButtonTexture);
+            
             //InWindow
             this.field_146123_n = p_146112_2_ >= this.xPosition && p_146112_3_ >= this.yPosition && p_146112_2_ < this.xPosition + this.width && p_146112_3_ < this.yPosition + this.height;
             int k = this.getHoverState(this.field_146123_n);
@@ -81,12 +99,147 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
             int selectedOffset = (this.isSelected()) ? this.width : 0;
             this.drawTexturedModalRect(this.xPosition, this.yPosition, this.origin_X + selectedOffset, this.origin_Y, this.width, this.height);
             
+            //Rendering Tab Icon
+            int iconOffsetX = (this.horizontal) ? 7 : 6;
+            p_146112_1_.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
+            this.drawTexturedModelRectFromIcon(this.xPosition  + iconOffsetX, this.yPosition + this.height - 16 - 6, tabButtonIcon, 16, 16);
+                        
             //Rendering Tab Name
-            if(k == 2) {
-            	
+            if( field_146123_n /*k == 2*/) {
+            	ArrayList stringList = new ArrayList();
+            	stringList.add(this.displayString);
+            	this.drawHoveringText(stringList, p_146112_2_, p_146112_3_, fontrenderer);
             }
+            //GL11.glDisable(GL11.GL_BLEND);
         }
     }
+    
+    protected void drawHoveringText(List p_146283_1_, int p_146283_2_, int p_146283_3_, FontRenderer font)
+    {
+        if (!p_146283_1_.isEmpty())
+        {
+            //GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+            //RenderHelper.disableStandardItemLighting();
+            //GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            int k = 0;
+            Iterator iterator = p_146283_1_.iterator();
+
+            while (iterator.hasNext())
+            {
+                String s = (String)iterator.next();
+                int l = font.getStringWidth(s);
+
+                if (l > k)
+                {
+                    k = l;
+                }
+            }
+
+            int j2 = p_146283_2_ + 12;
+            int k2 = p_146283_3_ - 12;
+            int i1 = 8;
+
+            if (p_146283_1_.size() > 1)
+            {
+                i1 += 2 + (p_146283_1_.size() - 1) * 10;
+            }
+
+            /*
+            if (j2 + k > this.width)
+            {
+                j2 -= 28 + k;
+            }
+
+            if (k2 + i1 + 6 > this.height)
+            {
+                k2 = this.height - i1 - 6;
+            }
+			*/
+            
+            RenderItem itemRender = null; 
+            Minecraft mc = Minecraft.getMinecraft();
+            if( mc.currentScreen != null) {
+				try {
+					Field f = GuiScreen.class.getDeclaredField("itemRender");
+					f.setAccessible(true);
+					itemRender = (RenderItem) f.get( ((GuiScreen)mc.currentScreen) );
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+            
+            
+           // this.zLevel -= 300.0F;
+            float zTemp = this.zLevel;
+            if(itemRender != null) {
+            	BattleClassesUtils.Log("Button Z:" + this.zLevel + ", IR Z:" + itemRender.zLevel, LogType.GUI);
+            	//this.zLevel += 10000.0F;
+            	//itemRender.zLevel += 300.0F;
+            }
+            this.zLevel -= 1000.0F;
+            
+            int j1 = -267386864;
+            
+            this.drawGradientRect(j2 - 3, k2 - 4, j2 + k + 3, k2 - 3, j1, j1);
+            this.drawGradientRect(j2 - 3, k2 + i1 + 3, j2 + k + 3, k2 + i1 + 4, j1, j1);
+            this.drawGradientRect(j2 - 3, k2 - 3, j2 + k + 3, k2 + i1 + 3, j1, j1);
+            this.drawGradientRect(j2 - 4, k2 - 3, j2 - 3, k2 + i1 + 3, j1, j1);
+            this.drawGradientRect(j2 + k + 3, k2 - 3, j2 + k + 4, k2 + i1 + 3, j1, j1);
+            
+            int k1 = 1347420415;
+            int l1 = (k1 & 16711422) >> 1 | k1 & -16777216;
+            this.drawGradientRect(j2 - 3, k2 - 3 + 1, j2 - 3 + 1, k2 + i1 + 3 - 1, k1, l1);
+            this.drawGradientRect(j2 + k + 2, k2 - 3 + 1, j2 + k + 3, k2 + i1 + 3 - 1, k1, l1);
+            this.drawGradientRect(j2 - 3, k2 - 3, j2 + k + 3, k2 - 3 + 1, k1, k1);
+            this.drawGradientRect(j2 - 3, k2 + i1 + 2, j2 + k + 3, k2 + i1 + 3, l1, l1);
+			
+            for (int i2 = 0; i2 < p_146283_1_.size(); ++i2)
+            {
+                String s1 = (String)p_146283_1_.get(i2);
+                font.drawStringWithShadow(s1, j2, k2, -1);
+
+                if (i2 == 0)
+                {
+                    k2 += 2;
+                }
+
+                k2 += 10;
+            }
+            
+            
+            //this.zLevel += 300.0F;
+            this.zLevel += 1000.0F;
+            if(itemRender != null) {
+            	//BattleClassesUtils.Log("Button Z:" + this.zLevel + ", IR Z:" + itemRender.zLevel, LogType.GUI);
+            	//itemRender.zLevel -= 300.0F;
+            }
+            
+            //this.zLevel = zTemp;
+            
+            //GL11.glEnable(GL11.GL_LIGHTING);
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+            //RenderHelper.enableStandardItemLighting();
+            //GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        }
+    }
+    
+    public void renderIcon(int par1, int par2, IIcon par3Icon, int par4, int par5)
+    {
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV((double)(par1 + 0), (double)(par2 + par5), (double)this.zLevel, (double)par3Icon.getMinU(), (double)par3Icon.getMaxV());
+        tessellator.addVertexWithUV((double)(par1 + par4), (double)(par2 + par5), (double)this.zLevel, (double)par3Icon.getMaxU(), (double)par3Icon.getMaxV());
+        tessellator.addVertexWithUV((double)(par1 + par4), (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.getMaxU(), (double)par3Icon.getMinV());
+        tessellator.addVertexWithUV((double)(par1 + 0), (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.getMinU(), (double)par3Icon.getMinV());
+        tessellator.draw();
+    }
+    
+	public String getIconRegisterPath() {
+		return ( "battleclasses:sharedicons/gui/"+this.getIconName() );
+	}
     
     public boolean isSelected() {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -98,5 +251,7 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
 
 	@Override
 	protected abstract void openGui(Minecraft mc);
+	
+	public abstract String getIconName();
 
 }
