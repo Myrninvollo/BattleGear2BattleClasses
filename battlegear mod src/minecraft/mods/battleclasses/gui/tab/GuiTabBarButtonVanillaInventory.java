@@ -12,6 +12,7 @@ import mods.battlegear2.packet.BattlegearGUIPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.network.play.client.C0DPacketCloseWindow;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 
 public class GuiTabBarButtonVanillaInventory extends BattleClassesGuiTabBarButton {
@@ -25,18 +26,10 @@ public class GuiTabBarButtonVanillaInventory extends BattleClassesGuiTabBarButto
 	protected void openGui(Minecraft mc) {
 		BattleClassesUtils.Log("GuiTabBarButtonVanillaInventory openGui", LogType.GUI);
 		BattleClassesInGameGUI.previousGui = mc.currentScreen.getClass();
-		mc.thePlayer.closeScreen();
-
+        mc.thePlayer.sendQueue.addToSendQueue(new C0DPacketCloseWindow(mc.thePlayer.openContainer.windowId));
 		mc.getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.OPEN_INVENTORY_ACHIEVEMENT));
 		GuiInventory guiInventory = new GuiInventory(mc.thePlayer);
 		mc.displayGuiScreen(guiInventory);
-		
-		//BattleClassesClientEvents.showButtonsFromGuiInventory(guiInventory);
-		//BattleClassesClientEvents.returnToInventory(mc.thePlayer);
-		//mc.displayGuiScreen(new GuiInventory(mc.thePlayer));
-		//GuiInventory.open(mc.thePlayer);
-		
-		//Battlegear.packetHandler.sendPacketToServer(new BattlegearGUIPacket(BattleClassesGUIHandler.vanillaInventoryID).generatePacket());
 	}
 
 	@Override
