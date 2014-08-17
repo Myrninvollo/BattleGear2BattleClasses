@@ -30,7 +30,7 @@ public class BattleClassesGUIHandler extends BattlegearGUIHandeler {
                                       int x, int y, int z) {
         switch (ID) {
         	case vanillaInventoryID:
-        		BattleClassesClientEvents.returnToInventory(player);
+        		//BattleClassesClientEvents.returnToInventory(player);
             case equipID:
                 return new ContainerBattle(player.inventory, !world.isRemote, player);
             default:

@@ -62,6 +62,7 @@ public class BattleClassesTabEquipment extends BattleEquipGUI {
     /**
      * Draw the background layer for the GuiContainer (everything behind the items)
      */
+    
     @Override
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -71,5 +72,6 @@ public class BattleClassesTabEquipment extends BattleEquipGUI {
         this.drawTexturedModalRect(var5, var6, 0, 0, this.xSize, this.ySize);
         GuiInventory.func_147046_a(var5 + 31, var6 + 75, 30, (float) (var5 + 51) - this.xSize_lo, (float) (var6 + 75 - 50) - this.ySize_lo, mc.thePlayer);
     }
+    
 
 }

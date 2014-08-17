@@ -32,7 +32,7 @@ public class ContainerBattle extends ContainerLocalPlayer {
         }
 
         //Weapon Slots[40-45] even slots for main, odd slots for offhand
-        for (int x = 0; x < (InventoryPlayerBattle.WEAPON_SETS); x++) {
+        for (int x = 0; x < InventoryPlayerBattle.BC_WEAPON_SETS; x++) {
             WeaponSlot main = new WeaponSlot(inventoryPlayer,
                     x + InventoryPlayerBattle.OFFSET, 78, 15 + (x+1) * 18, true);
             WeaponSlot offhand = new WeaponSlot(inventoryPlayer,

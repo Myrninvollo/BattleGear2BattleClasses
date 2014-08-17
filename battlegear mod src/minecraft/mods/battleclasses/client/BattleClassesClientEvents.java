@@ -81,7 +81,7 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
                 	List buttonListRefl = (List) f.get( ((GuiScreen)guiContainer) );
                 	
                     
-                    BattleClassesClientEvents.onOpenGui(buttonListRefl, guiLeft, guiTop);
+                    //BattleClassesClientEvents.onOpenGui(buttonListRefl, guiLeft, guiTop);
                     
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
