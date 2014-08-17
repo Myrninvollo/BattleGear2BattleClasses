@@ -79,14 +79,13 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
     /**
      * Draws this button to the screen.
      */
-    public void drawButton(Minecraft p_146112_1_, int p_146112_2_, int p_146112_3_)
+    public void drawButton(Minecraft mc, int p_146112_2_, int p_146112_3_)
     {
         if (this.visible)
-        {
-            FontRenderer fontrenderer = p_146112_1_.fontRenderer;
-          
+        {	
+            FontRenderer fontrenderer = mc.fontRenderer;
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            p_146112_1_.getTextureManager().bindTexture(barButtonTexture);
+            mc.getTextureManager().bindTexture(barButtonTexture);
             
             //InWindow
             this.field_146123_n = p_146112_2_ >= this.xPosition && p_146112_3_ >= this.yPosition && p_146112_2_ < this.xPosition + this.width && p_146112_3_ < this.yPosition + this.height;
@@ -101,7 +100,7 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
             
             //Rendering Tab Icon
             int iconOffsetX = (this.horizontal) ? 7 : 6;
-            p_146112_1_.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
+            mc.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
             this.drawTexturedModelRectFromIcon(this.xPosition  + iconOffsetX, this.yPosition + this.height - 16 - 6, tabButtonIcon, 16, 16);
                         
             //Rendering Tab Name
@@ -110,7 +109,6 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
             	stringList.add(this.displayString);
             	this.drawHoveringText(stringList, p_146112_2_, p_146112_3_, fontrenderer);
             }
-            //GL11.glDisable(GL11.GL_BLEND);
         }
     }
     
@@ -175,7 +173,7 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
            // this.zLevel -= 300.0F;
             float zTemp = this.zLevel;
             if(itemRender != null) {
-            	BattleClassesUtils.Log("Button Z:" + this.zLevel + ", IR Z:" + itemRender.zLevel, LogType.GUI);
+            	//BattleClassesUtils.Log("Button Z:" + this.zLevel + ", IR Z:" + itemRender.zLevel, LogType.GUI);
             	//this.zLevel += 10000.0F;
             	//itemRender.zLevel += 300.0F;
             }
@@ -226,6 +224,7 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
         }
     }
     
+    /*
     public void renderIcon(int par1, int par2, IIcon par3Icon, int par4, int par5)
     {
         Tessellator tessellator = Tessellator.instance;
@@ -236,6 +235,7 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
         tessellator.addVertexWithUV((double)(par1 + 0), (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.getMinU(), (double)par3Icon.getMinV());
         tessellator.draw();
     }
+    */
     
 	public String getIconRegisterPath() {
 		return ( "battleclasses:sharedicons/gui/"+this.getIconName() );
