@@ -16,7 +16,9 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
+import mods.battleclasses.gui.controlls.BattleClassesGuiButtonClassSelector;
 import mods.battleclasses.gui.tab.BattleClassesGuiTabBarButton;
+import mods.battleclasses.gui.tab.BattleClassesTabClassSelector;
 import mods.battleclasses.gui.tab.GuiTabBarButtonBattleInventory;
 import mods.battleclasses.gui.tab.GuiTabBarButtonClassSelector;
 import mods.battleclasses.gui.tab.GuiTabBarButtonConfig;
@@ -48,48 +50,6 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 	public void postRenderOverlay(RenderGameOverlayEvent.Post event) {
 		if (event.type == RenderGameOverlayEvent.ElementType.HOTBAR) {
 			inGameGUI.renderGameOverlay(event.partialTicks, event.mouseX, event.mouseY);
-		}
-	}
-	
-	@SubscribeEvent
-	public void onGuiOpen(GuiOpenEvent event) {
-		BattleClassesUtils.Log("Gui Opened", LogType.GUI);
-		if(event.gui instanceof GuiContainer ) {
-			
-			GuiContainer guiContiner = (GuiContainer)event.gui;
-			
-			BattleClassesUtils.Log("Gui Opened1", LogType.GUI);
-			
-			Minecraft mc = Minecraft.getMinecraft();
-			GuiContainer guiContainer = ((GuiContainer) mc.currentScreen);
-        	
-        	if(guiContainer != null) {
-        		/** The X size of the inventory window in pixels. */
-            	int xSize = 176;
-                /** The Y size of the inventory window in pixels. */
-                int ySize = 166;
-            	int guiLeft = (guiContainer.width - xSize) / 2 - 32;
-            	int guiTop = (guiContainer.height - ySize) / 2;
-                
-            	System.out.println("Current gui class:" + event.gui);
-            	
-            	Field f;
-				try {
-					
-					f = GuiScreen.class.getDeclaredField("buttonList");
-					f.setAccessible(true);
-                	List buttonListRefl = (List) f.get( ((GuiScreen)guiContainer) );
-                	
-                    
-                    //BattleClassesClientEvents.onOpenGui(buttonListRefl, guiLeft, guiTop);
-                    
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            	
-        	}
-			
 		}
 	}
 	
@@ -184,11 +144,14 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 		super.preStitch(event);
 		if (event.map.getTextureType() == 1) {
 			//Registering Tab Bar Button Icons
-			int i = 0;
 			for (BattleClassesGuiTabBarButton button : tabsList) {
 				BattleClassesUtils.Log("Registering " + button.getIconRegisterPath(), LogType.GUI);
 				button.tabButtonIcon = event.map.registerIcon(button.getIconRegisterPath());
-				i++;
+			}
+			
+			for (BattleClassesGuiButtonClassSelector button : BattleClassesTabClassSelector.classButtonList) {
+				BattleClassesUtils.Log("Registering " + button.getIconRegisterPath(), LogType.GUI);
+				button.classIcon = event.map.registerIcon(button.getIconRegisterPath());
 			}
 		}
 		

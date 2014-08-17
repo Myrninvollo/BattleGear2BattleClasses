@@ -23,6 +23,8 @@ public abstract class BattleClassesAbstractTab extends InventoryEffectRenderer {
     public Class equipTab;
     public int guiHandlerID;
     
+    public EntityPlayer ownerPlayer;
+    
     /**
      * x size of the inventory window in pixels. Defined as float, passed as int
      */
@@ -36,6 +38,7 @@ public abstract class BattleClassesAbstractTab extends InventoryEffectRenderer {
     public BattleClassesAbstractTab(EntityPlayer entityPlayer, boolean isRemote, Container container) {
         //super(new ContainerBattle(entityPlayer.inventory, !isRemote, entityPlayer));
     	super(container);
+    	this.ownerPlayer = entityPlayer; 
         this.allowUserInput = true;
 
         //Don't need this, however maybe we can add a stat later on. I will keep it comented out for now
@@ -43,8 +46,7 @@ public abstract class BattleClassesAbstractTab extends InventoryEffectRenderer {
     }
 
     @Override
-    public void initGui ()
-    {
+    public void initGui() {
         super.initGui();
         BattleClassesClientEvents.onOpenGui(this.buttonList, guiLeft-28, guiTop);
         if(ClientProxy.tconstructEnabled){

@@ -1,8 +1,15 @@
 package mods.battleclasses.gui.tab;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 
+import mods.battleclasses.BattleClassesUtils;
+import mods.battleclasses.EnumBattleClassesPlayerClass;
+import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.gui.BattleClassesGUIHandler;
+import mods.battleclasses.gui.controlls.BattleClassesGuiButtonClassSelector;
 import mods.battlegear2.Battlegear;
 import mods.battlegear2.packet.BattlegearGUIPacket;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -13,6 +20,18 @@ import net.minecraft.util.ResourceLocation;
 public class BattleClassesTabClassSelector extends BattleClassesAbstractTab  {
 	
 	public static final ResourceLocation resource = new ResourceLocation("battleclasses", "textures/gui/InterfaceClassSelector.png");
+	
+	
+	public static List<BattleClassesGuiButtonClassSelector> classButtonList = new ArrayList<BattleClassesGuiButtonClassSelector>();
+	static {
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(0, resource, EnumBattleClassesPlayerClass.PlayerClass_MAGE, "mage"));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(1, resource, EnumBattleClassesPlayerClass.PlayerClass_PRIEST, "priest"));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(2, resource, EnumBattleClassesPlayerClass.PlayerClass_WARLOCK, "warlock"));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(3, resource, EnumBattleClassesPlayerClass.PlayerClass_ROGUE, "rogue"));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(4, resource, EnumBattleClassesPlayerClass.PlayerClass_HUNTER, "hunter"));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(5, resource, EnumBattleClassesPlayerClass.PlayerClass_PALADIN, "paladin"));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(6, resource, EnumBattleClassesPlayerClass.PlayerClass_WARRIOR, "warrior"));
+	}
 
     public BattleClassesTabClassSelector(EntityPlayer entityPlayer, boolean isRemote) {
         super(entityPlayer, isRemote, new BattleClassesContainerEmpty(entityPlayer.inventory, !isRemote, entityPlayer));
@@ -23,6 +42,21 @@ public class BattleClassesTabClassSelector extends BattleClassesAbstractTab  {
     public void initGui ()
     {
         super.initGui();
+        
+        //Init Buttons
+		for (BattleClassesGuiButtonClassSelector button : BattleClassesTabClassSelector.classButtonList) {
+			this.buttonList.add(button);
+			button.setOrigin(0, 190);
+			button.setSize(22, 22);
+		}
+		BattleClassesTabClassSelector.classButtonList.get(0).setPosition(this.guiLeft + 77,this.guiTop + 28);
+		BattleClassesTabClassSelector.classButtonList.get(1).setPosition(this.guiLeft + 113,this.guiTop + 46);
+		BattleClassesTabClassSelector.classButtonList.get(2).setPosition(this.guiLeft + 122,this.guiTop + 85);
+		BattleClassesTabClassSelector.classButtonList.get(3).setPosition(this.guiLeft + 97,this.guiTop + 116);
+		BattleClassesTabClassSelector.classButtonList.get(4).setPosition(this.guiLeft + 56,this.guiTop + 116);
+		BattleClassesTabClassSelector.classButtonList.get(5).setPosition(this.guiLeft + 31,this.guiTop + 85);
+		BattleClassesTabClassSelector.classButtonList.get(6).setPosition(this.guiLeft + 41,this.guiTop + 46);
+		
     }
 
     /**
@@ -50,6 +84,30 @@ public class BattleClassesTabClassSelector extends BattleClassesAbstractTab  {
     public static void open(EntityPlayer player){
     	//send packet to open container on server
         Battlegear.packetHandler.sendPacketToServer(new BattlegearGUIPacket(BattleClassesGUIHandler.classSelectorID).generatePacket());
+    }
+    
+    public static String getClassDescription(EnumBattleClassesPlayerClass playerClass) {
+    	switch (playerClass)  {
+		case PlayerClass_HUNTER:
+			return "Hunter";
+		case PlayerClass_MAGE:
+			return "Mage";
+		case PlayerClass_NONE:
+			return "No Class";
+		case PlayerClass_PALADIN:
+			return "Paladin";
+		case PlayerClass_PRIEST:
+			return "Priest";
+		case PlayerClass_ROGUE:
+			return "Rogue";
+		case PlayerClass_WARLOCK:
+			return "Warlock";
+		case PlayerClass_WARRIOR:
+			return "Warrior";
+		default:
+			return "Unkown Class Description";
+    		
+    	}
     }
 
 }
