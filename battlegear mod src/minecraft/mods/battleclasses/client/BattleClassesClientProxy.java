@@ -27,6 +27,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import cpw.mods.fml.common.registry.GameData;
 import mods.battleclasses.BattleClassesCommonProxy;
+import mods.battleclasses.gui.BattleClassesGuiKeyHandler;
 import mods.battlegear2.Battlegear;
 import mods.battlegear2.api.core.InventoryPlayerBattle;
 import mods.battlegear2.api.heraldry.IHeraldryItem;
@@ -62,14 +63,14 @@ public class BattleClassesClientProxy extends BattleClassesCommonProxy {
     @Override
     public void registerKeyHandelers() {
         if(BattlegearConfig.enableGUIKeys){
-            FMLCommonHandler.instance().bus().register(new BattlegearGuiKeyHandler());
+            FMLCommonHandler.instance().bus().register(new BattleClassesGuiKeyHandler());
         }
     }
 
     @Override
     public void registerTickHandelers() {
         super.registerTickHandelers();
-        MinecraftForge.EVENT_BUS.register(new BattlegearClientEvents());
+        MinecraftForge.EVENT_BUS.register(new BattleClassesClientEvents());
         FMLCommonHandler.instance().bus().register(new BattlegearClientTickHandeler());
     }
 

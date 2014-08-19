@@ -59,8 +59,8 @@ public class BattlegearClientEvents {
     public static int storageIndex;
 	public static List<GuiPlaceableButton> tabsList = new ArrayList<GuiPlaceableButton>();
 	static {
-		tabsList.add(new GuiBGInventoryButton(0, 10, 10));
-		tabsList.add(new GuiSigilButton(1, 20, 20));
+		//tabsList.add(new GuiBGInventoryButton(0, 10, 10));
+		//tabsList.add(new GuiSigilButton(1, 20, 20));
 	}
 
     /**

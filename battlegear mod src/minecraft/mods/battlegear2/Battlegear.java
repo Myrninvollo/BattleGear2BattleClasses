@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 import cpw.mods.fml.common.network.FMLEventChannel;
 import mods.battleclasses.BattleClassesCommonProxy;
 import mods.battleclasses.BattleClassesMain;
+import mods.battleclasses.gui.BattleClassesGUIHandler;
 import mods.battleclasses.packet.BattleClassesPacketHandeler;
 import mods.battlegear2.api.core.BattlegearUtils;
 import mods.battlegear2.api.quiver.IArrowFireHandler;
@@ -30,7 +31,7 @@ import cpw.mods.fml.relauncher.FMLInjectionData;
 
 import java.net.URL;
 
-@Mod(modid = "battlegear2", useMetadata = true, guiFactory = "mods.battlegear2.gui.BattlegearGuiFactory")
+@Mod(modid = "battlegear2", useMetadata = true, guiFactory = "mods.battleclasses.gui.BattleClassesGuiFactory")
 public class Battlegear {
 
 	public static final String MODID = "battlegear2";
@@ -93,7 +94,7 @@ public class Battlegear {
             eventChannel.register(packetHandler);
             packetHandler.channels.put(channel, eventChannel);
         }
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, new BattlegearGUIHandeler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new BattleClassesGUIHandler());
         
         BattleClassesMain.init();
     }

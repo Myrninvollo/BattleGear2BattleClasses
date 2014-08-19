@@ -57,5 +57,9 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 			//return null;
 		}
 	}
+	
+	public static EnumBattleClassesPlayerClass getPlayerClass(EntityPlayer entityPlayer) {
+		return BattleClassesUtils.getPlayerHooks(entityPlayer).playerClass.getPlayerClass();
+	}
 		
 }

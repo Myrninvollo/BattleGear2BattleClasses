@@ -12,17 +12,21 @@ public abstract class GuiPlaceableButton extends GuiButton {
 
 	public void place(int count, int guiLeft, int guiTop) {
 		this.xPosition = guiLeft;
-		this.yPosition = guiTop + count * HEIGHT;
+		this.yPosition = guiTop; // + count * HEIGHT;
 	}
 
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 		boolean inWindow = super.mousePressed(mc, mouseX, mouseY);
-		if (inWindow && !isInGui(mc.currentScreen)) {
+		if (inWindow && !isInGui(mc.currentScreen) && isAccessAble()) {
 			this.openGui(mc);
 		}
 		return inWindow;
 	}
+	
+    public boolean isAccessAble() {
+    	return true;
+    }
 	
 	private boolean isInGui(GuiScreen currentScreen) {
 		return currentScreen.getClass()==getGUIClass();
