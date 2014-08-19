@@ -4,9 +4,12 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.gui.tab.BattleClassesTabClassSelector;
+import mods.battleclasses.packet.BattleClassesPacketPlayerClassSnyc;
+import mods.battlegear2.Battlegear;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -66,7 +69,9 @@ public class BattleClassesGuiButtonClassSelector extends BattleClassesGuiButton 
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 		boolean inWindow = super.mousePressed(mc, mouseX, mouseY);
 		if (inWindow) {
-			BattleClassesUtils.getPlayerHooks(Minecraft.getMinecraft().thePlayer).playerClass.switchToPlayerClass(this.playerClass);
+			//BattleClassesUtils.getPlayerHooks(Minecraft.getMinecraft().thePlayer).playerClass.switchToPlayerClass(this.playerClass);
+			FMLProxyPacket p = new BattleClassesPacketPlayerClassSnyc(mc.thePlayer, this.playerClass).generatePacket();
+			Battlegear.packetHandler.sendPacketToServer(p);
 		}
 		return inWindow;
 	}
