@@ -17,4 +17,6 @@ public class BattleClassesWeaponHitHandler {
 	public void initAccessSet() {
 		accessSet.clear();
 	}
+
+//ASD
 }
