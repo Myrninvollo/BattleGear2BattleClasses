@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL12;
 import scala.reflect.internal.Trees.This;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -163,6 +164,7 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
             
             RenderItem itemRender = null; 
             Minecraft mc = Minecraft.getMinecraft();
+            /*
             if( mc.currentScreen != null) {
 				try {
 					Field f = GuiScreen.class.getDeclaredField("itemRender");
@@ -174,17 +176,30 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
 					e.printStackTrace();
 				}
             }
-            
-            
-           // this.zLevel -= 300.0F;
-            float zTemp = this.zLevel;
+            */
+            /*
             if(itemRender != null) {
             	//BattleClassesUtils.Log("Button Z:" + this.zLevel + ", IR Z:" + itemRender.zLevel, LogType.GUI);
             	//this.zLevel += 10000.0F;
             	//itemRender.zLevel += 300.0F;
             }
-            this.zLevel -= 1000.0F;
+            */
             
+            float zTemp = this.zLevel;
+            
+            if( mc.currentScreen != null) {
+				try {
+					Field f = Gui.class.getDeclaredField("zLevel");
+					f.setAccessible(true);
+					//this.zLevel = f.getFloat(((Gui)mc.currentScreen)) + 1000.0F;
+					this.zLevel += 1000.0;
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+                        
             int j1 = -267386864;
             
             this.drawGradientRect(j2 - 3, k2 - 4, j2 + k + 3, k2 - 3, j1, j1);
@@ -215,11 +230,13 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
             
             
             //this.zLevel += 300.0F;
-            this.zLevel += 1000.0F;
+            this.zLevel = zTemp;
+            /*
             if(itemRender != null) {
             	//BattleClassesUtils.Log("Button Z:" + this.zLevel + ", IR Z:" + itemRender.zLevel, LogType.GUI);
             	//itemRender.zLevel -= 300.0F;
             }
+            */
             
             //this.zLevel = zTemp;
             
