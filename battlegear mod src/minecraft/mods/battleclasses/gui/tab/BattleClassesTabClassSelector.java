@@ -42,7 +42,7 @@ public class BattleClassesTabClassSelector extends BattleClassesAbstractTab  {
     public void initGui ()
     {
         super.initGui();
-        
+        this.displayTitle = "Class Selector";
         //Init Buttons
 		for (BattleClassesGuiButtonClassSelector button : BattleClassesTabClassSelector.classButtonList) {
 			this.buttonList.add(button);
@@ -67,6 +67,7 @@ public class BattleClassesTabClassSelector extends BattleClassesAbstractTab  {
         super.drawScreen(par1, par2, par3);
         this.xSize_lo = (float) par1;
         this.ySize_lo = (float) par2;
+        
     }
 
     /**
@@ -79,6 +80,7 @@ public class BattleClassesTabClassSelector extends BattleClassesAbstractTab  {
         int var5 = this.guiLeft;
         int var6 = this.guiTop;
         this.drawTexturedModalRect(var5, var6, 0, 0, this.xSize, this.ySize);
+        this.drawTitle();
     }
     
     public static void open(EntityPlayer player){

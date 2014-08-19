@@ -8,6 +8,8 @@ import mods.battlegear2.client.ClientProxy;
 import mods.battlegear2.gui.BattlegearGUIHandeler;
 import mods.battlegear2.gui.ContainerBattle;
 import mods.battlegear2.packet.BattlegearGUIPacket;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
@@ -22,6 +24,12 @@ public abstract class BattleClassesAbstractTab extends InventoryEffectRenderer {
 	public ResourceLocation resource;
     public Class equipTab;
     public int guiHandlerID;
+    
+    public int title_position_X = 0;
+    public int title_position_Y = 0;
+    public int DEFAULT_GUI_WIDTH = 176;
+    public int DEFAULT_GUI_HEIGHT = 166;
+    public String displayTitle = "";
     
     public EntityPlayer ownerPlayer;
     
@@ -61,6 +69,16 @@ public abstract class BattleClassesAbstractTab extends InventoryEffectRenderer {
                 ClientProxy.tconstructEnabled = false;
             }
         }
+		this.setTitlePosition(this.guiLeft + DEFAULT_GUI_WIDTH/2, this.guiTop + 8);
+    }
+    
+    public void setTitlePosition(int x, int y) {
+    	title_position_X = x;
+    	title_position_Y = y;
+    }
+    
+    public void drawTitle() {
+    	this.drawCenteredString(Minecraft.getMinecraft().fontRenderer, this.displayTitle, title_position_X, title_position_Y, 0xFFFFFF);
     }
 
     /**

@@ -22,6 +22,7 @@ public class BattleClassesTabHelp extends BattleClassesAbstractTab {
     public void initGui ()
     {
         super.initGui();
+        this.displayTitle = "Help";
     }
 
     /**
@@ -44,6 +45,7 @@ public class BattleClassesTabHelp extends BattleClassesAbstractTab {
         int var5 = this.guiLeft;
         int var6 = this.guiTop;
         this.drawTexturedModalRect(var5, var6, 0, 0, this.xSize, this.ySize);
+        this.drawTitle();
     }
     
     public static void open(EntityPlayer player){

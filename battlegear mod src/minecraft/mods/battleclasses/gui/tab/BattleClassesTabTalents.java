@@ -7,6 +7,7 @@ import mods.battlegear2.client.ClientProxy;
 import mods.battlegear2.gui.BattlegearGUIHandeler;
 import mods.battlegear2.gui.ContainerBattle;
 import mods.battlegear2.packet.BattlegearGUIPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -49,6 +50,10 @@ public class BattleClassesTabTalents extends BattleClassesAbstractTab {
         int var5 = this.guiLeft;
         int var6 = this.guiTop;
         this.drawTexturedModalRect(var5, var6, 0, 0, this.xSize, this.ySize);
+        int n = 0;
+        int inset = 8;
+        this.drawString(Minecraft.getMinecraft().fontRenderer, "Talent Points: " +n, this.guiLeft + inset,
+        		this.guiTop + DEFAULT_GUI_HEIGHT - inset - 5 - Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT, 0xFFFFFF);
     }
     
     public static void open(EntityPlayer player){
