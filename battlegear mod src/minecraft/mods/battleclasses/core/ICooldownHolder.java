@@ -6,6 +6,7 @@ public interface ICooldownHolder {
 	 * Each class implementing this interface, should have a field like this to store the last time (/date) when it was set to cooldown
 	 */
 	//private float setTime
+	//private float setDuration
 	
 	public static final float COOLDOWN_INITIALIZER = 3600;
 	
@@ -31,6 +32,8 @@ public interface ICooldownHolder {
 	 */
 	public void setToCooldownForced();
 	
+	public void setCooldown(float duration, boolean forced);
+	
 	/**
 	 * Returns the ammount of time remaining of the cooldown
 	 * @return - remaining cooldown in seconds
@@ -51,6 +54,12 @@ public interface ICooldownHolder {
 	
 	
 	// Methods for TotalCooldownSync
+	/**
+	 * Used for TotalCooldownSync
+	 * @return the duration of last set to cooldown 
+	 */
+	public float getSetDuration();
+	
 	/**
 	 * Used for TotalCooldownSync
 	 * @return the last time (/date) when it was set to cooldown 

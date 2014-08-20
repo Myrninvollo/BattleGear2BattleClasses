@@ -112,6 +112,7 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	public static final int CLASS_SWITCH_COOLDOWN_HASHCODE = 1399;
 
 	private float setTime;
+	private float setDuration;
 	
 	@Override
 	public void initCooldownHolder() {
@@ -125,30 +126,25 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 
 	@Override
 	public void setToCooldown() {
-		if(!isOnCooldown()) {
-			this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
-			if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {
-				EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.getOwnerPlayer();
-				if(entityPlayerMP != null) {
-					BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
-					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(), false).generatePacket();
-					Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
-				}
-			}
-			
-		}
+		this.setCooldown(this.getCooldownDuration(), false);
 	}
 
 	@Override
 	public void setToCooldownForced() {
-		this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
-		
-		if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {
-			EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.getOwnerPlayer();
-			if(entityPlayerMP != null) {
-				BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
-				FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(), true).generatePacket();
-				Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
+		this.setCooldown(this.getCooldownDuration(), true);
+	}
+	
+	public void setCooldown(float duration, boolean forced) {
+		if(!isOnCooldown() || forced) {
+			this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
+			this.setDuration = duration;
+			if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {
+				EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.getOwnerPlayer();
+				if(entityPlayerMP != null) {
+					BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
+					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(), this.getSetTime(), forced).generatePacket();
+					Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
+				}
 			}
 		}
 	}
@@ -180,6 +176,11 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	@Override
 	public void setSetTime(float t) {
 		setTime = t;
+	}
+	
+	@Override
+	public float getSetDuration() {
+		return this.setTime;
 	}
 	
 }

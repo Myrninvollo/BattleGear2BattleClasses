@@ -15,12 +15,14 @@ public class BattleClassesPacketCooldownSet extends AbstractMBPacket {
 	public static final String packetName = "BC|CooldownSet";
 	
 	private boolean coolDownForced = false;
+	private float coolDownDuration = 0;
 	private int coolDownHashCode = -1;
 	private String username;
 	
-	public BattleClassesPacketCooldownSet(EntityPlayer user, int parCoolDownHashCode, boolean forced) {
+	public BattleClassesPacketCooldownSet(EntityPlayer user, int parCoolDownHashCode, float parCoolDownDuration, boolean forced) {
 		this.username = user.getCommandSenderName();
     	this.coolDownHashCode = parCoolDownHashCode;
+    	this.coolDownDuration = parCoolDownDuration;
     	this.coolDownForced = forced;
     }
 
@@ -36,6 +38,7 @@ public class BattleClassesPacketCooldownSet extends AbstractMBPacket {
 	@Override
 	public void write(ByteBuf out) {
 		out.writeBoolean(coolDownForced);
+		out.writeFloat(coolDownDuration);
 		out.writeInt(coolDownHashCode);
         ByteBufUtils.writeUTF8String(out, username);
 	}
@@ -45,6 +48,7 @@ public class BattleClassesPacketCooldownSet extends AbstractMBPacket {
 		BattleClassesUtils.Log("Trying to process " + this.getClass() , LogType.PACKET);
 		
 		coolDownForced = in.readBoolean();
+		coolDownDuration = in.readFloat();
 		coolDownHashCode = in.readInt();
         username = ByteBufUtils.readUTF8String(in);
         if (username != null && coolDownHashCode != -1) {
@@ -55,13 +59,7 @@ public class BattleClassesPacketCooldownSet extends AbstractMBPacket {
             	
             	ICooldownHolder cooldownHolder = playerHooks.mainCooldownMap.get(coolDownHashCode);
             	if(cooldownHolder != null) {
-            		if (coolDownForced) {
-            			cooldownHolder.setToCooldownForced();
-            		}
-            		else {
-            			cooldownHolder.setToCooldown();
-            		}
-            		
+            		cooldownHolder.setCooldown(coolDownDuration, coolDownForced);
             	}
             }
         }

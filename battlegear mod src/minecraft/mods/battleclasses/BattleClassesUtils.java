@@ -46,6 +46,17 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 		entityPlayer.setItemInUse(itemStack, countDownTickStart);
 	}
 	
+	public static InventoryPlayerBattle getBattleInventory(EntityPlayer entityplayer) throws NullPointerException {
+		if(entityplayer.inventory instanceof InventoryPlayerBattle) {
+			return (InventoryPlayerBattle)entityplayer.inventory;
+		}
+		else {
+			battleClassesLogger.error("Couldn't find InventoryPlayerBattle of player:" + entityplayer.getDisplayName());
+			throw(new NullPointerException("Error when looking for InventoryPlayerBattle!"));
+			//return null;
+		}
+	}
+	
 	public static BattleClassesPlayerHooks getPlayerHooks(EntityPlayer entityplayer) throws NullPointerException {
 		if(entityplayer.inventory instanceof InventoryPlayerBattle) {
 			InventoryPlayerBattle battleInventory = (InventoryPlayerBattle)entityplayer.inventory;

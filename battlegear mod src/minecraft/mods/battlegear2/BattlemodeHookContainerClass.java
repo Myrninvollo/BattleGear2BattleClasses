@@ -91,6 +91,7 @@ public class BattlemodeHookContainerClass {
         if(((IBattlePlayer) event.entityPlayer).getSpecialActionTimer() > 0){
             event.setCanceled(true);
             event.entityPlayer.isSwingInProgress = false;
+        /*
         }else if(((IBattlePlayer) event.entityPlayer).isBattlemode()) {
             ItemStack mainHandItem = event.entityPlayer.getCurrentEquippedItem();
             ItemStack offhandItem = ((InventoryPlayerBattle)event.entityPlayer.inventory).getCurrentOffhandWeapon();
@@ -108,6 +109,7 @@ public class BattlemodeHookContainerClass {
                     }
                     break;
             }
+        */
         }else if(event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && !event.entityPlayer.worldObj.isRemote) {
             TileEntity tile = event.entityPlayer.worldObj.getTileEntity(event.x, event.y, event.z);
             if(tile != null && tile instanceof IFlagHolder) {

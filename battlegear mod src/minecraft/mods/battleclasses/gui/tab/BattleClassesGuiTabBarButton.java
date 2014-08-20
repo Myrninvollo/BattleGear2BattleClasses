@@ -121,6 +121,7 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
         }
     }
     
+    /*
     public void drawHoveringTextInvoked(List p_146283_1_, int p_146283_2_, int p_146283_3_, FontRenderer font) {
     	Minecraft mc =  Minecraft.getMinecraft();
     	if( mc.currentScreen != null) {
@@ -137,6 +138,7 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
 			}
         }
     }
+    */
     
     protected void drawHoveringText(List p_146283_1_, int p_146283_2_, int p_146283_3_, FontRenderer font)
     {
