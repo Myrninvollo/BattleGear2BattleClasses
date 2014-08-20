@@ -27,11 +27,15 @@ public class BattleClassesWeaponHitHandler {
 	
 	EnumSet<EnumBattleClassesWieldAccess> accessSet;
 	
+	public static final int WEAPONSKILL_COOLDOWN_HASHCODE_MAINHAND =  1398;
+	public static final int WEAPONSKILL_COOLDOWN_HASHCODE_OFFHAND = 1397;
 	public BattleClassesWeaponSkill mainHand;
 	public BattleClassesWeaponSkill offHand;
 	
 	public BattleClassesWeaponHitHandler(BattleClassesPlayerHooks parPlayerHooks) {
 		this.playerHooks = parPlayerHooks;
+		mainHand = new BattleClassesWeaponSkill(WEAPONSKILL_COOLDOWN_HASHCODE_MAINHAND, parPlayerHooks, true);
+		offHand = new BattleClassesWeaponSkill(WEAPONSKILL_COOLDOWN_HASHCODE_OFFHAND, parPlayerHooks, false);
 	}
 	
 	public void initAccessSet() {
