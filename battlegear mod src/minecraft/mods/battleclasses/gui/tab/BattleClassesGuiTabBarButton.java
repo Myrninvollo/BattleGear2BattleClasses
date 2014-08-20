@@ -1,6 +1,7 @@
 package mods.battleclasses.gui.tab;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -114,8 +115,26 @@ public abstract class BattleClassesGuiTabBarButton extends GuiPlaceableButton {
             if( field_146123_n /*k == 2*/) {
             	ArrayList stringList = new ArrayList();
             	stringList.add(this.displayString);
+            	//mc.currentScreen.drawHoveringText
             	this.drawHoveringText(stringList, p_146112_2_, p_146112_3_, fontrenderer);
             }
+        }
+    }
+    
+    public void drawHoveringTextInvoked(List p_146283_1_, int p_146283_2_, int p_146283_3_, FontRenderer font) {
+    	Minecraft mc =  Minecraft.getMinecraft();
+    	if( mc.currentScreen != null) {
+			try {
+				Class<?> params[] = {List.class, int.class, int.class, FontRenderer.class};
+				Method e = GuiScreen.class.getDeclaredMethod("drawHoveringText", params);
+				e.setAccessible(true);
+				e.invoke(mc.currentScreen, p_146283_1_, p_146283_2_, p_146283_3_, font);
+				//e.invoke(p_146283_1_, p_146283_2_, p_146283_3_, font);
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
     }
     

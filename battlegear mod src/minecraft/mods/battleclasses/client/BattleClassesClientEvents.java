@@ -10,12 +10,16 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
+import mods.battleclasses.EnumBattleClassesPlayerClass;
+import mods.battleclasses.core.BattleClassesPlayerClass;
+import mods.battleclasses.gui.BattleClassesGuiHelper;
 import mods.battleclasses.gui.controlls.BattleClassesGuiButtonClassSelector;
 import mods.battleclasses.gui.tab.BattleClassesGuiTabBarButton;
 import mods.battleclasses.gui.tab.BattleClassesTabClassSelector;
@@ -149,9 +153,21 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 				button.tabButtonIcon = event.map.registerIcon(button.getIconRegisterPath());
 			}
 			
-			for (BattleClassesGuiButtonClassSelector button : BattleClassesTabClassSelector.classButtonList) {
-				BattleClassesUtils.Log("Registering " + button.getIconRegisterPath(), LogType.GUI);
-				button.classIcon = event.map.registerIcon(button.getIconRegisterPath());
+			//Registering Player Class Icons
+			BattleClassesPlayerClass.classIcons = new IIcon[EnumBattleClassesPlayerClass.values().length];
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_MAGE.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "mage");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_PRIEST.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "priest");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_WARLOCK.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "warlock");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_ROGUE.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "rogue");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_HUNTER.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "hunter");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_PALADIN.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "paladin");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_WARRIOR.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "warrior");
+			
+			//Registering Cooldown Icons
+			BattleClassesGuiHelper.cooldownIcons = new IIcon[BattleClassesGuiHelper.COOLDOWN_FRAMES];
+			for(int i = 0; i < BattleClassesGuiHelper.COOLDOWN_FRAMES; ++i) {
+				int frameIndex = i + 1;
+				BattleClassesGuiHelper.cooldownIcons[i] = event.map.registerIcon("battleclasses:sharedicons/cooldown/" + "cooldown_" + frameIndex);
 			}
 		}
 		

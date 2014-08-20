@@ -1,6 +1,7 @@
 package mods.battleclasses.core;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.IIcon;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
@@ -13,6 +14,9 @@ import mods.battlegear2.packet.BattlegearAnimationPacket;
 import mods.battlegear2.utils.EnumBGAnimations;
 
 public class BattleClassesPlayerClass implements ICooldownHolder {
+	
+	public static final int TOTAL_CLASSES = EnumBattleClassesPlayerClass.values().length;
+	public static IIcon classIcons[];
 		
 	protected BattleClassesPlayerHooks playerHooks;
 	protected EnumBattleClassesPlayerClass playerClass;
@@ -96,6 +100,10 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	
 	public EnumBattleClassesPlayerClass getPlayerClass() {
 		return this.playerClass;
+	}
+	
+	public static IIcon getClassIcon(EnumBattleClassesPlayerClass parPlayerClass) {
+		return classIcons[parPlayerClass.ordinal()];
 	}
 	
 	// -------------------- ICooldownHolder implementation --------------------

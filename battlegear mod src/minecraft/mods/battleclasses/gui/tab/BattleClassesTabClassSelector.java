@@ -24,13 +24,13 @@ public class BattleClassesTabClassSelector extends BattleClassesAbstractTab  {
 	
 	public static List<BattleClassesGuiButtonClassSelector> classButtonList = new ArrayList<BattleClassesGuiButtonClassSelector>();
 	static {
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(0, resource, EnumBattleClassesPlayerClass.PlayerClass_MAGE, "mage"));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(1, resource, EnumBattleClassesPlayerClass.PlayerClass_PRIEST, "priest"));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(2, resource, EnumBattleClassesPlayerClass.PlayerClass_WARLOCK, "warlock"));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(3, resource, EnumBattleClassesPlayerClass.PlayerClass_ROGUE, "rogue"));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(4, resource, EnumBattleClassesPlayerClass.PlayerClass_HUNTER, "hunter"));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(5, resource, EnumBattleClassesPlayerClass.PlayerClass_PALADIN, "paladin"));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(6, resource, EnumBattleClassesPlayerClass.PlayerClass_WARRIOR, "warrior"));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(0, resource, EnumBattleClassesPlayerClass.PlayerClass_MAGE));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(1, resource, EnumBattleClassesPlayerClass.PlayerClass_PRIEST));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(2, resource, EnumBattleClassesPlayerClass.PlayerClass_WARLOCK));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(3, resource, EnumBattleClassesPlayerClass.PlayerClass_ROGUE));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(4, resource, EnumBattleClassesPlayerClass.PlayerClass_HUNTER));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(5, resource, EnumBattleClassesPlayerClass.PlayerClass_PALADIN));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(6, resource, EnumBattleClassesPlayerClass.PlayerClass_WARRIOR));
 	}
 
     public BattleClassesTabClassSelector(EntityPlayer entityPlayer, boolean isRemote) {
