@@ -139,7 +139,7 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	}
 	
 	public void setCooldown(float duration, boolean forced) {
-		if(!isOnCooldown() || forced) {
+		if(duration > this.getCooldownRemaining() || forced) {
 			this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
 			this.setDuration = duration;
 			if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {

@@ -15,6 +15,12 @@ public abstract class BattleClassesAbstractAbilityCooldownHolder extends BattleC
 		super(parAbilityID);
 		this.initCooldownHolder();
 	}
+	
+	@Override
+	public void setPlayerHooks(BattleClassesPlayerHooks parPlayerHooks) {
+		this.playerHooks = parPlayerHooks;
+		parPlayerHooks.mainCooldownMap.put(this.getCooldownHashCode(), this);
+	}
 
 	// -------------------- ICooldownHolder implementation --------------------
 	
@@ -49,7 +55,7 @@ public abstract class BattleClassesAbstractAbilityCooldownHolder extends BattleC
 	}
 	
 	public void setCooldown(float duration, boolean forced) {
-		if(!isOnCooldown() || forced) {
+		if( duration > this.getCooldownRemaining() || forced) {
 			this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
 			this.setDuration = duration;
 			if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {

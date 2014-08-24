@@ -30,12 +30,6 @@ public class BattleClassesWeaponSkill extends BattleClassesAbstractAbilityCooldo
 		parPlayerHooks.mainCooldownMap.put(this.getCooldownHashCode(), this);
 	}
 
-	@Override
-	public void performEffect() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public static final int MELEE_SWING_COOLDOWN = 1;
 	
 	@Override

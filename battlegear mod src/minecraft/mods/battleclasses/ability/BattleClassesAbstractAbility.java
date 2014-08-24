@@ -24,7 +24,5 @@ public abstract class BattleClassesAbstractAbility {
 		}
 		return this.playerHooks;
 	}
-	
-	public abstract void performEffect();
-	
+		
 }
