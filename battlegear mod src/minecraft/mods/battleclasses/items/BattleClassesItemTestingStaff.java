@@ -27,8 +27,8 @@ public class BattleClassesItemTestingStaff extends ItemSword {
 		this.material = toolMaterial;
         this.setCreativeTab(BattlegearConfig.customTab);
         
-        this.setUnlocalizedName("battlegear2:"+"weapons/WoodenStaff");
-		this.setTextureName("battlegear2:"+"weapons/WoodenStaff");
+        this.setUnlocalizedName("battleclasses:"+"weapons/WoodenStaff");
+		this.setTextureName("battleclasses:"+"weapons/WoodenStaff");
 		
 	}
 	
@@ -48,14 +48,14 @@ public class BattleClassesItemTestingStaff extends ItemSword {
     	return itemStack;
     }
 	
-    public void onUsingTick(ItemStack itemStack, EntityPlayer entityPlayer, int count) {
-    	BattleClassesUtils.getPlayerSpellBook(entityPlayer).CastTick(itemStack, entityPlayer, count);
+    public void onUsingTick(ItemStack itemStack, EntityPlayer entityPlayer, int tickCount) {
+    	BattleClassesUtils.getPlayerSpellBook(entityPlayer).CastTick(itemStack, entityPlayer, tickCount);
     }
 
     /**
      * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount
      */
-    public void onPlayerStoppedUsing(ItemStack itemStack, World world, EntityPlayer entityPlayer, int count) {
-    	BattleClassesUtils.getPlayerSpellBook(entityPlayer).CastRelease(itemStack, entityPlayer, count);
+    public void onPlayerStoppedUsing(ItemStack itemStack, World world, EntityPlayer entityPlayer, int tickCount) {
+    	BattleClassesUtils.getPlayerSpellBook(entityPlayer).CastRelease(itemStack, entityPlayer, tickCount);
     }
 }

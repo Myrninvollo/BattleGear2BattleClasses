@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
@@ -40,29 +41,19 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	/**
 	 * Called when player presses Mouse-Right button
 	 */
-	public void onUseStart() {
-		switch (this.targetType) {
-		case TargetType_AREAEFFECT_OFFENSIVE:
-			break;
-		case TargetType_AREAEFFECT_SUPPORTIVE:
-			break;
-		case TargetType_AREAEFFECT_UNIVERSAL:
-			break;
-		case TargetType_OPTIONAL_OFFENSIVE:
-			break;
-		case TargetType_OPTIONAL_SUPPORTIVE:
-			break;
-		case TargetType_OPTIONAL_UNIVERSAL:
-			break;
-		case TargetType_REQUIRED_OFFENSIVE:
-			break;
-		case TargetType_REQUIRED_SUPPORTIVE:
-			break;
-		case TargetType_UNNECESSARY_UNIVERSAL:
-			break;
-		default:
-			break;
+	public void onCastStart(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
+		if(false /* !IsOnCooldown and etc... */) {
+			return;
 		}
+		this.startCasting(entityPlayer, itemStack);
+	}
+	
+	public void onCastTick(ItemStack itemStack, EntityPlayer entityPlayer, int tickCount) {
+		
+	}
+	
+	public void onCastRelease(ItemStack itemStack, EntityPlayer entityPlayer, int tickCount) {
+		
 	}
 	
 	protected void startCasting(EntityPlayer entityPlayer, ItemStack itemStack) {
@@ -72,6 +63,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	/**
 	 * Called when player holds down Mouse-Right button
 	 */
+	/*
 	public void onUseTick() {
 		switch (this.targetType) {
 		case TargetType_AREAEFFECT_OFFENSIVE:
@@ -96,6 +88,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 			break;
 		}
 	}
+	*/
 	
 	public void cancelCasting(EntityPlayer entityPlayer) {
 		entityPlayer.clearItemInUse();

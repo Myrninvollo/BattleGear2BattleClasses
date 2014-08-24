@@ -13,7 +13,7 @@ public abstract class BattleClassesAbstractAbilityCooldownHolder extends BattleC
 	
 	public BattleClassesAbstractAbilityCooldownHolder(int parAbilityID) {
 		super(parAbilityID);
-		// TODO Auto-generated constructor stub
+		this.initCooldownHolder();
 	}
 
 	// -------------------- ICooldownHolder implementation --------------------

@@ -76,6 +76,7 @@ public class Battlegear {
         proxy.registerKeyHandelers();
         proxy.registerTickHandelers();
         proxy.registerItemRenderers();
+        BattleClassesMain.preInit(event);
     }
 
     @Mod.EventHandler

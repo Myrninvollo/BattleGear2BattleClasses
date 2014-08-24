@@ -22,15 +22,15 @@ public class BattleClassesSpellBook {
 	}
 	
 	public void CastStart(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
-		
+		this.getChosenAbility().onCastStart(itemStack, world, entityPlayer);
 	}
 	
 	public void CastTick(ItemStack itemStack, EntityPlayer entityPlayer, int tickCount) {
-		
+		this.getChosenAbility().onCastTick(itemStack, entityPlayer, tickCount);
 	}
 	
 	public void CastRelease(ItemStack itemStack, EntityPlayer entityPlayer, int tickCount) {
-		
+		this.getChosenAbility().onCastRelease(itemStack, entityPlayer, tickCount);
 	}
 	
 }
