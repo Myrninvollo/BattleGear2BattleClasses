@@ -44,6 +44,7 @@ public class BattleClassesWeaponHitHandler {
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onAttack(LivingAttackEvent event){
-		 
+		event.setCanceled(true);
     }
+	
 }

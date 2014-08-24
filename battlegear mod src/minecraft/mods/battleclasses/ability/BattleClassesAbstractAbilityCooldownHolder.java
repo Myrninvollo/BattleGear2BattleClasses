@@ -17,7 +17,6 @@ public abstract class BattleClassesAbstractAbilityCooldownHolder extends BattleC
 	}
 
 	// -------------------- ICooldownHolder implementation --------------------
-
 	
 
 	protected float cooldownDuration = 0.0F;
@@ -67,7 +66,7 @@ public abstract class BattleClassesAbstractAbilityCooldownHolder extends BattleC
 
 	@Override
 	public float getCooldownRemaining() {
-		float timeRemaining = getSetTime() + getCooldownDuration() - BattleClassesUtils.getCurrentTimeInSeconds();
+		float timeRemaining = getSetTime() + getSetDuration() - BattleClassesUtils.getCurrentTimeInSeconds();
 		if(timeRemaining < 0 ) {
 			timeRemaining = 0;
 		}

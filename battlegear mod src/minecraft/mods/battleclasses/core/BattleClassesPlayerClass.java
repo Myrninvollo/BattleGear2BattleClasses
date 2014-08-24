@@ -17,6 +17,8 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	
 	public static final int TOTAL_CLASSES = EnumBattleClassesPlayerClass.values().length;
 	public static IIcon classIcons[];
+	
+	public BattleClassesSpellBook spellBook;
 		
 	protected BattleClassesPlayerHooks playerHooks;
 	protected EnumBattleClassesPlayerClass playerClass;
@@ -26,6 +28,8 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 		parPlayerHooks.mainCooldownMap.put(this.getCooldownHashCode(), this);
 		this.setPlayerClass(parPlayerClass);
 		this.initCooldownHolder();
+		
+		this.spellBook = new BattleClassesSpellBook(parPlayerHooks);
 	}
 	
 	public void switchToPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
@@ -151,7 +155,7 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 
 	@Override
 	public float getCooldownRemaining() {
-		float timeRemaining = getSetTime() + getCooldownDuration() - BattleClassesUtils.getCurrentTimeInSeconds();
+		float timeRemaining = getSetTime() + getSetDuration() - BattleClassesUtils.getCurrentTimeInSeconds();
 		if(timeRemaining < 0 ) {
 			timeRemaining = 0;
 		}
