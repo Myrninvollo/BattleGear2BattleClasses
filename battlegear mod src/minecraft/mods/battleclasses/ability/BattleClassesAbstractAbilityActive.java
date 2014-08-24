@@ -58,9 +58,12 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 			return;
 		}
 		int currentCastTick = tickCount - 72000;
-		if(currentCastTick > 0) {
+		if(currentCastTick >= 0) {
 			int ticksPerProceed = this.getCastTimeInTicks() / this.channelTickCount;
-			if((currentCastTick % ticksPerProceed) == 0) {
+			int currentCastTickInverted = this.getCastTimeInTicks() - currentCastTick;
+			//BattleClassesUtils.Log("Channeling... Ticks per procession: " + ticksPerProceed + ", current tick: " + currentCastTick, LogType.CORE);
+			if(currentCastTickInverted > 0 && (currentCastTickInverted % ticksPerProceed) == 0) {
+				BattleClassesUtils.Log("Channeling tick Current tick: " + currentCastTickInverted + " Cast time in tick " + this.getCastTimeInTicks(), LogType.ABILITY);
 				this.requestProcession(entityPlayer, itemStack, tickCount);
 			}
 		}
@@ -77,6 +80,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	}
 	
 	protected void startCasting(EntityPlayer entityPlayer, ItemStack itemStack) {
+		BattleClassesUtils.Log("Casting started!", LogType.ABILITY);
 		BattleClassesUtils.setEntityPlayerItemInUseInSeconds(entityPlayer, itemStack, this.castTime);
 	}
 	

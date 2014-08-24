@@ -112,7 +112,7 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	
 	// -------------------- ICooldownHolder implementation --------------------
 	
-	public static final float CLASS_SWITCH_COOLDOWN_VALUE = 30.0F;
+	public static final float CLASS_SWITCH_COOLDOWN_VALUE = 3.0F;
 	public static final int CLASS_SWITCH_COOLDOWN_HASHCODE = 1399;
 
 	protected float cooldownDuration = CLASS_SWITCH_COOLDOWN_VALUE;

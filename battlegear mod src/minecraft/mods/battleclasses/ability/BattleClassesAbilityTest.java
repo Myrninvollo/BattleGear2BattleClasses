@@ -11,7 +11,9 @@ public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive
 
 	public BattleClassesAbilityTest() {
 		super(TEST_SPELL_ID);
-		castTime = 3;
+		this.castTime = 3;
+		this.channeled = true;
+		this.channelTickCount = 3;
 	}
 
 	@Override
