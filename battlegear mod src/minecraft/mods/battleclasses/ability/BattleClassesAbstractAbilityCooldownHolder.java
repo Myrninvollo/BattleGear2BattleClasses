@@ -62,7 +62,7 @@ public abstract class BattleClassesAbstractAbilityCooldownHolder extends BattleC
 				EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.getOwnerPlayer();
 				if(entityPlayerMP != null) {
 					BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
-					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(), this.getSetTime(), forced).generatePacket();
+					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(), this.getSetDuration(), forced).generatePacket();
 					Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
 				}
 			}
@@ -103,5 +103,5 @@ public abstract class BattleClassesAbstractAbilityCooldownHolder extends BattleC
 	public void setSetTime(float t) {
 		setTime = t;
 	}
-
+	
 }

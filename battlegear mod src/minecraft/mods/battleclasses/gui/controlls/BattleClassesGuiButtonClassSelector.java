@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
+import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.core.BattleClassesPlayerClass;
 import mods.battleclasses.gui.BattleClassesGuiHelper;
@@ -56,6 +57,12 @@ public class BattleClassesGuiButtonClassSelector extends BattleClassesGuiButton 
             	drawCooldown(this.xPosition + this.width/2 - classIcon.getIconWidth()/2, 
 						this.yPosition + this.height/2 -  classIcon.getIconHeight()/2,
 						BattleClassesUtils.getCooldownPercentage(BattleClassesUtils.getPlayerHooks(mc.thePlayer).playerClass));
+            	/*
+            	BattleClassesUtils.Log("Class CD: " + BattleClassesUtils.getPlayerHooks(mc.thePlayer).playerClass.getCooldownRemaining() + 
+            			" Set Time: " + BattleClassesUtils.getPlayerHooks(mc.thePlayer).playerClass.getSetTime() +
+            			" Set Duration: " + BattleClassesUtils.getPlayerHooks(mc.thePlayer).playerClass.getSetTime() + 
+            			" Curent Time: " + BattleClassesUtils.getCurrentTimeInSeconds(), LogType.GUI);
+            	*/
             }
             
             //Drawing Class Description

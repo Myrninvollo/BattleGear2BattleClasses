@@ -115,6 +115,8 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	public static final float CLASS_SWITCH_COOLDOWN_VALUE = 30.0F;
 	public static final int CLASS_SWITCH_COOLDOWN_HASHCODE = 1399;
 
+	protected float cooldownDuration = CLASS_SWITCH_COOLDOWN_VALUE;
+	
 	private float setTime;
 	private float setDuration;
 	
@@ -125,7 +127,7 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	
 	@Override
 	public float getCooldownDuration() {
-		return CLASS_SWITCH_COOLDOWN_VALUE;
+		return this.cooldownDuration;
 	}
 
 	@Override
@@ -139,19 +141,20 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	}
 	
 	public void setCooldown(float duration, boolean forced) {
-		if(duration > this.getCooldownRemaining() || forced) {
+		if( duration > this.getCooldownRemaining() || forced) {
 			this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
 			this.setDuration = duration;
 			if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {
 				EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.getOwnerPlayer();
 				if(entityPlayerMP != null) {
 					BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
-					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(), this.getSetTime(), forced).generatePacket();
+					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(), this.getSetDuration(), forced).generatePacket();
 					Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
 				}
 			}
 		}
 	}
+
 
 	@Override
 	public float getCooldownRemaining() {
@@ -169,7 +172,12 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 
 	@Override
 	public int getCooldownHashCode() {
-		return CLASS_SWITCH_COOLDOWN_HASHCODE;
+		return this.CLASS_SWITCH_COOLDOWN_HASHCODE;
+	}
+	
+	@Override
+	public float getSetDuration() {
+		return this.setDuration;
 	}
 
 	@Override
@@ -180,11 +188,6 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	@Override
 	public void setSetTime(float t) {
 		setTime = t;
-	}
-	
-	@Override
-	public float getSetDuration() {
-		return this.setTime;
 	}
 	
 }
