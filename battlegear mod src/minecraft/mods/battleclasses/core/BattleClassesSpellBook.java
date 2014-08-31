@@ -11,6 +11,7 @@ import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.ability.BattleClassesAbilityTest;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
 import mods.battleclasses.items.BattleClassesItemWeapon;
+import mods.battlegear2.api.core.IBattlePlayer;
 
 public class BattleClassesSpellBook {
 	
@@ -18,9 +19,9 @@ public class BattleClassesSpellBook {
 	
 	public static final int SPELLBOOK_CAPACITY = 7;
 	
-	protected LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> abilities = new LinkedHashMap<Integer, BattleClassesAbstractAbilityActive>();
+	public LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> abilities = new LinkedHashMap<Integer, BattleClassesAbstractAbilityActive>();
 	protected int chosenAbilityIndex = 0;
-	public int chosenAbilityID;
+	public int chosenAbilityID = 0;
 	
 	public BattleClassesSpellBook(BattleClassesPlayerHooks parPlayerHooks) {
 		this.playerHooks = parPlayerHooks;
@@ -31,7 +32,8 @@ public class BattleClassesSpellBook {
 	
 	public BattleClassesAbstractAbilityActive getChosenAbility() {
 		//TODO
-		return protoSpell;
+		
+		return abilities.get(chosenAbilityID);
 	}
 	
 	public void CastStart(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
@@ -56,12 +58,19 @@ public class BattleClassesSpellBook {
 	}
 	
 	public boolean isAvailable(ItemStack itemStack, EntityPlayer entityPlayer) {
+		boolean hasClass = playerHooks.playerClass.getPlayerClass() != EnumBattleClassesPlayerClass.PlayerClass_NONE;
+		if(!hasClass) {
+			return false;
+		}
 		boolean cooldownFreeClass = !playerHooks.playerClass.isOnCooldown();
 		if(!cooldownFreeClass) {
 			//HUD WARNING MESSAGE
 			return false;
 		}
-		return cooldownFreeClass;
+		
+		boolean battleMode = ((IBattlePlayer) entityPlayer).isBattlemode();
+		
+		return hasClass && cooldownFreeClass && battleMode;
 	}
 	
 	public void setAbilitiesByClass(EnumBattleClassesPlayerClass playerClass) {
@@ -121,6 +130,10 @@ public class BattleClassesSpellBook {
 		if(this.chosenAbilityIndex < 0) {
 			this.chosenAbilityIndex = SPELLBOOK_CAPACITY - 1;
 		}
+	}
+	
+	public void setChosenAbilityID(){
+		
 	}
 	
 	public void setGlobalCooldown() {

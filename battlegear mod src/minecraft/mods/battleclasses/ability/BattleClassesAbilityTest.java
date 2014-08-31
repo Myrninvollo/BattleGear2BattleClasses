@@ -19,8 +19,9 @@ public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive
 	public BattleClassesAbilityTest(int id) {
 		super(id);
 		this.castTime = 3;
-		this.channeled = true;
-		this.channelTickCount = 3;
+		//this.channeled = true;
+		//this.channelTickCount = 3;
+		this.cooldownDuration = 6.0F;
 	}
 
 	@Override
