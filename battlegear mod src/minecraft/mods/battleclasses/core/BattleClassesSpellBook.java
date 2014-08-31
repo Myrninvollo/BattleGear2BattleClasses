@@ -1,5 +1,8 @@
 package mods.battleclasses.core;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -12,6 +15,12 @@ import mods.battleclasses.items.BattleClassesItemWeapon;
 public class BattleClassesSpellBook {
 	
 	protected BattleClassesPlayerHooks playerHooks;
+	
+	public static final int SPELLBOOK_CAPACITY = 7;
+	
+	protected LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> abilities = new LinkedHashMap<Integer, BattleClassesAbstractAbilityActive>();
+	protected int chosenAbilityIndex = 0;
+	public int chosenAbilityID;
 	
 	public BattleClassesSpellBook(BattleClassesPlayerHooks parPlayerHooks) {
 		this.playerHooks = parPlayerHooks;
@@ -53,6 +62,65 @@ public class BattleClassesSpellBook {
 			return false;
 		}
 		return cooldownFreeClass;
+	}
+	
+	public void setAbilitiesByClass(EnumBattleClassesPlayerClass playerClass) {
+		abilities.clear();
+		switch (playerClass) {
+		case PlayerClass_NONE: {
+		}
+			break;
+		case PlayerClass_MAGE: {
+			abilities.put(100, new BattleClassesAbilityTest(100));
+			abilities.put(101, new BattleClassesAbilityTest(101));
+			abilities.put(102, new BattleClassesAbilityTest(102));
+			abilities.put(110, new BattleClassesAbilityTest(110));
+			abilities.put(111, new BattleClassesAbilityTest(111));
+			abilities.put(112, new BattleClassesAbilityTest(112));
+			abilities.put(120, new BattleClassesAbilityTest(120));
+		}
+			break;
+		case PlayerClass_HUNTER:
+			break;
+		
+
+		case PlayerClass_PALADIN:
+			break;
+		case PlayerClass_PRIEST:
+			break;
+		case PlayerClass_ROGUE:
+			break;
+		case PlayerClass_WARLOCK:
+			break;
+		case PlayerClass_WARRIOR:
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public int getChosenAbilityIndex() {
+		return this.chosenAbilityIndex;
+	}
+	
+	public void setChosenAbilityIndex(int i) {
+		if(i >= 0 && i < SPELLBOOK_CAPACITY) {
+			this.chosenAbilityIndex = i;
+		}
+	}
+	
+	public void incrementChosenAbilityIndex() {
+		this.chosenAbilityIndex++;
+		if(this.chosenAbilityIndex >= SPELLBOOK_CAPACITY) {
+			this.chosenAbilityIndex = 0;
+		}
+	}
+	
+	public void decrementChosenAbilityIndex() {
+		this.chosenAbilityIndex--;
+		if(this.chosenAbilityIndex < 0) {
+			this.chosenAbilityIndex = SPELLBOOK_CAPACITY - 1;
+		}
 	}
 	
 	public void setGlobalCooldown() {

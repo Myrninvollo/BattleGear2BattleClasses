@@ -223,7 +223,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister par1IconRegister)
     {
-        this.abilityIcon = par1IconRegister.registerIcon(this.getAbilityIconName());
+        this.abilityIcon = par1IconRegister.registerIcon( "battleclasses:sharedicons/spells/" + this.getAbilityIconName());
     }
     
     public IIcon getAbilityIcon() {
