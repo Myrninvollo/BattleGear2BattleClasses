@@ -1,16 +1,20 @@
 package mods.battleclasses.ability;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.EnumBattleClassesTargetType;
@@ -26,7 +30,21 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		super(parAbilityID);
 	}
 	
-	//public static HashSet<BattleClassesAbstractAbilityActive> activeAbilityFactoryHashSet;
+	public static HashMap<Integer, BattleClassesAbstractAbilityActive> activeAbilityFactoryHashSet = new HashMap<Integer, BattleClassesAbstractAbilityActive>();
+	static {
+		//activeAbilityFactoryHashSet.put(BattleClassesAbilityTest.TEST_SPELL_ID, new BattleClassesAbilityTest());
+		activeAbilityFactoryHashSet.put(100, new BattleClassesAbilityTest(100));
+		activeAbilityFactoryHashSet.put(101, new BattleClassesAbilityTest(101));
+		activeAbilityFactoryHashSet.put(102, new BattleClassesAbilityTest(102));
+		activeAbilityFactoryHashSet.put(110, new BattleClassesAbilityTest(110));
+		activeAbilityFactoryHashSet.put(111, new BattleClassesAbilityTest(111));
+		activeAbilityFactoryHashSet.put(112, new BattleClassesAbilityTest(112));
+		activeAbilityFactoryHashSet.put(120, new BattleClassesAbilityTest(120));
+		
+	}
+	
+	
+	protected IIcon abilityIcon;
 	
 	protected EnumBattleClassesTargetType targetType = EnumBattleClassesTargetType.TargetType_UNNECESSARY_UNIVERSAL;
 	protected float castTime = 0;
@@ -61,9 +79,8 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		if(currentCastTick >= 0) {
 			int ticksPerProceed = this.getCastTimeInTicks() / this.channelTickCount;
 			int currentCastTickInverted = this.getCastTimeInTicks() - currentCastTick;
-			//BattleClassesUtils.Log("Channeling... Ticks per procession: " + ticksPerProceed + ", current tick: " + currentCastTick, LogType.CORE);
 			if(currentCastTickInverted > 0 && (currentCastTickInverted % ticksPerProceed) == 0) {
-				BattleClassesUtils.Log("Channeling tick Current tick: " + currentCastTickInverted + " Cast time in tick " + this.getCastTimeInTicks(), LogType.ABILITY);
+				BattleClassesUtils.Log("Channeling... Current tick: " + currentCastTickInverted + " Cast time in tick " + this.getCastTimeInTicks(), LogType.ABILITY);
 				this.requestProcession(entityPlayer, itemStack, tickCount);
 			}
 		}
@@ -119,36 +136,6 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		
 		return hasRequiredItem && cooldownFree && hasRequiredAmmo;
 	}
-	
-	/**
-	 * Called before the proceedAbility method to check if should happen. Working differently on client and server due to targeting.
-	 * @param entityPlayer - the caster player
-	 * @param itemStack - the itemStack containing the held item
-	 * @return - proceedAbility method should happen or not
-	 */
-	/*
-	public boolean isAbleToProceed(EntityPlayer entityPlayer, ItemStack itemStack) {
-		Side side = FMLCommonHandler.instance().getEffectiveSide();
-		//Checking CLIENT SIDE
-		if(side == Side.CLIENT) {
-			if(this.requiresRayTracingForTarget()) {
-				//CHECK TARGET REQUIREMENTS
-				
-				//CHECK RANGE REQUIREMENTS
-				
-			}
-			return true;
-		}
-		//Checking SERVER SIDE
-		else {
-			if(this.requiresRayTracingForTarget()) {
-				return false;
-			}
-			
-			return true;
-		}
-	}
-	*/
 	
 	public boolean requiresRayTracingForTarget() {
 		switch (this.targetType) {
@@ -228,5 +215,20 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		this.setToCooldown();
 		//ADD Global coolDown here!
 	}
+	
+	protected String getAbilityIconName() {
+		return "ability_" + this.abilityID;
+	}
+	
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister par1IconRegister)
+    {
+        this.abilityIcon = par1IconRegister.registerIcon(this.getAbilityIconName());
+    }
+    
+    public IIcon getAbilityIcon() {
+    	return activeAbilityFactoryHashSet.get(this.abilityID).abilityIcon;
+    }
+
 	
 }

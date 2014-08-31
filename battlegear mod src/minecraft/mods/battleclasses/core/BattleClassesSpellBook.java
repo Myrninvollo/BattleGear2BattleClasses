@@ -15,7 +15,7 @@ public class BattleClassesSpellBook {
 	
 	public BattleClassesSpellBook(BattleClassesPlayerHooks parPlayerHooks) {
 		this.playerHooks = parPlayerHooks;
-		protoSpell = new BattleClassesAbilityTest();
+		protoSpell = new BattleClassesAbilityTest(100);
 	}
 	
 	public BattleClassesAbstractAbilityActive protoSpell;

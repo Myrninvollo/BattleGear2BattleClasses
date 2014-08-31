@@ -18,6 +18,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.EnumBattleClassesPlayerClass;
+import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
 import mods.battleclasses.core.BattleClassesPlayerClass;
 import mods.battleclasses.gui.BattleClassesGuiHelper;
 import mods.battleclasses.gui.controlls.BattleClassesGuiButtonClassSelector;
@@ -169,6 +170,14 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 				int frameIndex = i + 1;
 				BattleClassesGuiHelper.cooldownIcons[i] = event.map.registerIcon("battleclasses:sharedicons/cooldown/" + "cooldown_" + frameIndex);
 			}
+			
+			//Registering Ability Icons
+			ArrayList<BattleClassesAbstractAbilityActive> abilityIcons = new ArrayList<BattleClassesAbstractAbilityActive> 
+																		(BattleClassesAbstractAbilityActive.activeAbilityFactoryHashSet.values());
+			for(int i = 0; i < abilityIcons.size(); ++i) {
+				abilityIcons.get(i).registerIcons(event.map);
+			}
+						
 		}
 		
 	}

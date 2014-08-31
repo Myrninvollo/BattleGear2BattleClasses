@@ -4,7 +4,7 @@ import mods.battleclasses.core.BattleClassesPlayerHooks;
 
 public abstract class BattleClassesAbstractAbility {
 
-	private int abilityID;
+	protected int abilityID;
 	
 	protected BattleClassesPlayerHooks playerHooks;
 	

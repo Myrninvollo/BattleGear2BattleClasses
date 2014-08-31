@@ -15,6 +15,13 @@ public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive
 		this.channeled = true;
 		this.channelTickCount = 3;
 	}
+	
+	public BattleClassesAbilityTest(int id) {
+		super(id);
+		this.castTime = 3;
+		this.channeled = true;
+		this.channelTickCount = 3;
+	}
 
 	@Override
 	public boolean performEffect(EntityLiving targetEntity, int tickCount) {
