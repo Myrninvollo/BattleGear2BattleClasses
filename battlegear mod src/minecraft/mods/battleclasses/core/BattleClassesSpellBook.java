@@ -1,8 +1,12 @@
 package mods.battleclasses.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -11,6 +15,9 @@ import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.ability.BattleClassesAbilityTest;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
 import mods.battleclasses.items.BattleClassesItemWeapon;
+import mods.battleclasses.packet.BattleClassesPacketChosenAbilityIDSync;
+import mods.battleclasses.packet.BattleClassesPacketPlayerClassSnyc;
+import mods.battlegear2.Battlegear;
 import mods.battlegear2.api.core.IBattlePlayer;
 
 public class BattleClassesSpellBook {
@@ -32,7 +39,6 @@ public class BattleClassesSpellBook {
 	
 	public BattleClassesAbstractAbilityActive getChosenAbility() {
 		//TODO
-		
 		return abilities.get(chosenAbilityID);
 	}
 	
@@ -108,35 +114,53 @@ public class BattleClassesSpellBook {
 		}
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public int getChosenAbilityIndex() {
 		return this.chosenAbilityIndex;
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public void setChosenAbilityIndex(int i) {
 		if(i >= 0 && i < SPELLBOOK_CAPACITY) {
 			this.chosenAbilityIndex = i;
 		}
+		setChosenAbilityID();
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public void incrementChosenAbilityIndex() {
 		this.chosenAbilityIndex++;
 		if(this.chosenAbilityIndex >= SPELLBOOK_CAPACITY) {
 			this.chosenAbilityIndex = 0;
 		}
+		setChosenAbilityID();
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public void decrementChosenAbilityIndex() {
 		this.chosenAbilityIndex--;
 		if(this.chosenAbilityIndex < 0) {
 			this.chosenAbilityIndex = SPELLBOOK_CAPACITY - 1;
 		}
+		setChosenAbilityID();
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public void setChosenAbilityID(){
-		
+		if(chosenAbilityIndex < getAbilitiesInArray().size()) {
+			this.chosenAbilityID = getAbilitiesInArray().get(chosenAbilityIndex).getAbilityID();
+			FMLProxyPacket p = new BattleClassesPacketChosenAbilityIDSync(playerHooks.getOwnerPlayer(), this.chosenAbilityID).generatePacket();
+			//Should be sidesafe
+			Battlegear.packetHandler.sendPacketToServerWithSideCheck(p);
+		}
 	}
 	
 	public void setGlobalCooldown() {
 		
+	}
+	
+	//Helper
+	public ArrayList<BattleClassesAbstractAbilityActive> getAbilitiesInArray() {
+		return new ArrayList<BattleClassesAbstractAbilityActive>(this.abilities.values());
 	}
 }

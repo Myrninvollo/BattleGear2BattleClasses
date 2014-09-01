@@ -21,6 +21,7 @@ public class BattleClassesPacketHandeler extends BattlegearPacketHandeler {
 		side = FMLCommonHandler.instance().getEffectiveSide();
 		map.put(BattleClassesPacketPlayerClassSnyc.packetName, new BattleClassesPacketPlayerClassSnyc());
 		map.put(BattleClassesPacketCooldownSet.packetName, new BattleClassesPacketCooldownSet());
+		map.put(BattleClassesPacketChosenAbilityIDSync.packetName, new BattleClassesPacketChosenAbilityIDSync());
 	}
 	
 	public void sendPacketToPlayerWithSideCheck(FMLProxyPacket packet, EntityPlayerMP player){
