@@ -102,6 +102,8 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
                 }
 
                 RenderItemBarEvent event = new RenderItemBarEvent.BattleSlots(renderEvent, true);
+                renderAbilityActionBar(frame, event.xOffset+width/2, event.yOffset);
+
                 if(!MinecraftForge.EVENT_BUS.post(event)){
                     renderBattleSlots(width / 2 + 121 + event.xOffset, height - 22 + event.yOffset, frame, true);
                 }
@@ -118,7 +120,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
                 }
 
                 ItemStack mainhand = mc.thePlayer.getCurrentEquippedItem();
-                renderAbilityActionBar(frame, event.xOffset+width/2, event.yOffset);
+                
                 /*
                 if(mainhand != null){
                     ItemStack quiver = QuiverArrowRegistry.getArrowContainer(mainhand, mc.thePlayer);
@@ -177,16 +179,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.renderEngine.bindTexture(resourceLocationHUD);
-        /*
-        int maxSlots = ((IArrowContainer2)quiver.getItem()).getSlotCount(quiver)*10;
 
-        drawTexturedModalRect(xOffset -(1 + maxSlots), yOffset, 0, 0, 1+maxSlots, SLOT_H);
-        drawTexturedModalRect(xOffset , yOffset, 182-(1+maxSlots), 0, 1+maxSlots, SLOT_H);
-
-        int selectedSlot =  ((IArrowContainer2)quiver.getItem()).getSelectedSlot(quiver);
-
-        drawTexturedModalRect(xOffset -(2 + maxSlots) + 20*selectedSlot, -1+yOffset, 0, 22, 24, SLOT_H);
-		*/
         ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         int width = scaledresolution.getScaledWidth();
         int height = scaledresolution.getScaledHeight();
@@ -209,13 +202,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         	int chosenIndex = BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbilityIndex();
             this.drawTexturedModalRect(actionbarPosX-1 + chosenIndex*20, actionbarPosY-1, 232, 0, 24, 24);
         }
-        
-        /*
-        for (int i = 0; i < maxSlots/10; ++i) {
-            int x = xOffset -(maxSlots-1) + i * 20;
-            renderStackAt(x, yOffset+2, ((IArrowContainer2)quiver.getItem()).getStackInSlot(quiver, i), frame);
-        }
-		*/
+
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glDisable(GL11.GL_BLEND);

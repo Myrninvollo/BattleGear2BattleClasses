@@ -45,7 +45,7 @@ public class BattleClassesPacketChosenAbilityIDSync extends AbstractMBPacket {
         if (username != null && abilityID != -1) {
             EntityPlayer entityPlayer = player.worldObj.getPlayerEntityByName(username);
             if(entityPlayer!=null){
-            	BattleClassesUtils.getPlayerSpellBook(entityPlayer).chosenAbilityID = abilityID;
+            	BattleClassesUtils.getPlayerSpellBook(entityPlayer).setChosenAbilityID(abilityID);
             }
         }
 	}

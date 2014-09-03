@@ -43,21 +43,21 @@ public class BattleClassesSpellBook {
 	}
 	
 	public void CastStart(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
-		if(!this.isAvailable(itemStack, entityPlayer)) {
+		if(!this.isAvailable(itemStack, entityPlayer) || this.getChosenAbility() == null) {
 			return;
 		}
 		this.getChosenAbility().onCastStart(itemStack, world, entityPlayer);
 	}
 	
 	public void CastTick(ItemStack itemStack, EntityPlayer entityPlayer, int tickCount) {
-		if(!this.isAvailable(itemStack, entityPlayer)) {
+		if(!this.isAvailable(itemStack, entityPlayer) || this.getChosenAbility() == null) {
 			return;
 		}
 		this.getChosenAbility().onCastTick(itemStack, entityPlayer, tickCount);
 	}
 	
 	public void CastRelease(ItemStack itemStack, EntityPlayer entityPlayer, int tickCount) {
-		if(!this.isAvailable(itemStack, entityPlayer)) {
+		if(!this.isAvailable(itemStack, entityPlayer) || this.getChosenAbility() == null) {
 			return;
 		}
 		this.getChosenAbility().onCastRelease(itemStack, entityPlayer, tickCount);
@@ -112,6 +112,10 @@ public class BattleClassesSpellBook {
 		default:
 			break;
 		}
+		updateChosenAbilityID();
+		for(BattleClassesAbstractAbilityActive ability : getAbilitiesInArray()){
+		    ability.setPlayerHooks(this.playerHooks);
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -124,7 +128,7 @@ public class BattleClassesSpellBook {
 		if(i >= 0 && i < SPELLBOOK_CAPACITY) {
 			this.chosenAbilityIndex = i;
 		}
-		setChosenAbilityID();
+		updateChosenAbilityID();
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -133,7 +137,7 @@ public class BattleClassesSpellBook {
 		if(this.chosenAbilityIndex >= SPELLBOOK_CAPACITY) {
 			this.chosenAbilityIndex = 0;
 		}
-		setChosenAbilityID();
+		updateChosenAbilityID();
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -142,17 +146,23 @@ public class BattleClassesSpellBook {
 		if(this.chosenAbilityIndex < 0) {
 			this.chosenAbilityIndex = SPELLBOOK_CAPACITY - 1;
 		}
-		setChosenAbilityID();
+		updateChosenAbilityID();
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void setChosenAbilityID(){
+	public void updateChosenAbilityID() {
 		if(chosenAbilityIndex < getAbilitiesInArray().size()) {
-			this.chosenAbilityID = getAbilitiesInArray().get(chosenAbilityIndex).getAbilityID();
+			setChosenAbilityID(getAbilitiesInArray().get(chosenAbilityIndex).getAbilityID());
+			cancelCasting();
 			FMLProxyPacket p = new BattleClassesPacketChosenAbilityIDSync(playerHooks.getOwnerPlayer(), this.chosenAbilityID).generatePacket();
 			//Should be sidesafe
 			Battlegear.packetHandler.sendPacketToServerWithSideCheck(p);
 		}
+	}
+	
+	public void setChosenAbilityID(int parID) {
+		this.chosenAbilityID = parID;
+		cancelCasting();
 	}
 	
 	public void setGlobalCooldown() {
@@ -162,5 +172,9 @@ public class BattleClassesSpellBook {
 	//Helper
 	public ArrayList<BattleClassesAbstractAbilityActive> getAbilitiesInArray() {
 		return new ArrayList<BattleClassesAbstractAbilityActive>(this.abilities.values());
+	}
+	
+	public void cancelCasting() {
+		this.playerHooks.ownerPlayer.clearItemInUse();
 	}
 }
