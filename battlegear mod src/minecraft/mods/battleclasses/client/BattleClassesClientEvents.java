@@ -156,13 +156,13 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 			
 			//Registering Player Class Icons
 			BattleClassesPlayerClass.classIcons = new IIcon[EnumBattleClassesPlayerClass.values().length];
-			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_MAGE.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "mage");
-			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_PRIEST.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "priest");
-			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_WARLOCK.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "warlock");
-			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_ROGUE.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "rogue");
-			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_HUNTER.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "hunter");
-			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_PALADIN.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "paladin");
-			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PlayerClass_WARRIOR.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "warrior");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.MAGE.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "mage");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PRIEST.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "priest");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.WARLOCK.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "warlock");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.ROGUE.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "rogue");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.HUNTER.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "hunter");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.PALADIN.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "paladin");
+			BattleClassesPlayerClass.classIcons[EnumBattleClassesPlayerClass.WARRIOR.ordinal()] = event.map.registerIcon("battleclasses:sharedicons/classes/" + "warrior");
 			
 			//Registering Cooldown Icons
 			BattleClassesGuiHelper.cooldownIcons = new IIcon[BattleClassesGuiHelper.COOLDOWN_FRAMES];

@@ -89,31 +89,31 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWieldAccess.WeaponAccess_SHIELD);
 			}
 				break;
-			case PlayerClass_MAGE : {
+			case MAGE : {
 				//
 			}
 				break;
-			case PlayerClass_PRIEST : {
+			case PRIEST : {
 				//
 			}
 				break;
-			case PlayerClass_WARLOCK : {
+			case WARLOCK : {
 				//
 			}
 				break;
-			case PlayerClass_ROGUE : {
+			case ROGUE : {
 				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWieldAccess.WeaponAccess_DUALWIELD);
 			}
 				break;
-			case PlayerClass_HUNTER : {
+			case HUNTER : {
 				//
 			}
 				break;
-			case PlayerClass_PALADIN : {
+			case PALADIN : {
 				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWieldAccess.WeaponAccess_SHIELD);
 			}
 				break;
-			case PlayerClass_WARRIOR : {
+			case WARRIOR : {
 				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWieldAccess.WeaponAccess_DUALWIELD);
 				this.playerHooks.weaponHitHandler.accessSet.add(EnumBattleClassesWieldAccess.WeaponAccess_SHIELD);
 			}

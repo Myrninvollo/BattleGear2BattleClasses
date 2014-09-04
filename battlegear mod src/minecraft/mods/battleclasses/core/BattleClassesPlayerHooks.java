@@ -32,7 +32,7 @@ public class BattleClassesPlayerHooks {
 	public void switchToPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
 		
 		switch(parPlayerClass) {
-			case PlayerClass_MAGE: {
+			case MAGE: {
 				this.playerClass = new BattleClassesPlayerClassMage(this);
 			}
 				break;

@@ -29,13 +29,13 @@ public class BattleClassesItemTestingStaff extends BattleClassesItemWeapon {
         this.setUnlocalizedName("battleclasses:"+"weapons/WoodenStaff");
 		this.setTextureName("battleclasses:"+"weapons/WoodenStaff");
 		classAccessSet = EnumSet.of(
-				EnumBattleClassesPlayerClass.PlayerClass_MAGE,
-				EnumBattleClassesPlayerClass.PlayerClass_PRIEST,
-				EnumBattleClassesPlayerClass.PlayerClass_WARLOCK,
-				EnumBattleClassesPlayerClass.PlayerClass_ROGUE,
-				EnumBattleClassesPlayerClass.PlayerClass_HUNTER,
-				EnumBattleClassesPlayerClass.PlayerClass_PALADIN,
-				EnumBattleClassesPlayerClass.PlayerClass_WARRIOR);
+				EnumBattleClassesPlayerClass.MAGE,
+				EnumBattleClassesPlayerClass.PRIEST,
+				EnumBattleClassesPlayerClass.WARLOCK,
+				EnumBattleClassesPlayerClass.ROGUE,
+				EnumBattleClassesPlayerClass.HUNTER,
+				EnumBattleClassesPlayerClass.PALADIN,
+				EnumBattleClassesPlayerClass.WARRIOR);
 	}
 	
 	

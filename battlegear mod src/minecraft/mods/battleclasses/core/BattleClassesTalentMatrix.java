@@ -24,31 +24,7 @@ public class BattleClassesTalentMatrix {
 		//TODO
 	}
 	
-	public void setTalentTreesByClass(EnumBattleClassesPlayerClass playerClass) {
-		talentTrees.clear();
-		//Load talentTrees by classes
-		switch (playerClass) {
-			case PlayerClass_NONE: {
-			}
-				break;
-			case PlayerClass_MAGE: {
-				
-			}
-				break;
-			case PlayerClass_PRIEST:
-				break;
-			case PlayerClass_WARLOCK:
-				break;
-			case PlayerClass_ROGUE:
-				break;
-			case PlayerClass_HUNTER:
-				break;
-			case PlayerClass_PALADIN:
-				break;
-			case PlayerClass_WARRIOR:
-				break;
-			default:
-				break;
-		}
+	public boolean hasPointsToSpend() {
+		return talentPoints > 0;
 	}
 }

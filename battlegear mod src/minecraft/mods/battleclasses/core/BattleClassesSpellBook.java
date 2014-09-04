@@ -89,47 +89,7 @@ public class BattleClassesSpellBook {
 		    ability.setPlayerHooks(this.playerHooks);
 		}
 	}
-	
-	/**
-	 * DEPRECATED
-	 */
-	public void setAbilitiesByClass(EnumBattleClassesPlayerClass playerClass) {
-		activeAbilities.clear();
-		switch (playerClass) {
-		case PlayerClass_NONE: {
-		}
-			break;
-		case PlayerClass_MAGE: {
-			activeAbilities.put(100, new BattleClassesAbilityTest(100));
-			activeAbilities.put(101, new BattleClassesAbilityTest(101));
-			activeAbilities.put(102, new BattleClassesAbilityTest(102));
-			activeAbilities.put(110, new BattleClassesAbilityTest(110));
-			activeAbilities.put(111, new BattleClassesAbilityTest(111));
-			activeAbilities.put(112, new BattleClassesAbilityTest(112));
-			activeAbilities.put(120, new BattleClassesAbilityTest(120));
-		}
-			break;
-		case PlayerClass_PRIEST:
-			break;
-		case PlayerClass_WARLOCK:
-			break;
-		case PlayerClass_ROGUE:
-			break;
-		case PlayerClass_HUNTER:
-			break;
-		case PlayerClass_PALADIN:
-			break;
-		case PlayerClass_WARRIOR:
-			break;
-		default:
-			break;
-		}
-		updateChosenAbilityID();
-		for(BattleClassesAbstractAbilityActive ability : getAbilitiesInArray()){
-		    ability.setPlayerHooks(this.playerHooks);
-		}
-	}
-	
+		
 	@SideOnly(Side.CLIENT)
 	public int getChosenAbilityIndex() {
 		return this.chosenAbilityIndex;

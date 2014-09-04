@@ -13,7 +13,7 @@ import mods.battleclasses.core.BattleClassesTalentTree;
 public class BattleClassesPlayerClassMage extends BattleClassesPlayerClass {
 
 	public BattleClassesPlayerClassMage(BattleClassesPlayerHooks parPlayerHooks) {
-		super(parPlayerHooks, EnumBattleClassesPlayerClass.PlayerClass_MAGE);
+		super(parPlayerHooks, EnumBattleClassesPlayerClass.MAGE);
 	}
 
 	public LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> getClassAbilities() {

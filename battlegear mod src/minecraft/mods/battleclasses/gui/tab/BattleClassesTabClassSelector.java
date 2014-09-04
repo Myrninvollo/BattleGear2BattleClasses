@@ -24,13 +24,13 @@ public class BattleClassesTabClassSelector extends BattleClassesAbstractTab  {
 	
 	public static List<BattleClassesGuiButtonClassSelector> classButtonList = new ArrayList<BattleClassesGuiButtonClassSelector>();
 	static {
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(0, resource, EnumBattleClassesPlayerClass.PlayerClass_MAGE));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(1, resource, EnumBattleClassesPlayerClass.PlayerClass_PRIEST));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(2, resource, EnumBattleClassesPlayerClass.PlayerClass_WARLOCK));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(3, resource, EnumBattleClassesPlayerClass.PlayerClass_ROGUE));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(4, resource, EnumBattleClassesPlayerClass.PlayerClass_HUNTER));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(5, resource, EnumBattleClassesPlayerClass.PlayerClass_PALADIN));
-		classButtonList.add(new BattleClassesGuiButtonClassSelector(6, resource, EnumBattleClassesPlayerClass.PlayerClass_WARRIOR));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(0, resource, EnumBattleClassesPlayerClass.MAGE));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(1, resource, EnumBattleClassesPlayerClass.PRIEST));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(2, resource, EnumBattleClassesPlayerClass.WARLOCK));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(3, resource, EnumBattleClassesPlayerClass.ROGUE));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(4, resource, EnumBattleClassesPlayerClass.HUNTER));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(5, resource, EnumBattleClassesPlayerClass.PALADIN));
+		classButtonList.add(new BattleClassesGuiButtonClassSelector(6, resource, EnumBattleClassesPlayerClass.WARRIOR));
 	}
 
     public BattleClassesTabClassSelector(EntityPlayer entityPlayer, boolean isRemote) {
@@ -90,21 +90,21 @@ public class BattleClassesTabClassSelector extends BattleClassesAbstractTab  {
     
     public static String getClassDescription(EnumBattleClassesPlayerClass playerClass) {
     	switch (playerClass)  {
-		case PlayerClass_HUNTER:
+		case HUNTER:
 			return "Hunter";
-		case PlayerClass_MAGE:
+		case MAGE:
 			return "Mage";
 		case PlayerClass_NONE:
 			return "No Class";
-		case PlayerClass_PALADIN:
+		case PALADIN:
 			return "Paladin";
-		case PlayerClass_PRIEST:
+		case PRIEST:
 			return "Priest";
-		case PlayerClass_ROGUE:
+		case ROGUE:
 			return "Rogue";
-		case PlayerClass_WARLOCK:
+		case WARLOCK:
 			return "Warlock";
-		case PlayerClass_WARRIOR:
+		case WARRIOR:
 			return "Warrior";
 		default:
 			return "Unkown Class Description";
