@@ -94,12 +94,13 @@ public class BattleClassesGuiButtonClassSelector extends BattleClassesGuiButton 
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 		boolean inWindow = super.mousePressed(mc, mouseX, mouseY);
-		if (inWindow && !isClassSelected()) {
+		boolean press = inWindow && !isClassSelected();
+		if (press) {
 			//BattleClassesUtils.getPlayerHooks(Minecraft.getMinecraft().thePlayer).playerClass.switchToPlayerClass(this.playerClass);
 			FMLProxyPacket p = new BattleClassesPacketPlayerClassSnyc(mc.thePlayer, this.playerClass).generatePacket();
 			Battlegear.packetHandler.sendPacketToServer(p);
 		}
-		return inWindow;
+		return press;
 	}
 
 }

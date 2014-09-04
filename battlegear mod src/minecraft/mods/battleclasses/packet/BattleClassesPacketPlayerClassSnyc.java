@@ -49,7 +49,7 @@ public class BattleClassesPacketPlayerClassSnyc extends AbstractMBPacket {
 
             	BattleClassesPlayerHooks playerHooks = BattleClassesUtils.getPlayerHooks(entityPlayer);
             	
-            	playerHooks.playerClass.switchToPlayerClass(playerClass);
+            	playerHooks.switchToPlayerClass(playerClass);
             }
         }
 	}

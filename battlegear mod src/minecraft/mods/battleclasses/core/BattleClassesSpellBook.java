@@ -26,11 +26,12 @@ public class BattleClassesSpellBook {
 	protected BattleClassesPlayerHooks playerHooks;
 	
 	public static final int SPELLBOOK_CAPACITY = 7;
+	public static final float GLOBAL_COOLDOWN_DURATION = 1.0F;
 	
 	public LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> activeAbilities = new LinkedHashMap<Integer, BattleClassesAbstractAbilityActive>();
 	protected int chosenAbilityIndex = 0;
 	public int chosenAbilityID = 0;
-	public LinkedHashMap<Integer, BattleClassesAbstractAbilityPassive> passiveAbilities = new LinkedHashMap<Integer, BattleClassesAbstractAbilityPassive>();
+	//public LinkedHashMap<Integer, BattleClassesAbstractAbilityPassive> passiveAbilities = new LinkedHashMap<Integer, BattleClassesAbstractAbilityPassive>();
 	
 	public BattleClassesSpellBook(BattleClassesPlayerHooks parPlayerHooks) {
 		this.playerHooks = parPlayerHooks;
@@ -81,6 +82,17 @@ public class BattleClassesSpellBook {
 		return hasClass && cooldownFreeClass && battleMode;
 	}
 	
+	public void initWithAbilities(LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> parAbilities) {
+		this.activeAbilities = parAbilities;
+		updateChosenAbilityID();
+		for(BattleClassesAbstractAbilityActive ability : getAbilitiesInArray()){
+		    ability.setPlayerHooks(this.playerHooks);
+		}
+	}
+	
+	/**
+	 * DEPRECATED
+	 */
 	public void setAbilitiesByClass(EnumBattleClassesPlayerClass playerClass) {
 		activeAbilities.clear();
 		switch (playerClass) {
@@ -97,17 +109,15 @@ public class BattleClassesSpellBook {
 			activeAbilities.put(120, new BattleClassesAbilityTest(120));
 		}
 			break;
-		case PlayerClass_HUNTER:
-			break;
-		
-
-		case PlayerClass_PALADIN:
-			break;
 		case PlayerClass_PRIEST:
+			break;
+		case PlayerClass_WARLOCK:
 			break;
 		case PlayerClass_ROGUE:
 			break;
-		case PlayerClass_WARLOCK:
+		case PlayerClass_HUNTER:
+			break;
+		case PlayerClass_PALADIN:
 			break;
 		case PlayerClass_WARRIOR:
 			break;
@@ -168,7 +178,11 @@ public class BattleClassesSpellBook {
 	}
 	
 	public void setGlobalCooldown() {
-		
+		for(BattleClassesAbstractAbilityActive ability : getAbilitiesInArray()) {
+			if(!ability.ignoresGlobalCooldown && !ability.isOnCooldown()) {
+				ability.setCooldown(GLOBAL_COOLDOWN_DURATION, false);
+			}
+		}
 	}
 	
 	//Helper

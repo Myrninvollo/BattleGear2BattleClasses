@@ -39,7 +39,7 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 	}
 	
 	public static float getCooldownPercentage(ICooldownHolder coolDownHolder) {
-		return coolDownHolder.getCooldownRemaining() / coolDownHolder.getCooldownDuration();
+		return coolDownHolder.getCooldownRemaining() / coolDownHolder.getSetDuration();
 	}
 	
 	public static void setEntityPlayerItemInUseInSeconds(EntityPlayer entityPlayer, ItemStack itemStack, float time) {

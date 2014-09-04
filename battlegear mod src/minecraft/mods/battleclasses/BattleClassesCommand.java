@@ -62,7 +62,7 @@ public class BattleClassesCommand extends CommandBase {
 				
 				int pick = new Random().nextInt(EnumBattleClassesPlayerClass.values().length);
 			
-				playerHooks.playerClass.switchToPlayerClass(EnumBattleClassesPlayerClass.values()[pick]);
+				playerHooks.switchToPlayerClass(EnumBattleClassesPlayerClass.values()[pick]);
 			}
 			else {
 				BattleClassesUtils.Log(message, LogType.COMMAND);

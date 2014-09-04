@@ -39,7 +39,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		activeAbilityFactoryHashSet.put(110, new BattleClassesAbilityTest(110));
 		activeAbilityFactoryHashSet.put(111, new BattleClassesAbilityTest(111));
 		activeAbilityFactoryHashSet.put(112, new BattleClassesAbilityTest(112));
-		activeAbilityFactoryHashSet.put(120, new BattleClassesAbilityTest(120));
+		activeAbilityFactoryHashSet.put(121, new BattleClassesAbilityTest(121));
 		
 	}
 	
@@ -50,7 +50,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	protected float castTime = 0;
 	protected int channelTickCount = 1;
 	protected boolean channeled = false;
-	protected boolean ignoresGlobalCooldown = false;
+	public boolean ignoresGlobalCooldown = false;
 	protected boolean ignoresSilence = false;
 	protected boolean requiresMeleeSwing = false;
 	protected int requiredItemLevel = 0;
@@ -62,7 +62,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		if(!this.isAvailable(entityPlayer, itemStack)) {
 			return;
 		}
-		
+		BattleClassesUtils.getPlayerSpellBook(entityPlayer).setGlobalCooldown();
 		if(this.isInstant()) {
 			this.requestProcession(entityPlayer, itemStack, 0);
 		}
@@ -213,7 +213,6 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		
 	public void onCastFinished(EntityLiving targetEntity, int tickCount) {
 		this.setToCooldown();
-		//ADD Global coolDown here!
 	}
 	
 	protected String getAbilityIconName() {

@@ -1,5 +1,8 @@
 package mods.battleclasses.core;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.IIcon;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -7,6 +10,7 @@ import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.EnumBattleClassesWieldAccess;
+import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
 import mods.battleclasses.packet.BattleClassesPacketCooldownSet;
 import mods.battleclasses.packet.BattleClassesPacketPlayerClassSnyc;
 import mods.battlegear2.Battlegear;
@@ -29,10 +33,11 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 		this.initCooldownHolder();
 		parPlayerHooks.mainCooldownMap.put(this.getCooldownHashCode(), this);
 		this.spellBook = new BattleClassesSpellBook(parPlayerHooks);
+		this.talentMatrix = new BattleClassesTalentMatrix(parPlayerHooks);
 		
 		this.setPlayerClass(parPlayerClass);
 	}
-	
+	/*
 	public void switchToPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
 		this.setPlayerClass(parPlayerClass);
 
@@ -50,16 +55,29 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 		
 		this.setToCooldownForced();
 	}
-	
+	*/
 	protected void setPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
 		this.playerClass = parPlayerClass;
 		this.initClassContent();
 	}
 	
 	protected void initClassContent() {
-		this.spellBook.setAbilitiesByClass(this.playerClass);
-		this.talentMatrix.setTalentTreesByClass(this.playerClass);
-		this.setWeaponAccessByClass(this.playerClass);
+		this.spellBook.initWithAbilities(getClassAbilities());
+		this.talentMatrix.initWithTalentTrees(getClassTalents());
+		//TODO
+		//this.setWeaponAccessByClass(this.playerClass);
+	}
+	
+	public LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> getClassAbilities() {
+		LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> abilities = new LinkedHashMap<Integer, BattleClassesAbstractAbilityActive>();
+		//No addition on void class
+		return abilities;
+	}
+	
+	public ArrayList<BattleClassesTalentTree> getClassTalents() {
+		ArrayList<BattleClassesTalentTree> talentTrees = new ArrayList<BattleClassesTalentTree>();
+		//No addition on void class
+		return talentTrees;
 	}
 	
 	public void setWeaponAccessByClass(EnumBattleClassesPlayerClass parPlayerClass) {

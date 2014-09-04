@@ -31,6 +31,7 @@ public class BattleClassesAbstractTalent extends BattleClassesAbstractAbilityPas
 	public void onStateChanged() {
 		//TODO
 		//ADD OR REMOVE THIS AMPLIFY/MODIFY PROVIDER FROM CENTRAL HASHTABLE
+		//ADD OR REMOVE CONTAINED ABILITY TO SPELLBOOK
 	}
 	
 	public boolean isAccessAbleInTalentTree(BattleClassesTalentTree talentTree) {
