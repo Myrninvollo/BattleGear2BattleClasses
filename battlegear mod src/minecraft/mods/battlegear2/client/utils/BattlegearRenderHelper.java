@@ -145,7 +145,9 @@ public class BattlegearRenderHelper {
 
 	        		GL11.glRotatef(25, 0, 0, 1);
 	        		GL11.glRotatef(325-35*MathHelper.sin(swingProgress*(float)Math.PI), 0, 1, 0);
-
+	        		//FIRSTPERSON SHIELD SCALE
+                    float scale = 0.7F;
+                    GL11.glScalef(scale,scale,scale);
 	        		if(!BattlegearUtils.RENDER_BUS.post(new PreRenderPlayerElement(preRender, true, PlayerElementType.ItemOffhand, offhandRender.getItemToRender())))
 	        			itemRenderer.renderItem(player, offhandRender.getItemToRender(), 0);
                     BattlegearUtils.RENDER_BUS.post(new PostRenderPlayerElement(postRender, true, PlayerElementType.ItemOffhand, offhandRender.getItemToRender()));

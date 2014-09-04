@@ -16,7 +16,9 @@ public abstract class BattleClassesAbstractAbility {
 		this.abilityID = parAbilityID;
 	}
 	
-	public abstract void setPlayerHooks(BattleClassesPlayerHooks parPlayerHooks);
+	public void setPlayerHooks(BattleClassesPlayerHooks parPlayerHooks) {
+		this.playerHooks = parPlayerHooks;
+	}
 	
 	public BattleClassesPlayerHooks getPlayerHooks() throws NullPointerException {
 		if(playerHooks == null) {

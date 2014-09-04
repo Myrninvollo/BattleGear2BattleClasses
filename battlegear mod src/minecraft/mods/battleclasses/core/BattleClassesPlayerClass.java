@@ -25,11 +25,11 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	
 	public BattleClassesPlayerClass(BattleClassesPlayerHooks parPlayerHooks, EnumBattleClassesPlayerClass parPlayerClass) {
 		this.playerHooks = parPlayerHooks;
-		parPlayerHooks.mainCooldownMap.put(this.getCooldownHashCode(), this);
-		this.setPlayerClass(parPlayerClass);
 		this.initCooldownHolder();
-		
+		parPlayerHooks.mainCooldownMap.put(this.getCooldownHashCode(), this);
 		this.spellBook = new BattleClassesSpellBook(parPlayerHooks);
+		
+		this.setPlayerClass(parPlayerClass);
 	}
 	
 	public void switchToPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
@@ -54,7 +54,7 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 		this.playerClass = parPlayerClass;
 		
 		//TO DO
-		//Set SpellBook content
+		this.spellBook.setAbilitiesByClass(parPlayerClass);
 		//Set Talents content
 		//Set Weapon skill abilities
 	}

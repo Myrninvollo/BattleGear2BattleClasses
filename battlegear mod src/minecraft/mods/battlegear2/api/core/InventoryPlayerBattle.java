@@ -1,5 +1,6 @@
 package mods.battlegear2.api.core;
 
+import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -119,22 +120,26 @@ public class InventoryPlayerBattle extends InventoryPlayer {
     @SideOnly(Side.CLIENT)
     public void changeCurrentItem(int direction) {
         hasChanged = true;
-
+        
         if (isBattlemode()) {
-
+        	
         	if (direction > 0){
         		direction = 1;
+        		BattleClassesUtils.getPlayerSpellBook(this.player).decrementChosenAbilityIndex();
             }else if (direction != 0){
             	direction = -1;
+            	BattleClassesUtils.getPlayerSpellBook(this.player).incrementChosenAbilityIndex();
             }
-
+        	
             //noinspection StatementWithEmptyBody
+        	/*
             for (currentItem -= direction; currentItem < OFFSET; currentItem += WEAPON_SETS) {
             }
 
             while (currentItem >= OFFSET + WEAPON_SETS) {
                 currentItem -= WEAPON_SETS;
             }
+            */
 
         } else {
             super.changeCurrentItem(direction);
