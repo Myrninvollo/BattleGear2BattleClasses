@@ -19,6 +19,7 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	public static IIcon classIcons[];
 	
 	public BattleClassesSpellBook spellBook;
+	public BattleClassesTalentMatrix talentMatrix;
 		
 	protected BattleClassesPlayerHooks playerHooks;
 	protected EnumBattleClassesPlayerClass playerClass;
@@ -52,11 +53,13 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	
 	protected void setPlayerClass(EnumBattleClassesPlayerClass parPlayerClass) {
 		this.playerClass = parPlayerClass;
-		
-		//TO DO
-		this.spellBook.setAbilitiesByClass(parPlayerClass);
-		//Set Talents content
-		//Set Weapon skill abilities
+		this.initClassContent();
+	}
+	
+	protected void initClassContent() {
+		this.spellBook.setAbilitiesByClass(this.playerClass);
+		this.talentMatrix.setTalentTreesByClass(this.playerClass);
+		this.setWeaponAccessByClass(this.playerClass);
 	}
 	
 	public void setWeaponAccessByClass(EnumBattleClassesPlayerClass parPlayerClass) {

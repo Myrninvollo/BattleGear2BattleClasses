@@ -14,6 +14,7 @@ import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.ability.BattleClassesAbilityTest;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
+import mods.battleclasses.ability.BattleClassesAbstractAbilityPassive;
 import mods.battleclasses.items.BattleClassesItemWeapon;
 import mods.battleclasses.packet.BattleClassesPacketChosenAbilityIDSync;
 import mods.battleclasses.packet.BattleClassesPacketPlayerClassSnyc;
@@ -26,9 +27,10 @@ public class BattleClassesSpellBook {
 	
 	public static final int SPELLBOOK_CAPACITY = 7;
 	
-	public LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> abilities = new LinkedHashMap<Integer, BattleClassesAbstractAbilityActive>();
+	public LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> activeAbilities = new LinkedHashMap<Integer, BattleClassesAbstractAbilityActive>();
 	protected int chosenAbilityIndex = 0;
 	public int chosenAbilityID = 0;
+	public LinkedHashMap<Integer, BattleClassesAbstractAbilityPassive> passiveAbilities = new LinkedHashMap<Integer, BattleClassesAbstractAbilityPassive>();
 	
 	public BattleClassesSpellBook(BattleClassesPlayerHooks parPlayerHooks) {
 		this.playerHooks = parPlayerHooks;
@@ -39,7 +41,7 @@ public class BattleClassesSpellBook {
 	
 	public BattleClassesAbstractAbilityActive getChosenAbility() {
 		//TODO
-		return abilities.get(chosenAbilityID);
+		return activeAbilities.get(chosenAbilityID);
 	}
 	
 	public void CastStart(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
@@ -80,19 +82,19 @@ public class BattleClassesSpellBook {
 	}
 	
 	public void setAbilitiesByClass(EnumBattleClassesPlayerClass playerClass) {
-		abilities.clear();
+		activeAbilities.clear();
 		switch (playerClass) {
 		case PlayerClass_NONE: {
 		}
 			break;
 		case PlayerClass_MAGE: {
-			abilities.put(100, new BattleClassesAbilityTest(100));
-			abilities.put(101, new BattleClassesAbilityTest(101));
-			abilities.put(102, new BattleClassesAbilityTest(102));
-			abilities.put(110, new BattleClassesAbilityTest(110));
-			abilities.put(111, new BattleClassesAbilityTest(111));
-			abilities.put(112, new BattleClassesAbilityTest(112));
-			abilities.put(120, new BattleClassesAbilityTest(120));
+			activeAbilities.put(100, new BattleClassesAbilityTest(100));
+			activeAbilities.put(101, new BattleClassesAbilityTest(101));
+			activeAbilities.put(102, new BattleClassesAbilityTest(102));
+			activeAbilities.put(110, new BattleClassesAbilityTest(110));
+			activeAbilities.put(111, new BattleClassesAbilityTest(111));
+			activeAbilities.put(112, new BattleClassesAbilityTest(112));
+			activeAbilities.put(120, new BattleClassesAbilityTest(120));
 		}
 			break;
 		case PlayerClass_HUNTER:
@@ -171,7 +173,7 @@ public class BattleClassesSpellBook {
 	
 	//Helper
 	public ArrayList<BattleClassesAbstractAbilityActive> getAbilitiesInArray() {
-		return new ArrayList<BattleClassesAbstractAbilityActive>(this.abilities.values());
+		return new ArrayList<BattleClassesAbstractAbilityActive>(this.activeAbilities.values());
 	}
 	
 	public void cancelCasting() {

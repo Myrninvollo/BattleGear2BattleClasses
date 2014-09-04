@@ -191,7 +191,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         RenderHelper.enableGUIStandardItemLighting();
-        ArrayList<BattleClassesAbstractAbilityActive> spellbookAbilities = new ArrayList<BattleClassesAbstractAbilityActive>(BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).abilities.values()); 
+        ArrayList<BattleClassesAbstractAbilityActive> spellbookAbilities = new ArrayList<BattleClassesAbstractAbilityActive>(BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).activeAbilities.values()); 
         for(int i = 0; i < spellbookAbilities.size(); ++i) {
         	this.drawAbility(actionbarPosX+3 + i*20, actionbarPosY+3, spellbookAbilities.get(i));
         }
