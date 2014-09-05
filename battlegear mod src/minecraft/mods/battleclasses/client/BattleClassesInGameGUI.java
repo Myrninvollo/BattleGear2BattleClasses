@@ -12,6 +12,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -268,10 +269,10 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
     }
     
     public void drawAbility(int x, int y, BattleClassesAbstractAbilityActive ability ) {
-    	if(ability != null && ability.getAbilityIcon() != null) {
-    		//BattleClassesUtils.Log("Drawing Ability with ID: " + ability.getAbilityID() + ", X: " + x + ", Y: " + y, LogType.GUI);
-    		mc.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
-        	drawTexturedModelRectFromIcon(x, y, ability.getAbilityIcon(), 16, 16);
+    	if(ability != null && ability.getIconResourceLocation() != null) {
+    		mc.getTextureManager().bindTexture(ability.getIconResourceLocation());
+    		myDrawTexturedModalRect(x, y, 16, 16);
+        	//drawTexturedModelRectFromIcon(x, y, ability.getAbilityIcon(), 16, 16);
         	drawCooldown(x, y, BattleClassesUtils.getCooldownPercentage(ability));
         	
     	}
@@ -290,5 +291,18 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
     		
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     	}
+	}
+    
+	 // 3.  You'll need to write your own version of the Gui.drawTexturedModalRect() method
+	//  This method can go into your own Gui class:
+	public void myDrawTexturedModalRect(int x, int y, int width, int height)
+	{
+		 Tessellator tessellator = Tessellator.instance;
+		 tessellator.startDrawingQuads();    
+		 tessellator.addVertexWithUV(x        , y + height, 0, 0.0, 1.0);
+		 tessellator.addVertexWithUV(x + width, y + height, 0, 1.0, 1.0);
+		 tessellator.addVertexWithUV(x + width, y         , 0, 1.0, 0.0);
+		 tessellator.addVertexWithUV(x        , y         , 0, 0.0, 0.0);
+		 tessellator.draw();
 	}
 }

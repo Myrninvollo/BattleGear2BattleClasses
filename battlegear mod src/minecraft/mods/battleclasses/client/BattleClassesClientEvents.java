@@ -171,12 +171,14 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 				BattleClassesGuiHelper.cooldownIcons[i] = event.map.registerIcon("battleclasses:sharedicons/cooldown/" + "cooldown_" + frameIndex);
 			}
 			
+			/*
 			//Registering Ability Icons
 			ArrayList<BattleClassesAbstractAbilityActive> abilityIcons = new ArrayList<BattleClassesAbstractAbilityActive> 
 																		(BattleClassesAbstractAbilityActive.activeAbilityFactoryHashSet.values());
 			for(int i = 0; i < abilityIcons.size(); ++i) {
 				abilityIcons.get(i).registerIcons(event.map);
 			}
+			*/
 						
 		}
 		

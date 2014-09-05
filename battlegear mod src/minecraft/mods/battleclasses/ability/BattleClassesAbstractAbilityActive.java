@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -28,23 +29,11 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 
 	public BattleClassesAbstractAbilityActive(int parAbilityID) {
 		super(parAbilityID);
+		abilityIconResourceLocation = new ResourceLocation("battleclasses", getAbilityIconPath() + getAbilityIconName() + ".png");
 	}
-	
-	public static HashMap<Integer, BattleClassesAbstractAbilityActive> activeAbilityFactoryHashSet = new HashMap<Integer, BattleClassesAbstractAbilityActive>();
-	static {
-		//activeAbilityFactoryHashSet.put(BattleClassesAbilityTest.TEST_SPELL_ID, new BattleClassesAbilityTest());
-		activeAbilityFactoryHashSet.put(100, new BattleClassesAbilityTest(100));
-		activeAbilityFactoryHashSet.put(101, new BattleClassesAbilityTest(101));
-		activeAbilityFactoryHashSet.put(102, new BattleClassesAbilityTest(102));
-		activeAbilityFactoryHashSet.put(110, new BattleClassesAbilityTest(110));
-		activeAbilityFactoryHashSet.put(111, new BattleClassesAbilityTest(111));
-		activeAbilityFactoryHashSet.put(112, new BattleClassesAbilityTest(112));
-		activeAbilityFactoryHashSet.put(121, new BattleClassesAbilityTest(121));
-		
-	}
-	
 	
 	protected IIcon abilityIcon;
+	public ResourceLocation abilityIconResourceLocation;
 	
 	protected EnumBattleClassesTargetType targetType = EnumBattleClassesTargetType.TargetType_UNNECESSARY_UNIVERSAL;
 	protected float castTime = 0;
@@ -215,18 +204,19 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		this.setToCooldown();
 	}
 	
+	@SideOnly(Side.CLIENT)
 	protected String getAbilityIconName() {
 		return "ability_" + this.abilityID;
 	}
 	
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister par1IconRegister)
-    {
-        this.abilityIcon = par1IconRegister.registerIcon( "battleclasses:sharedicons/spells/" + this.getAbilityIconName());
+    public String getAbilityIconPath() {
+    	return "textures/spells/icons/";
     }
     
-    public IIcon getAbilityIcon() {
-    	return activeAbilityFactoryHashSet.get(this.abilityID).abilityIcon;
+    @SideOnly(Side.CLIENT)    
+    public ResourceLocation getIconResourceLocation() {
+    	return abilityIconResourceLocation;
     }
 
 	
