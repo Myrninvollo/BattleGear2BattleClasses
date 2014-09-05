@@ -125,8 +125,6 @@ public class BattleClassesSpellBook {
 	@SideOnly(Side.CLIENT)
 	public void updateChosenAbilityID() {
 		if(chosenAbilityIndex < getAbilitiesInArray().size()) {
-			BattleClassesInGameGUI.displayTargetingInfo("Targeting Info: <targetname>");
-			BattleClassesInGameGUI.displayWarning("That spell is not ready yet!");
 			setChosenAbilityID(getAbilitiesInArray().get(chosenAbilityIndex).getAbilityID());
 			cancelCasting();
 			FMLProxyPacket p = new BattleClassesPacketChosenAbilityIDSync(playerHooks.getOwnerPlayer(), this.chosenAbilityID).generatePacket();

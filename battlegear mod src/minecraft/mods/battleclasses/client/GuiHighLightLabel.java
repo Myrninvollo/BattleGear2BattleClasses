@@ -89,5 +89,9 @@ public class GuiHighLightLabel extends Gui {
             }
         }
     }
+    
+    public void hide() {
+    	remainingHighlightTicks = 0;
+    }
 
 }

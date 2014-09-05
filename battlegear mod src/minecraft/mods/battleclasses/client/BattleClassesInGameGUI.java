@@ -280,22 +280,35 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
     
     public void drawCastbar() {
     	
-    	if(BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).isCastingInProgress()) {
+    	if(BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).isCastingInProgress() ||
+    			BattleClassesUtils.getPlayerHooks(mc.thePlayer).playerClass.isOnCooldown()) {
             ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
     		int x = scaledresolution.getScaledWidth()/2 - CAST_BAR_WIDTH/2;
     		int y = 12 + BattleClassesInGameGUI.ABILITY_ACTIONBAR_HEIGHT;
-    		int v = 48;
-    		int u = 0;
-    		int vStateOffset = 8;
-    		float f = BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().getCastPercentage(mc.thePlayer);
-    		int state = (int)(f * (float)CAST_BAR_WIDTH );
-    		state = (state > CAST_BAR_WIDTH) ? CAST_BAR_WIDTH : state;
-    		
     		if(this.shouldDrawBossHealthBar()) {
     			y += CAST_BAR_ZONE_HEIGHT;
     		}
+    		int v = 48;
+    		int u = 0;
+    		int vStateOffset = 8;
+    		String chosenAbilityName = "";
+    		float f = 0;
+    		if( BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility() != null) {
+    			chosenAbilityName = BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().getName();
+    			f = BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().getCastPercentage(mc.thePlayer);
+    		} 
     		
-    		System.out.println("state = " + state);
+    		if(BattleClassesUtils.getPlayerHooks(mc.thePlayer).playerClass.isOnCooldown()) {
+    			chosenAbilit_HLL.hide();
+    			f = 1.0F - BattleClassesUtils.getCooldownPercentage(BattleClassesUtils.getPlayerHooks(mc.thePlayer).playerClass);
+    			chosenAbilityName = "Switching Class...";
+    		}
+    		else {
+    			//Set castbar colour here
+    		}
+    		
+    		int state = (int)(f * (float)CAST_BAR_WIDTH );
+    		state = (state > CAST_BAR_WIDTH) ? CAST_BAR_WIDTH : state;
     		
     		this.mc.renderEngine.bindTexture(resourceLocationHUD);
     		
@@ -306,7 +319,6 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
                 this.drawTexturedModalRect(x, y, u, v + vStateOffset, state, CAST_BAR_HEIGHT);
             }
             //DRAWING CHOSEN SPELL NAME
-            String chosenAbilityName = BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().getName();
             FontRenderer fontrenderer = this.mc.fontRenderer;
             fontrenderer.drawStringWithShadow(chosenAbilityName,
             		scaledresolution.getScaledWidth()/2 - fontrenderer.getStringWidth(chosenAbilityName)/2,
