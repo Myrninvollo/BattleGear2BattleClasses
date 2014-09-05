@@ -275,7 +275,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
     
     public static final int CAST_BAR_WIDTH = 182;
     public static final int CAST_BAR_HEIGHT = 5;
-    public static final int CAST_BAR_ZONE_HEIGHT = 12;
+    public static final int CAST_BAR_ZONE_HEIGHT = 18;
     public static final int CAST_BAR_LABEL_OFFSET = -10;
     
     public void drawCastbar() {
