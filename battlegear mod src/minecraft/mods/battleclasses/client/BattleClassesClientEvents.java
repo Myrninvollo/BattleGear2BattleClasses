@@ -53,18 +53,19 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 
 	@SubscribeEvent
 	public void postRenderOverlay(RenderGameOverlayEvent.Post event) {
-		Minecraft mc = Minecraft.getMinecraft();
-		boolean hasBattleClassesHUD = (mc.ingameGUI instanceof BattleClassesHUDIngame);
-		if(!hasBattleClassesHUD) {
-			//Can not set this event canceled
-			//event.setCanceled(true);
-			replaceHUD();
-			return;
-		}
 		if (event.type == RenderGameOverlayEvent.ElementType.HOTBAR) {
 			inGameGUI.renderGameOverlay(event.partialTicks, event.mouseX, event.mouseY);
 		}
 	}
+	
+	@SubscribeEvent
+	public void preRenderOverlay(RenderGameOverlayEvent.Pre event) {
+		if (event.type == RenderGameOverlayEvent.ElementType.BOSSHEALTH) {
+			event.setCanceled(true);
+			inGameGUI.drawBossHealth();
+		}
+	}
+
 	
 	public void replaceHUD() {
 		Minecraft mc = Minecraft.getMinecraft();

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.LinkedHashMap;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -14,6 +15,7 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.boss.BossStatus;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -174,6 +176,9 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glDisable(GL11.GL_BLEND);
     }
+    
+    public static final int ABILITY_ACTIONBAR_WIDTH = 142;
+    public static final int ABILITY_ACTIONBAR_HEIGHT = 22;
 
     public void renderAbilityActionBar(float frame, int xOffset, int yOffset) {
         GL11.glEnable(GL11.GL_BLEND);
@@ -184,8 +189,8 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         int width = scaledresolution.getScaledWidth();
         int height = scaledresolution.getScaledHeight();
-        int actionbarWidth = 142;
-        int actionbarHeight = 22;
+        int actionbarWidth = ABILITY_ACTIONBAR_WIDTH;
+        int actionbarHeight = ABILITY_ACTIONBAR_HEIGHT;
         int actionbarPosX = width/2 - actionbarWidth/2;
         int actionbarPosY = 0;
         this.drawTexturedModalRect(actionbarPosX, actionbarPosY, 0, 0, actionbarWidth, actionbarHeight);
@@ -241,6 +246,39 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         this.drawTexturedModalRect(x, y, 0, 9, (int) (182 * BattlegearClientTickHandeler.blockBar), 9);
 
         GL11.glDisable(GL11.GL_BLEND);
+    }
+    
+    protected boolean shouldDrawBossHealthBar() {
+    	return (BossStatus.bossName != null && BossStatus.statusBarTime > 0);
+    }
+    
+    protected void drawBossHealth()
+    {
+        if (shouldDrawBossHealthBar())
+        {
+            --BossStatus.statusBarTime;
+            FontRenderer fontrenderer = this.mc.fontRenderer;
+            ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+            int i = scaledresolution.getScaledWidth();
+            short short1 = 182;
+            int j = i / 2 - short1 / 2;
+            int k = (int)(BossStatus.healthScale * (float)(short1 + 1));
+            
+            byte b0 = 12 + BattleClassesInGameGUI.ABILITY_ACTIONBAR_HEIGHT;	//MAIN Y coord
+            
+            this.drawTexturedModalRect(j, b0, 0, 74, short1, 5);
+            this.drawTexturedModalRect(j, b0, 0, 74, short1, 5);
+
+            if (k > 0)
+            {
+                this.drawTexturedModalRect(j, b0, 0, 79, k, 5);
+            }
+
+            String s = BossStatus.bossName;
+            fontrenderer.drawStringWithShadow(s, i / 2 - fontrenderer.getStringWidth(s) / 2, b0 - 10, 16777215);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            this.mc.getTextureManager().bindTexture(icons);
+        }
     }
 
     private void renderInventorySlot(int par1, int par2, int par3, float par4) {
