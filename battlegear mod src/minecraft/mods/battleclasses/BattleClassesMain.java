@@ -21,7 +21,7 @@ import mods.battlegear2.utils.BattlegearConfig;
 public class BattleClassesMain {
 	
 	public static void preInit(FMLPreInitializationEvent event) {
-		//Testing ASD
+		//Testing
 		GameRegistry.registerItem(new BattleClassesItemTestingStaff(ToolMaterial.WOOD), "woodenStaff");
     }
 	
