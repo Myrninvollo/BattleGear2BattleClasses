@@ -55,21 +55,6 @@ public class BattleClassesTabTalents extends BattleClassesAbstractTab {
         super.drawScreen(par1, par2, par3);
         this.xSize_lo = (float) par1;
         this.ySize_lo = (float) par2;
-        
-        /*
-        int k = this.guiLeft;
-        int l = this.guiTop;
-        BattleClassesTalentMatrix talentMatrix = BattleClassesUtils.getPlayerTalentMatrix(mc.thePlayer);
-        //DrawTalentViews
-        
-        int posX = this.guiLeft + 7;
-        int posY = this.guiTop + 27;
-        int i = 0;
-        for(BattleClassesTalentTree talentTree : talentMatrix.talentTrees) {
-        	this.drawTalentTreeView(talentTree, i, posX + i*TALENT_TREE_VIEW_W, posY);
-        	++i;
-        }
-         */
     }
     
     public static final int TALENT_TREE_VIEW_W = 54;
@@ -93,6 +78,24 @@ public class BattleClassesTabTalents extends BattleClassesAbstractTab {
     	this.mc.renderEngine.bindTexture(resource);
     	this.drawTexturedModalRect(x, y, 176, 0, TALENT_TREE_VIEW_W, TALENT_TREE_VIEW_H);
     	//DRAW ARROWS
+    	
+    	
+    	
+    	/* GUICONTAINER.CLASS
+        if (this.isMouseOverSlot(slot, par1, par2) && slot.func_111238_b())
+        {
+            this.theSlot = slot;
+            GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            int j1 = slot.xDisplayPosition;
+            k1 = slot.yDisplayPosition;
+            GL11.glColorMask(true, true, true, false);
+            this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, -2130706433, -2130706433);
+            GL11.glColorMask(true, true, true, true);
+            GL11.glEnable(GL11.GL_LIGHTING);
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+        }
+        */
     }
 
     /**
