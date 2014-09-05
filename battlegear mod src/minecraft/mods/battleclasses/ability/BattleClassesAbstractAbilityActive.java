@@ -20,6 +20,7 @@ import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.ICooldownHolder;
+import mods.battleclasses.enumhelper.EnumBattleClassesAbilitySchool;
 import mods.battleclasses.enumhelper.EnumBattleClassesCastType;
 import mods.battleclasses.enumhelper.EnumBattleClassesTargetType;
 import mods.battleclasses.items.BattleClassesItemWeapon;
@@ -36,6 +37,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	protected IIcon abilityIcon;
 	public ResourceLocation abilityIconResourceLocation;
 	
+	protected EnumBattleClassesAbilitySchool school = EnumBattleClassesAbilitySchool.UNKNOWN;
 	protected EnumBattleClassesTargetType targetType = EnumBattleClassesTargetType.TargetType_UNNECESSARY_UNIVERSAL;
 	protected EnumBattleClassesCastType castingType = EnumBattleClassesCastType.CastType_UNKNOWN;
 	protected float castTime = 0;
@@ -91,6 +93,10 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	protected void startCasting(EntityPlayer entityPlayer, ItemStack itemStack) {
 		BattleClassesUtils.Log("Casting started!", LogType.ABILITY);
 		BattleClassesUtils.setEntityPlayerItemInUseInSeconds(entityPlayer, itemStack, this.castTime);
+	}
+	
+	public EnumBattleClassesAbilitySchool getSchool() {
+		return this.school;
 	}
 	
 	/**

@@ -304,7 +304,9 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
     			chosenAbilityName = "Switching Class...";
     		}
     		else {
-    			//Set castbar colour here
+    			if(BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility() != null) {
+        			v = BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().getSchool().getCastBarColoringV();
+        		}
     		}
     		
     		int state = (int)(f * (float)CAST_BAR_WIDTH );
