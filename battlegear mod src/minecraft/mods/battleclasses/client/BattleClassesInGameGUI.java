@@ -286,7 +286,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
     		}
     		IIcon cooldownIcon = BattleClassesGuiHelper.cooldownIcons[frameIndex];
     	    GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
-
+            mc.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
     		this.drawTexturedModelRectFromIcon(posX, posY, cooldownIcon, cooldownIcon.getIconWidth(), cooldownIcon.getIconHeight());
     		
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -299,10 +299,10 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 	{
 		 Tessellator tessellator = Tessellator.instance;
 		 tessellator.startDrawingQuads();    
-		 tessellator.addVertexWithUV(x        , y + height, 0, 0.0, 1.0);
-		 tessellator.addVertexWithUV(x + width, y + height, 0, 1.0, 1.0);
-		 tessellator.addVertexWithUV(x + width, y         , 0, 1.0, 0.0);
-		 tessellator.addVertexWithUV(x        , y         , 0, 0.0, 0.0);
+		 tessellator.addVertexWithUV(x        , y + height, (double)this.zLevel, 0.0, 1.0);
+		 tessellator.addVertexWithUV(x + width, y + height, (double)this.zLevel, 1.0, 1.0);
+		 tessellator.addVertexWithUV(x + width, y         , (double)this.zLevel, 1.0, 0.0);
+		 tessellator.addVertexWithUV(x        , y         , (double)this.zLevel, 0.0, 0.0);
 		 tessellator.draw();
 	}
 }
