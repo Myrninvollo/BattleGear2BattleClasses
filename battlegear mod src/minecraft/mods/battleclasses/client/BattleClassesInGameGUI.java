@@ -273,8 +273,47 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         }
     }
     
+    public static final int CAST_BAR_WIDTH = 182;
+    public static final int CAST_BAR_HEIGHT = 5;
+    public static final int CAST_BAR_ZONE_HEIGHT = 12;
+    public static final int CAST_BAR_LABEL_OFFSET = -10;
+    
     public void drawCastbar() {
     	
+    	if(BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).isCastingInProgress()) {
+            ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+    		int x = scaledresolution.getScaledWidth()/2 - CAST_BAR_WIDTH/2;
+    		int y = 12 + BattleClassesInGameGUI.ABILITY_ACTIONBAR_HEIGHT;
+    		int v = 48;
+    		int u = 0;
+    		int vStateOffset = 8;
+    		float f = BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().getCastPercentage(mc.thePlayer);
+    		int state = (int)(f * (float)CAST_BAR_WIDTH );
+    		state = (state > CAST_BAR_WIDTH) ? CAST_BAR_WIDTH : state;
+    		
+    		if(this.shouldDrawBossHealthBar()) {
+    			y += CAST_BAR_ZONE_HEIGHT;
+    		}
+    		
+    		System.out.println("state = " + state);
+    		
+    		this.mc.renderEngine.bindTexture(resourceLocationHUD);
+    		
+    		//DRAWING CASTBAR
+            this.drawTexturedModalRect(x, y, u, v, CAST_BAR_WIDTH, CAST_BAR_HEIGHT);
+            if (state > 0)
+            {
+                this.drawTexturedModalRect(x, y, u, v + vStateOffset, state, CAST_BAR_HEIGHT);
+            }
+            //DRAWING CHOSEN SPELL NAME
+            String chosenAbilityName = BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().getName();
+            FontRenderer fontrenderer = this.mc.fontRenderer;
+            fontrenderer.drawStringWithShadow(chosenAbilityName,
+            		scaledresolution.getScaledWidth()/2 - fontrenderer.getStringWidth(chosenAbilityName)/2,
+            		y + CAST_BAR_LABEL_OFFSET, 0xFFFFFF);
+            
+            this.mc.getTextureManager().bindTexture(icons);
+    	}
     }
 
     private void renderInventorySlot(int par1, int par2, int par3, float par4) {
@@ -345,12 +384,10 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 	public static GuiHighLightLabel warningDisplay_HLL = new GuiHighLightLabel();
 	
 	public void initHighLightLabels() {
-
         targetDisplay_HLL.horizontalAlignmentMode = 0;
 		warningDisplay_HLL.horizontalAlignmentMode = 2;
 		warningDisplay_HLL.setColorHEX(0xFF0000);
 		chosenAbilit_HLL.horizontalAlignmentMode = 1;
-		
 	}
 	
 	public void drawHighLightedLabels() {
@@ -361,8 +398,17 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 		warningDisplay_HLL.posX = scaledresolution.getScaledWidth() / 2 - centerGap;
 		warningDisplay_HLL.posY = scaledresolution.getScaledHeight() / 2 + centerGap;
 		
+		int y = 12 + BattleClassesInGameGUI.ABILITY_ACTIONBAR_HEIGHT;
+		if(this.shouldDrawBossHealthBar()) {
+			y += CAST_BAR_ZONE_HEIGHT;
+		}
+		y += CAST_BAR_LABEL_OFFSET;
+		chosenAbilit_HLL.posX = scaledresolution.getScaledWidth() / 2;
+		chosenAbilit_HLL.posY = y;
+		
 		targetDisplay_HLL.draw(mc.fontRenderer);
 		warningDisplay_HLL.draw(mc.fontRenderer);
+		chosenAbilit_HLL.draw(mc.fontRenderer);
 	}
 	
 	public static void displayTargetingInfo(String message) {

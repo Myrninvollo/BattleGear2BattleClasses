@@ -132,6 +132,8 @@ public class BattleClassesSpellBook {
 			FMLProxyPacket p = new BattleClassesPacketChosenAbilityIDSync(playerHooks.getOwnerPlayer(), this.chosenAbilityID).generatePacket();
 			//Should be sidesafe
 			Battlegear.packetHandler.sendPacketToServerWithSideCheck(p);
+			
+			BattleClassesInGameGUI.displayChosenAbilityName(this.getChosenAbility().getName());
 		}
 	}
 	
@@ -155,5 +157,9 @@ public class BattleClassesSpellBook {
 	
 	public void cancelCasting() {
 		this.playerHooks.ownerPlayer.clearItemInUse();
+	}
+	
+	public boolean isCastingInProgress() {
+		return ((IBattlePlayer)this.playerHooks.ownerPlayer).isBattlemode() && this.playerHooks.ownerPlayer.isUsingItem() && this.getChosenAbility() != null;
 	}
 }

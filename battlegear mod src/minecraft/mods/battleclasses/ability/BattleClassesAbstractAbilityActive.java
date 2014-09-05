@@ -45,6 +45,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	protected boolean ignoresSilence = false;
 	protected boolean requiresMeleeSwing = false;
 	protected int requiredItemLevel = 0;
+	protected String name = "Unknown Ability";
 	
 	/**
 	 * Called when player presses Mouse-Right button
@@ -242,6 +243,33 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
     public ResourceLocation getIconResourceLocation() {
     	return abilityIconResourceLocation;
     }
-
+    
+    @SideOnly(Side.CLIENT)
+    public String getName() {
+    	return name;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public float getCastPercentage(EntityPlayer entityPlayer) {
+    	float f = 0;
+    	float total = (float) this.getCastTimeInTicks();
+    	float current = total - (float) (entityPlayer.getItemInUseCount() - 72000);
+    	//System.out.println("Current ItemInUseCount = " + entityPlayer.getItemInUseCount());
+    	
+    	f = current/total;
+    	/*
+    	if(this.channeled) {
+    		f = 1.0F / f;
+    	}
+    	*/
+    	if(f > 1) {
+    		f = 1;
+    	}
+    	if(f < 0) {
+    		f = 0;
+    	}
+    	System.out.println(current + "/" + total + " | F = " + f);
+    	return f;
+    }
 	
 }

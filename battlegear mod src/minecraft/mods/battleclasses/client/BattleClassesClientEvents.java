@@ -57,6 +57,7 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 			inGameGUI.renderGameOverlay(event.partialTicks, event.mouseX, event.mouseY);
 		}
 		if (event.type == RenderGameOverlayEvent.ElementType.HEALTH) {
+			inGameGUI.drawCastbar();
 			inGameGUI.drawHighLightedLabels();
 		}
 	}
