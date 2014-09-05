@@ -1,4 +1,4 @@
-package mods.battleclasses;
+package mods.battleclasses.enumhelper;
 
 public enum EnumBattleClassesTargetType {
 	TargetType_REQUIRED_SUPPORTIVE,

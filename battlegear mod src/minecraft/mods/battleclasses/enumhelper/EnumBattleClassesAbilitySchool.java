@@ -1,4 +1,4 @@
-package mods.battleclasses.ability;
+package mods.battleclasses.enumhelper;
 
 public enum EnumBattleClassesAbilitySchool {
 	PHYSICAL_MELEE,

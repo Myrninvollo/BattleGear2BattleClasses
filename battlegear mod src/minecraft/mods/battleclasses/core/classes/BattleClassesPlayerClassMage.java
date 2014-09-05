@@ -3,12 +3,12 @@ package mods.battleclasses.core.classes;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.ability.BattleClassesAbilityTest;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
 import mods.battleclasses.core.BattleClassesPlayerClass;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.BattleClassesTalentTree;
+import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 
 public class BattleClassesPlayerClassMage extends BattleClassesPlayerClass {
 

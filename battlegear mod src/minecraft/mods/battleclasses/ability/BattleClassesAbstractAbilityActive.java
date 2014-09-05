@@ -18,9 +18,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
-import mods.battleclasses.EnumBattleClassesTargetType;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.ICooldownHolder;
+import mods.battleclasses.enumhelper.EnumBattleClassesCastType;
+import mods.battleclasses.enumhelper.EnumBattleClassesTargetType;
 import mods.battleclasses.items.BattleClassesItemWeapon;
 import mods.battleclasses.packet.BattleClassesPacketCooldownSet;
 import mods.battlegear2.Battlegear;
@@ -36,6 +37,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	public ResourceLocation abilityIconResourceLocation;
 	
 	protected EnumBattleClassesTargetType targetType = EnumBattleClassesTargetType.TargetType_UNNECESSARY_UNIVERSAL;
+	protected EnumBattleClassesCastType castingType = EnumBattleClassesCastType.CastType_UNKNOWN;
 	protected float castTime = 0;
 	protected int channelTickCount = 1;
 	protected boolean channeled = false;
@@ -202,6 +204,28 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		
 	public void onCastFinished(EntityLiving targetEntity, int tickCount) {
 		this.setToCooldown();
+	}
+	
+	//Helper method
+	public void setCastingType(EnumBattleClassesCastType parCastType) {
+		this.castingType = parCastType;
+		switch(this.castingType) {
+			case CastType_CASTED: {
+				this.channeled = false;
+			}
+				break;
+			case CastType_CHANNELED: {
+				this.channeled = true;
+			}
+				break;
+			case CastType_INSTANT: {
+				this.channeled = false;
+				this.castTime = 0;
+			}
+				break;
+			default:
+				break;
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import mods.battleclasses.EnumBattleClassesPlayerClass;
+import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;

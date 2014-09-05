@@ -1,7 +1,7 @@
 package mods.battleclasses.gui.tab;
 
 import mods.battleclasses.BattleClassesUtils;
-import mods.battleclasses.EnumBattleClassesPlayerClass;
+import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import mods.battlegear2.client.gui.BattleEquipGUI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;

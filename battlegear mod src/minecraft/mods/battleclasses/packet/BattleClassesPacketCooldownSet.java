@@ -2,10 +2,10 @@ package mods.battleclasses.packet;
 
 import io.netty.buffer.ByteBuf;
 import mods.battleclasses.BattleClassesUtils;
-import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.ICooldownHolder;
+import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import mods.battlegear2.packet.AbstractMBPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.network.ByteBufUtils;

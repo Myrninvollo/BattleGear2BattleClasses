@@ -27,10 +27,10 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import mods.battleclasses.BattleClassesUtils;
-import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
 import mods.battleclasses.core.BattleClassesSpellBook;
+import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import mods.battleclasses.gui.BattleClassesGuiHelper;
 import mods.battlegear2.Battlegear;
 import mods.battlegear2.api.RenderItemBarEvent;

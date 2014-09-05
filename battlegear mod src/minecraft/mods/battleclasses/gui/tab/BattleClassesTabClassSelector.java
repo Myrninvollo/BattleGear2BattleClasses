@@ -6,8 +6,8 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import mods.battleclasses.BattleClassesUtils;
-import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.BattleClassesUtils.LogType;
+import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import mods.battleclasses.gui.BattleClassesGUIHandler;
 import mods.battleclasses.gui.controlls.BattleClassesGuiButtonClassSelector;
 import mods.battlegear2.Battlegear;

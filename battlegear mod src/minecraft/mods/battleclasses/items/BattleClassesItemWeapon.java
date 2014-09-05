@@ -3,8 +3,8 @@ package mods.battleclasses.items;
 import java.util.EnumSet;
 
 import mods.battleclasses.BattleClassesUtils;
-import mods.battleclasses.EnumBattleClassesPlayerClass;
-import mods.battleclasses.EnumBattleClassesWieldAccess;
+import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
+import mods.battleclasses.enumhelper.EnumBattleClassesWieldAccess;
 import mods.battlegear2.utils.BattlegearConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;

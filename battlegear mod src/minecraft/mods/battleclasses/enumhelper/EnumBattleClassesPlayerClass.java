@@ -1,4 +1,4 @@
-package mods.battleclasses;
+package mods.battleclasses.enumhelper;
 
 public enum EnumBattleClassesPlayerClass {
 	PlayerClass_NONE,

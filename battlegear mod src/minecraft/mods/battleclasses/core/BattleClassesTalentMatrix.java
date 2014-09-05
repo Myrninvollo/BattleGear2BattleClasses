@@ -2,9 +2,9 @@ package mods.battleclasses.core;
 
 import java.util.ArrayList;
 
-import mods.battleclasses.EnumBattleClassesPlayerClass;
 import mods.battleclasses.ability.BattleClassesAbilityTest;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
+import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 
 public class BattleClassesTalentMatrix {
 	

@@ -9,6 +9,7 @@ import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.BattleClassesSpellBook;
 import mods.battleclasses.core.BattleClassesTalentMatrix;
 import mods.battleclasses.core.ICooldownHolder;
+import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import mods.battlegear2.api.core.InventoryPlayerBattle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
