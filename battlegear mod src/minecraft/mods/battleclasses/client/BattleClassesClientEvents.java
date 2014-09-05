@@ -53,9 +53,22 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 
 	@SubscribeEvent
 	public void postRenderOverlay(RenderGameOverlayEvent.Post event) {
+		Minecraft mc = Minecraft.getMinecraft();
+		boolean hasBattleClassesHUD = (mc.ingameGUI instanceof BattleClassesHUDIngame);
+		if(!hasBattleClassesHUD) {
+			//Can not set this event canceled
+			//event.setCanceled(true);
+			replaceHUD();
+			return;
+		}
 		if (event.type == RenderGameOverlayEvent.ElementType.HOTBAR) {
 			inGameGUI.renderGameOverlay(event.partialTicks, event.mouseX, event.mouseY);
 		}
+	}
+	
+	public void replaceHUD() {
+		Minecraft mc = Minecraft.getMinecraft();
+		mc.ingameGUI =  new BattleClassesHUDIngame(mc);
 	}
 	
 	public static final int TABS_ON_LEFT = 5; 
