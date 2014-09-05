@@ -56,6 +56,9 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 		if (event.type == RenderGameOverlayEvent.ElementType.HOTBAR) {
 			inGameGUI.renderGameOverlay(event.partialTicks, event.mouseX, event.mouseY);
 		}
+		if (event.type == RenderGameOverlayEvent.ElementType.HEALTH) {
+			inGameGUI.drawHighLightedLabels();
+		}
 	}
 	
 	@SubscribeEvent
@@ -64,12 +67,6 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 			event.setCanceled(true);
 			inGameGUI.drawBossHealth();
 		}
-	}
-
-	
-	public void replaceHUD() {
-		Minecraft mc = Minecraft.getMinecraft();
-		mc.ingameGUI =  new BattleClassesHUDIngame(mc);
 	}
 	
 	public static final int TABS_ON_LEFT = 5; 

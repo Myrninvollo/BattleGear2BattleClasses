@@ -14,6 +14,7 @@ import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.ability.BattleClassesAbilityTest;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityPassive;
+import mods.battleclasses.client.BattleClassesInGameGUI;
 import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import mods.battleclasses.items.BattleClassesItemWeapon;
 import mods.battleclasses.packet.BattleClassesPacketChosenAbilityIDSync;
@@ -124,6 +125,8 @@ public class BattleClassesSpellBook {
 	@SideOnly(Side.CLIENT)
 	public void updateChosenAbilityID() {
 		if(chosenAbilityIndex < getAbilitiesInArray().size()) {
+			BattleClassesInGameGUI.displayTargetingInfo("Targeting Info: <targetname>");
+			BattleClassesInGameGUI.displayWarning("That spell is not ready yet!");
 			setChosenAbilityID(getAbilitiesInArray().get(chosenAbilityIndex).getAbilityID());
 			cancelCasting();
 			FMLProxyPacket p = new BattleClassesPacketChosenAbilityIDSync(playerHooks.getOwnerPlayer(), this.chosenAbilityID).generatePacket();

@@ -51,6 +51,11 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
     public static Class<?> previousGui;
     //public static Minecraft mc;
     public static final ResourceLocation resourceLocationHUD = new ResourceLocation("battleclasses", "textures/gui/InGameGUI.png");
+    
+    public BattleClassesInGameGUI() {
+    	super();
+    	this.initHighLightLabels();
+    }
 	
     public void renderGameOverlay(float frame, int mouseX, int mouseY) {
     	
@@ -145,20 +150,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         this.mc.renderEngine.bindTexture(resourceLocationHUD);
         int offsetX = SLOT_H;
         drawTexturedModalRect(x + offsetX, y, 180, 0, SLOT_H, SLOT_H);
-        //drawTexturedModalRect(x + 31, y, 151, 0, 31, SLOT_H);
-        
-        /*
-        ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-        int width = scaledresolution.getScaledWidth();
-        int height = scaledresolution.getScaledHeight();
-        int battleSlotPosY = height - SLOT_H;
-        if(isMainHand) {
-        	drawTexturedModalRect((int) (width*0.25), battleSlotPosY, 180, 0, SLOT_H, SLOT_H);
-        }
-        else {
-        	drawTexturedModalRect((int) (width*0.75), battleSlotPosY, 180, 0, SLOT_H, SLOT_H);
-        }
-        */
+
         this.mc.renderEngine.bindTexture(resourceLocation);
         if (mc.thePlayer!=null && ((IBattlePlayer) mc.thePlayer).isBattlemode()) {
             this.drawTexturedModalRect(x + offsetX-1 + (mc.thePlayer.inventory.currentItem - InventoryPlayerBattle.OFFSET) * 20,
@@ -252,7 +244,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
     	return (BossStatus.bossName != null && BossStatus.statusBarTime > 0);
     }
     
-    protected void drawBossHealth()
+    public void drawBossHealth()
     {
         if (shouldDrawBossHealthBar())
         {
@@ -279,6 +271,10 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(icons);
         }
+    }
+    
+    public void drawCastbar() {
+    	
     }
 
     private void renderInventorySlot(int par1, int par2, int par3, float par4) {
@@ -342,5 +338,45 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 		 tessellator.addVertexWithUV(x + width, y         , (double)this.zLevel, 1.0, 0.0);
 		 tessellator.addVertexWithUV(x        , y         , (double)this.zLevel, 0.0, 0.0);
 		 tessellator.draw();
+	}
+	
+	public static GuiHighLightLabel chosenAbilit_HLL = new GuiHighLightLabel();
+	public static GuiHighLightLabel targetDisplay_HLL = new GuiHighLightLabel();
+	public static GuiHighLightLabel warningDisplay_HLL = new GuiHighLightLabel();
+	
+	public void initHighLightLabels() {
+
+        targetDisplay_HLL.horizontalAlignmentMode = 0;
+		warningDisplay_HLL.horizontalAlignmentMode = 2;
+		warningDisplay_HLL.setColorHEX(0xFF0000);
+		chosenAbilit_HLL.horizontalAlignmentMode = 1;
+		
+	}
+	
+	public void drawHighLightedLabels() {
+		ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+        int centerGap = 5;
+		targetDisplay_HLL.posX = scaledresolution.getScaledWidth() / 2 + centerGap;
+		targetDisplay_HLL.posY = scaledresolution.getScaledHeight() / 2 - centerGap - mc.fontRenderer.FONT_HEIGHT/2;
+		warningDisplay_HLL.posX = scaledresolution.getScaledWidth() / 2 - centerGap;
+		warningDisplay_HLL.posY = scaledresolution.getScaledHeight() / 2 + centerGap;
+		
+		targetDisplay_HLL.draw(mc.fontRenderer);
+		warningDisplay_HLL.draw(mc.fontRenderer);
+	}
+	
+	public static void displayTargetingInfo(String message) {
+		targetDisplay_HLL.setText(message);
+		targetDisplay_HLL.show();
+	}
+	
+	public static void displayWarning(String message) {
+		warningDisplay_HLL.setText(message);
+		warningDisplay_HLL.show();
+	}
+	
+	public static void displayChosenAbilityName(String message) {
+		chosenAbilit_HLL.setText(message);
+		chosenAbilit_HLL.show();
 	}
 }
