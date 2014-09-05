@@ -7,6 +7,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.BattleClassesSpellBook;
+import mods.battleclasses.core.BattleClassesTalentMatrix;
 import mods.battleclasses.core.ICooldownHolder;
 import mods.battlegear2.api.core.InventoryPlayerBattle;
 import net.minecraft.client.Minecraft;
@@ -76,6 +77,10 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 	
 	public static BattleClassesSpellBook getPlayerSpellBook(EntityPlayer entityPlayer) {
 		return BattleClassesUtils.getPlayerHooks(entityPlayer).playerClass.spellBook;
+	}
+	
+	public static BattleClassesTalentMatrix getPlayerTalentMatrix(EntityPlayer entityPlayer) {
+		return BattleClassesUtils.getPlayerHooks(entityPlayer).playerClass.talentMatrix;
 	}
 		
 }

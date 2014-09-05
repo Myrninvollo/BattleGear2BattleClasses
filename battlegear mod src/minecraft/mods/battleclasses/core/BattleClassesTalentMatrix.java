@@ -14,14 +14,20 @@ public class BattleClassesTalentMatrix {
 		playerHooks = parPlayerHooks;
 	}
 	
-	protected ArrayList<BattleClassesTalentTree> talentTrees = new ArrayList<BattleClassesTalentTree>();
+	public ArrayList<BattleClassesTalentTree> talentTrees = new ArrayList<BattleClassesTalentTree>();
 
 	public static final int TALENT_POINTS_TO_SPEND = 3;
 	protected int talentPoints = TALENT_POINTS_TO_SPEND;
 	
 	public void initWithTalentTrees(ArrayList<BattleClassesTalentTree> parTalentTrees) {
 		talentTrees = parTalentTrees;
-		//TODO
+		for(BattleClassesTalentTree talentTree : talentTrees) {
+			talentTree.setOwnerTalentMatrix(this);
+		}
+	}
+	
+	public int getTalentPoints() {
+		return talentPoints;
 	}
 	
 	public boolean hasPointsToSpend() {

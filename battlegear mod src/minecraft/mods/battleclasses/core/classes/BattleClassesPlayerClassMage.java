@@ -30,7 +30,15 @@ public class BattleClassesPlayerClassMage extends BattleClassesPlayerClass {
 	
 	public ArrayList<BattleClassesTalentTree> getClassTalents() {
 		ArrayList<BattleClassesTalentTree> talentTrees = new ArrayList<BattleClassesTalentTree>();
-		//TODO
+		BattleClassesTalentTree talentTree1 = new BattleClassesTalentTree();
+		BattleClassesTalentTree talentTree2 = new BattleClassesTalentTree();
+		BattleClassesTalentTree talentTree3 = new BattleClassesTalentTree();
+		talentTrees.add(talentTree1);
+		talentTrees.add(talentTree2);
+		talentTrees.add(talentTree3);
+		
+		//TODO : Add talents to the talent trees
+		
 		return talentTrees;
 	}
 	
