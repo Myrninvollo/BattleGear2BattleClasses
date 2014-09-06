@@ -114,8 +114,8 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 
                 RenderItemBarEvent event = new RenderItemBarEvent.BattleSlots(renderEvent, true);
                 AbilityActionBarPosX = event.xOffset+width/2;
-                AbilityActionBarPosX = event.yOffset;
-                //renderAbilityActionBar(frame, event.xOffset+width/2, event.yOffset);
+                AbilityActionBarPosY = event.yOffset;
+                renderAbilityActionBar(frame, event.xOffset+width/2, event.yOffset);
 
                 if(!MinecraftForge.EVENT_BUS.post(event)){
                     renderBattleSlots(width / 2 + 121 + event.xOffset, height - 22 + event.yOffset, frame, true);
@@ -152,11 +152,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        
-        if(isMainHand) {
-        	renderAbilityActionBar(frame, AbilityActionBarPosX, AbilityActionBarPosY);
-        }
-        
+                
         this.mc.renderEngine.bindTexture(resourceLocationHUD);
         int offsetX = SLOT_H;
         drawTexturedModalRect(x + offsetX, y, 180, 0, SLOT_H, SLOT_H);
@@ -183,11 +179,9 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
     public static final int ABILITY_ACTIONBAR_HEIGHT = 22;
 
     public void renderAbilityActionBar(float frame, int xOffset, int yOffset) {
-    	/*
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        */
         this.mc.renderEngine.bindTexture(resourceLocationHUD);
 
         ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
@@ -200,7 +194,6 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         this.drawTexturedModalRect(actionbarPosX, actionbarPosY, 0, 0, actionbarWidth, actionbarHeight);
         
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        //RenderHelper.enableGUIStandardItemLighting();
         ArrayList<BattleClassesAbstractAbilityActive> spellbookAbilities = new ArrayList<BattleClassesAbstractAbilityActive>(BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).activeAbilities.values()); 
         for(int i = 0; i < spellbookAbilities.size(); ++i) {
         	this.drawAbilityIcon(actionbarPosX+3 + i*20, actionbarPosY+3, spellbookAbilities.get(i));
@@ -212,12 +205,10 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         	int chosenIndex = BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbilityIndex();
             this.drawTexturedModalRect(actionbarPosX-1 + chosenIndex*20, actionbarPosY-1, 232, 0, 24, 24);
         }
-
-        //RenderHelper.disableStandardItemLighting();
-        /*
+        RenderHelper.enableGUIStandardItemLighting();
+        RenderHelper.disableStandardItemLighting();
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glDisable(GL11.GL_BLEND);
-        */
     }
 
     public void renderBlockBar(int x, int y) {
