@@ -20,6 +20,7 @@ import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.ICooldownHolder;
+import mods.battleclasses.enumhelper.EnumBattleClassesAbilitySchool;
 import mods.battleclasses.enumhelper.EnumBattleClassesCastType;
 import mods.battleclasses.enumhelper.EnumBattleClassesTargetType;
 import mods.battleclasses.items.BattleClassesItemWeapon;
@@ -36,6 +37,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	protected IIcon abilityIcon;
 	public ResourceLocation abilityIconResourceLocation;
 	
+	protected EnumBattleClassesAbilitySchool school = EnumBattleClassesAbilitySchool.UNKNOWN;
 	protected EnumBattleClassesTargetType targetType = EnumBattleClassesTargetType.TargetType_UNNECESSARY_UNIVERSAL;
 	protected EnumBattleClassesCastType castingType = EnumBattleClassesCastType.CastType_UNKNOWN;
 	protected float castTime = 0;
@@ -45,6 +47,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	protected boolean ignoresSilence = false;
 	protected boolean requiresMeleeSwing = false;
 	protected int requiredItemLevel = 0;
+	protected String name = "Unknown Ability";
 	
 	/**
 	 * Called when player presses Mouse-Right button
@@ -92,6 +95,18 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		BattleClassesUtils.setEntityPlayerItemInUseInSeconds(entityPlayer, itemStack, this.castTime);
 	}
 	
+	public EnumBattleClassesAbilitySchool getSchool() {
+		return this.school;
+	}
+	
+	public int getChannelTicks() {
+		return this.channelTickCount;
+	}
+	
+	public boolean isChanneled() {
+		return this.channeled;
+	}
+	
 	/**
 	 * Called on CastStart to check if the ability is available and ready to use
 	 * @param entityPlayer - the caster player
@@ -127,6 +142,9 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		
 		return hasRequiredItem && cooldownFree && hasRequiredAmmo;
 	}
+	
+	public static final String HUD_W_ON_COOLDOWN = "That ability is not ready yet!";
+	public static final String ASD = "That ability is not ready yet!";
 	
 	public boolean requiresRayTracingForTarget() {
 		switch (this.targetType) {
@@ -242,6 +260,29 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
     public ResourceLocation getIconResourceLocation() {
     	return abilityIconResourceLocation;
     }
-
+    
+    @SideOnly(Side.CLIENT)
+    public String getName() {
+    	return name;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public float getCastPercentage(EntityPlayer entityPlayer) {
+    	float f = 0;
+    	float total = (float) this.getCastTimeInTicks();
+    	float current = total - (float) (entityPlayer.getItemInUseCount() - 72000);
+    	f = current/total;
+    	if(this.channeled) {
+    		f = 1.0F - f;
+    	}
+    	if(f > 1) {
+    		f = 1;
+    	}
+    	if(f < 0) {
+    		f = 0;
+    	}
+    	//System.out.println(current + "/" + total + " | F = " + f);
+    	return f;
+    }
 	
 }

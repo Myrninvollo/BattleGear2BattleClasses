@@ -56,6 +56,18 @@ public class BattleClassesClientEvents extends BattlegearClientEvents {
 		if (event.type == RenderGameOverlayEvent.ElementType.HOTBAR) {
 			inGameGUI.renderGameOverlay(event.partialTicks, event.mouseX, event.mouseY);
 		}
+		if (event.type == RenderGameOverlayEvent.ElementType.HEALTH) {
+			inGameGUI.drawCastbar();
+			inGameGUI.drawHighLightedLabels();
+		}
+	}
+	
+	@SubscribeEvent
+	public void preRenderOverlay(RenderGameOverlayEvent.Pre event) {
+		if (event.type == RenderGameOverlayEvent.ElementType.BOSSHEALTH) {
+			event.setCanceled(true);
+			inGameGUI.drawBossHealth();
+		}
 	}
 	
 	public static final int TABS_ON_LEFT = 5; 

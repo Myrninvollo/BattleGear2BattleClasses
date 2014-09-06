@@ -51,7 +51,7 @@ public class BattleClassesPlayerHooks {
 				break;
 				*/
 			default: {
-				this.playerClass = new BattleClassesPlayerClass(this, EnumBattleClassesPlayerClass.PlayerClass_NONE);
+				this.playerClass = new BattleClassesPlayerClass(this, parPlayerClass);
 			}
 				break;
 		
