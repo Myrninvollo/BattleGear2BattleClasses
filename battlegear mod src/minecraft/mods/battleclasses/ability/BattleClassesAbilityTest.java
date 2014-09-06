@@ -32,6 +32,12 @@ public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive
 	public void initSpellSchool() {
 		int pick = new Random().nextInt(EnumBattleClassesAbilitySchool.values().length);
 		this.school = EnumBattleClassesAbilitySchool.values()[pick];
+		
+		if(this.abilityID == 100) {
+			this.channeled = true;
+			this.channelTickCount = 3;
+			this.school = EnumBattleClassesAbilitySchool.SPELL_ARCANE;
+		}
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
@@ -129,6 +130,10 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	
 	public static IIcon getClassIcon(EnumBattleClassesPlayerClass parPlayerClass) {
 		return classIcons[parPlayerClass.ordinal()];
+	}
+	
+	public ResourceLocation getIconResourceLocation() {
+		return new ResourceLocation("battleclasses", "textures/sharedicons/classes/" + this.playerClass.toString() + ".png");
 	}
 	
 	// -------------------- ICooldownHolder implementation --------------------

@@ -99,6 +99,14 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		return this.school;
 	}
 	
+	public int getChannelTicks() {
+		return this.channelTickCount;
+	}
+	
+	public boolean isChanneled() {
+		return this.channeled;
+	}
+	
 	/**
 	 * Called on CastStart to check if the ability is available and ready to use
 	 * @param entityPlayer - the caster player

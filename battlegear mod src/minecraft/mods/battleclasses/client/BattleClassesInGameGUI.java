@@ -191,7 +191,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         RenderHelper.enableGUIStandardItemLighting();
         ArrayList<BattleClassesAbstractAbilityActive> spellbookAbilities = new ArrayList<BattleClassesAbstractAbilityActive>(BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).activeAbilities.values()); 
         for(int i = 0; i < spellbookAbilities.size(); ++i) {
-        	this.drawAbility(actionbarPosX+3 + i*20, actionbarPosY+3, spellbookAbilities.get(i));
+        	this.drawAbilityIcon(actionbarPosX+3 + i*20, actionbarPosY+3, spellbookAbilities.get(i));
         }
         
         this.mc.renderEngine.bindTexture(resourceLocationHUD);
@@ -325,6 +325,28 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
             fontrenderer.drawStringWithShadow(chosenAbilityName,
             		scaledresolution.getScaledWidth()/2 - fontrenderer.getStringWidth(chosenAbilityName)/2,
             		y + CAST_BAR_LABEL_OFFSET, 0xFFFFFF);
+            //DRAW CHOSEN SPELL ICON
+            float castBarIconScale = 0.6F;
+            if(BattleClassesUtils.getPlayerHooks(mc.thePlayer).playerClass.isOnCooldown()) {
+            	castBarIconScale = 1.0F;
+            	this.drawAbilityIconCentered(x + CAST_BAR_WIDTH, y + CAST_BAR_HEIGHT/4,
+						castBarIconScale, BattleClassesUtils.getPlayerHooks(mc.thePlayer).playerClass.getIconResourceLocation());
+    		}
+    		else {
+    			if(BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility() != null) {
+        			if(BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().isChanneled()) {
+        				int channelTicks =  BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().getChannelTicks();
+        				for(int i = 0; i < channelTicks; ++i) {
+        					this.drawAbilityIconCentered(x + CAST_BAR_WIDTH - ((i+1)*(CAST_BAR_WIDTH/(channelTicks)) ), y + CAST_BAR_HEIGHT/4,
+            						castBarIconScale, BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().getIconResourceLocation());
+        				}
+        			}
+        			else {
+        				this.drawAbilityIconCentered(x + CAST_BAR_WIDTH, y + CAST_BAR_HEIGHT/4,
+        						castBarIconScale, BattleClassesUtils.getPlayerSpellBook(mc.thePlayer).getChosenAbility().getIconResourceLocation());
+        			}
+        		}
+    		}
             
             this.mc.getTextureManager().bindTexture(icons);
     	}
@@ -355,12 +377,34 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
         }
     }
     
-    public void drawAbility(int x, int y, BattleClassesAbstractAbilityActive ability ) {
+    public void drawAbilityIcon(int x, int y, BattleClassesAbstractAbilityActive ability ) {
     	if(ability != null && ability.getIconResourceLocation() != null) {
     		mc.getTextureManager().bindTexture(ability.getIconResourceLocation());
     		myDrawTexturedModalRect(x, y, 16, 16);
         	//drawTexturedModelRectFromIcon(x, y, ability.getAbilityIcon(), 16, 16);
         	drawCooldown(x, y, BattleClassesUtils.getCooldownPercentage(ability));
+        	
+    	}
+    }
+    
+    public void drawAbilityIconCentered(int x, int y, float scale, ResourceLocation iconResourceLocation ) {
+    	if(iconResourceLocation != null) {
+    		mc.getTextureManager().bindTexture(iconResourceLocation);
+    		
+    		GL11.glPushMatrix();
+    		GL11.glScalef(scale, scale, scale);
+    		GL11.glEnable (GL11.GL_BLEND);
+    		GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+    		int iconScaledWidth = (int) (scale * 16);
+    		int iconScaledHeight = (int) (scale * 16);
+    		int scaledPosX = (int) ( ((float)x) / scale );
+    		int scaledPosY = (int) ( ((float)y) / scale );
+    		
+    		myDrawTexturedModalRect(scaledPosX - iconScaledWidth/2, scaledPosY - iconScaledHeight/2, 16, 16);
+    		
+    		GL11.glScalef(1, 1, 1);
+    		GL11.glPopMatrix();
         	
     	}
     }
@@ -373,6 +417,7 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
     		}
     		IIcon cooldownIcon = BattleClassesGuiHelper.cooldownIcons[frameIndex];
     	    GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
+    	    
             mc.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
     		this.drawTexturedModelRectFromIcon(posX, posY, cooldownIcon, cooldownIcon.getIconWidth(), cooldownIcon.getIconHeight());
     		
