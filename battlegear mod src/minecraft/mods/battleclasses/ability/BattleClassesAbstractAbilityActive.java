@@ -143,6 +143,9 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		return hasRequiredItem && cooldownFree && hasRequiredAmmo;
 	}
 	
+	public static final String HUD_W_ON_COOLDOWN = "That ability is not ready yet!";
+	public static final String ASD = "That ability is not ready yet!";
+	
 	public boolean requiresRayTracingForTarget() {
 		switch (this.targetType) {
 		case TargetType_AREAEFFECT_OFFENSIVE:
