@@ -54,9 +54,15 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	 */
 	public void onCastStart(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
 		if(!this.isAvailable(entityPlayer, itemStack)) {
+			this.playerHooks.playerClass.spellBook.cancelCasting();
 			return;
 		}
-		BattleClassesUtils.getPlayerSpellBook(entityPlayer).setGlobalCooldown();
+		
+		Side side = FMLCommonHandler.instance().getEffectiveSide();
+		if(side == Side.SERVER) {
+			BattleClassesUtils.getPlayerSpellBook(entityPlayer).setGlobalCooldown();
+		}
+		
 		if(this.isInstant()) {
 			this.requestProcession(entityPlayer, itemStack, 0);
 		}
@@ -74,6 +80,10 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 			int ticksPerProceed = this.getCastTimeInTicks() / this.channelTickCount;
 			int currentCastTickInverted = this.getCastTimeInTicks() - currentCastTick;
 			if(currentCastTickInverted > 0 && (currentCastTickInverted % ticksPerProceed) == 0) {
+				//Set To Cooldown on first channel tick
+				if(currentCastTickInverted == ticksPerProceed) {
+					this.setToCooldown();
+				}
 				BattleClassesUtils.Log("Channeling... Current tick: " + currentCastTickInverted + " Cast time in tick " + this.getCastTimeInTicks(), LogType.ABILITY);
 				this.requestProcession(entityPlayer, itemStack, tickCount);
 			}
@@ -211,7 +221,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	
 	public boolean proceedAbility(EntityLiving targetEntity, int tickCount) {
 		boolean performSucceeded = this.performEffect(targetEntity, tickCount);
-		if(performSucceeded) {
+		if(performSucceeded && !this.channeled) {
 			this.onCastFinished(targetEntity, tickCount);
 		}
 		

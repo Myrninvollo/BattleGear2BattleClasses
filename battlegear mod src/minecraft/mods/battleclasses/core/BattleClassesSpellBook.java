@@ -139,7 +139,7 @@ public class BattleClassesSpellBook {
 		this.chosenAbilityID = parID;
 		cancelCasting();
 	}
-	
+		
 	public void setGlobalCooldown() {
 		for(BattleClassesAbstractAbilityActive ability : getAbilitiesInArray()) {
 			if(!ability.ignoresGlobalCooldown && !ability.isOnCooldown()) {
