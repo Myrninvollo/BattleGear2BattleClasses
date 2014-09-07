@@ -39,7 +39,7 @@ public class BattleClassesWeaponSkill extends BattleClassesAbstractAbilityCooldo
 	}
 	
 	public void setToHalfCooldown() {
-		this.setCooldown(this.getCooldownDuration()/2, false);
+		//this.setCooldown(this.getCooldownDuration()/2, false);
 	}
-	
+
 }

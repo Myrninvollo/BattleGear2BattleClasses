@@ -1,5 +1,7 @@
 package mods.battleclasses.core;
 
+import mods.battleclasses.enumhelper.EnumBattleClassesCooldownType;
+
 public interface ICooldownHolder {
 	
 	/*
@@ -32,7 +34,7 @@ public interface ICooldownHolder {
 	 */
 	public void setToCooldownForced();
 	
-	public void setCooldown(float duration, boolean forced);
+	public void setCooldown(float duration, boolean forced, EnumBattleClassesCooldownType type);
 	
 	/**
 	 * Returns the ammount of time remaining of the cooldown
@@ -71,5 +73,11 @@ public interface ICooldownHolder {
 	 */
 	public void setSetTime(float t);
 	
+	public void cancelCooldown();
 	
+	//EnumBattleClassesCooldownType lastUsedCooldownType
+	
+	public void setLastUsedCooldownType(EnumBattleClassesCooldownType type);
+	
+	public EnumBattleClassesCooldownType getLastUsedCooldownType();
 }

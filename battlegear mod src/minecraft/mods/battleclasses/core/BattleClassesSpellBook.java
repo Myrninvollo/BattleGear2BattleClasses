@@ -15,6 +15,7 @@ import mods.battleclasses.ability.BattleClassesAbilityTest;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityPassive;
 import mods.battleclasses.client.BattleClassesInGameGUI;
+import mods.battleclasses.enumhelper.EnumBattleClassesCooldownType;
 import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import mods.battleclasses.items.BattleClassesItemWeapon;
 import mods.battleclasses.packet.BattleClassesPacketChosenAbilityIDSync;
@@ -143,7 +144,15 @@ public class BattleClassesSpellBook {
 	public void setGlobalCooldown() {
 		for(BattleClassesAbstractAbilityActive ability : getAbilitiesInArray()) {
 			if(!ability.ignoresGlobalCooldown && !ability.isOnCooldown()) {
-				ability.setCooldown(GLOBAL_COOLDOWN_DURATION, false);
+				ability.setCooldown(GLOBAL_COOLDOWN_DURATION, false, EnumBattleClassesCooldownType.CooldownType_GLOBAL);
+			}
+		}
+	}
+	
+	public void cancelGlobalCooldown() {
+		for(BattleClassesAbstractAbilityActive ability : getAbilitiesInArray()) {
+			if(!ability.ignoresGlobalCooldown && ability.isOnCooldown() && ability.getLastUsedCooldownType() == EnumBattleClassesCooldownType.CooldownType_GLOBAL) {
+				ability.cancelCooldown();
 			}
 		}
 	}

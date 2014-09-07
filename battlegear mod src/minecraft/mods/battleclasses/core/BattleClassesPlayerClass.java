@@ -10,6 +10,7 @@ import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
+import mods.battleclasses.enumhelper.EnumBattleClassesCooldownType;
 import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import mods.battleclasses.enumhelper.EnumBattleClassesWieldAccess;
 import mods.battleclasses.packet.BattleClassesPacketCooldownSet;
@@ -158,23 +159,25 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 
 	@Override
 	public void setToCooldown() {
-		this.setCooldown(this.getCooldownDuration(), false);
+		this.setCooldown(this.getCooldownDuration(), false, EnumBattleClassesCooldownType.CooldownType_CLASS_SWITCH);
 	}
 
 	@Override
 	public void setToCooldownForced() {
-		this.setCooldown(this.getCooldownDuration(), true);
+		this.setCooldown(this.getCooldownDuration(), true, EnumBattleClassesCooldownType.CooldownType_CLASS_SWITCH);
 	}
 	
-	public void setCooldown(float duration, boolean forced) {
+	public void setCooldown(float duration, boolean forced, EnumBattleClassesCooldownType type) {
 		if( duration > this.getCooldownRemaining() || forced) {
 			this.setTime = BattleClassesUtils.getCurrentTimeInSeconds();
 			this.setDuration = duration;
+			setLastUsedCooldownType(type);
 			if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {
 				EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.getOwnerPlayer();
 				if(entityPlayerMP != null) {
 					BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
-					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(), this.getSetDuration(), forced).generatePacket();
+					FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(),
+							this.getSetDuration(), forced, this.getLastUsedCooldownType()).generatePacket();
 					Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
 				}
 			}
@@ -214,6 +217,29 @@ public class BattleClassesPlayerClass implements ICooldownHolder {
 	@Override
 	public void setSetTime(float t) {
 		setTime = t;
+	}
+	
+	public void cancelCooldown() {
+		this.initCooldownHolder();
+		if(playerHooks.getOwnerPlayer() instanceof EntityPlayerMP) {
+			EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerHooks.getOwnerPlayer();
+			if(entityPlayerMP != null) {
+				BattleClassesUtils.Log("Sending class cooldown set to client: " + entityPlayerMP.getDisplayName(), LogType.PACKET);
+				FMLProxyPacket p = new BattleClassesPacketCooldownSet(playerHooks.getOwnerPlayer(), this.getCooldownHashCode(),
+						this.getSetDuration(), false, EnumBattleClassesCooldownType.CooldownType_CANCEL).generatePacket();
+				Battlegear.packetHandler.sendPacketToPlayerWithSideCheck(p, entityPlayerMP);
+			}
+		}
+	}
+	
+	protected EnumBattleClassesCooldownType lastUsedCoodownType;
+	
+	public void setLastUsedCooldownType(EnumBattleClassesCooldownType type) {
+		this.lastUsedCoodownType = type;
+	}
+	
+	public EnumBattleClassesCooldownType getLastUsedCooldownType() {
+		return lastUsedCoodownType;
 	}
 	
 }

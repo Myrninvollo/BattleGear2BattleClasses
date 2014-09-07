@@ -22,6 +22,7 @@ import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.ICooldownHolder;
 import mods.battleclasses.enumhelper.EnumBattleClassesAbilitySchool;
 import mods.battleclasses.enumhelper.EnumBattleClassesCastType;
+import mods.battleclasses.enumhelper.EnumBattleClassesCooldownType;
 import mods.battleclasses.enumhelper.EnumBattleClassesTargetType;
 import mods.battleclasses.items.BattleClassesItemWeapon;
 import mods.battleclasses.packet.BattleClassesPacketCooldownSet;
@@ -54,7 +55,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	 */
 	public void onCastStart(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
 		if(!this.isAvailable(entityPlayer, itemStack)) {
-			this.playerHooks.playerClass.spellBook.cancelCasting();
+			this.cancelCasting(entityPlayer);
 			return;
 		}
 		
@@ -91,13 +92,16 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	}
 	
 	public void onCastRelease(ItemStack itemStack, EntityPlayer entityPlayer, int tickCount) {
-		if(this.channeled) {
-			return;
-		}
-		int currentCastTick = tickCount - 72000;
-		if(currentCastTick <= 0) {
+		int remainingCastTick = tickCount - 72000;
+		if(remainingCastTick <= 0) {
+			if(this.channeled) {
+				return;
+			}
 			this.requestProcession(entityPlayer, itemStack, tickCount);
 		}
+		else {
+			this.cancelCasting(entityPlayer);
+		}	
 	}
 	
 	protected void startCasting(EntityPlayer entityPlayer, ItemStack itemStack) {
@@ -191,7 +195,9 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	}
 	
 	public void cancelCasting(EntityPlayer entityPlayer) {
+		this.playerHooks.playerClass.spellBook.cancelGlobalCooldown();
 		entityPlayer.clearItemInUse();
+		BattleClassesUtils.Log("Cancelling Casting and GlobalCD", LogType.ABILITY);
 	}
 	
 	public void requestProcession(EntityPlayer entityPlayer, ItemStack itemStack, int tickCount) {
