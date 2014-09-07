@@ -69,17 +69,21 @@ public class BattleClassesSpellBook {
 	}
 	
 	public boolean isAvailable(ItemStack itemStack, EntityPlayer entityPlayer) {
+		boolean battleMode = ((IBattlePlayer) entityPlayer).isBattlemode();
+		if(!battleMode) {
+			BattleClassesInGameGUI.displayWarning(BattleClassesInGameGUI.HUD_W_BATTLEMODE_REQUIRED);
+			return false;
+		}
 		boolean hasClass = playerHooks.playerClass.getPlayerClass() != EnumBattleClassesPlayerClass.PlayerClass_NONE;
 		if(!hasClass) {
+			BattleClassesInGameGUI.displayWarning(BattleClassesInGameGUI.HUD_W_CLASS_REQUIRED);
 			return false;
 		}
 		boolean cooldownFreeClass = !playerHooks.playerClass.isOnCooldown();
 		if(!cooldownFreeClass) {
-			//HUD WARNING MESSAGE
+			BattleClassesInGameGUI.displayWarning(BattleClassesInGameGUI.HUD_W_ON_CLASS_COOLDOWN);
 			return false;
 		}
-		
-		boolean battleMode = ((IBattlePlayer) entityPlayer).isBattlemode();
 		
 		return hasClass && cooldownFreeClass && battleMode;
 	}

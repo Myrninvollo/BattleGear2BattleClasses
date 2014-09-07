@@ -18,6 +18,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
+import mods.battleclasses.client.BattleClassesInGameGUI;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.ICooldownHolder;
 import mods.battleclasses.enumhelper.EnumBattleClassesAbilitySchool;
@@ -136,30 +137,30 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 					hasRequiredItem = true;
 				}
 				else {
-					//HUD WARNING MESSAGE
+					BattleClassesInGameGUI.displayWarning(BattleClassesInGameGUI.HUD_W_WEAPON_LOW_LEVEL);
+					return false;
 				}
 			}
 			else {
-				//HUD WARNING MESSAGE
+				BattleClassesInGameGUI.displayWarning(BattleClassesInGameGUI.HUD_W_WEAPON_WRONG_CLASS);
+				return false;
 			}
 		}
 		
 		boolean cooldownFree = !this.isOnCooldown();
 		if(!cooldownFree) {
-			//HUD WARNING MESSAGE
+			BattleClassesInGameGUI.displayWarning(BattleClassesInGameGUI.HUD_W_ON_COOLDOWN);
+			return false;
 		}
 		
 		boolean hasRequiredAmmo = true;
 		if(!hasRequiredAmmo) {
-			//HUD WARNING MESSAGE
+			BattleClassesInGameGUI.displayWarning(BattleClassesInGameGUI.HUD_W_WEAPON_NO_AMMO);
 		}
 		
 		return hasRequiredItem && cooldownFree && hasRequiredAmmo;
 	}
-	
-	public static final String HUD_W_ON_COOLDOWN = "That ability is not ready yet!";
-	public static final String ASD = "That ability is not ready yet!";
-	
+		
 	public boolean requiresRayTracingForTarget() {
 		switch (this.targetType) {
 		case TargetType_AREAEFFECT_OFFENSIVE:

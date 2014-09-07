@@ -479,6 +479,14 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 		targetDisplay_HLL.setText(message);
 		targetDisplay_HLL.show();
 	}
+
+	public static final String HUD_W_CLASS_REQUIRED = "You need to choose a class to use that!";
+	public static final String HUD_W_BATTLEMODE_REQUIRED = "You need to be in Battle mode to use that!";
+	public static final String HUD_W_ON_COOLDOWN = "That ability is not ready yet!";
+	public static final String HUD_W_ON_CLASS_COOLDOWN = "Your class is not ready yet!";
+	public static final String HUD_W_WEAPON_WRONG_CLASS = "That weapon is not for your class!";
+	public static final String HUD_W_WEAPON_LOW_LEVEL = "That ability requires a better weapon'";
+	public static final String HUD_W_WEAPON_NO_AMMO = "That ability requires ammo!";
 	
 	public static void displayWarning(String message) {
 		warningDisplay_HLL.setText(message);
