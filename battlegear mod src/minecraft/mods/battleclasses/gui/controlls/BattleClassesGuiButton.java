@@ -13,6 +13,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
@@ -32,8 +33,12 @@ public class BattleClassesGuiButton extends GuiButton {
 	public int origin_x = 0;
 	public int origin_y = 0;
 	
+	public boolean displayTooltip = false;
+	public String tooltipDescription = "";
+	
 	public BattleClassesGuiButton(int id, int x, int y, int width, int height, String name) {
 		super(id, x, y, width, height, name);
+		this.displayString = "";
 	}
 	
 	public BattleClassesGuiButton(int id, ResourceLocation resource) {
@@ -73,6 +78,12 @@ public class BattleClassesGuiButton extends GuiButton {
 		return false;
 	}
 	
+	public List getDescriptionList() {
+		ArrayList stringList = new ArrayList();
+    	stringList.add(this.tooltipDescription);
+    	return stringList;
+	}
+	
 	/**
      * Draws this button to the screen.
      */
@@ -94,20 +105,23 @@ public class BattleClassesGuiButton extends GuiButton {
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             this.drawTexturedModalRect(this.xPosition, this.yPosition, this.origin_x, this.origin_y + k*this.height, this.width, this.height);
             
-            //Rendering Tab Icon
-            /*
-            int iconOffsetX = (this.horizontal) ? 7 : 6;
-            mc.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
-            this.drawTexturedModelRectFromIcon(this.xPosition  + iconOffsetX, this.yPosition + this.height - 16 - 6, tabButtonIcon, 16, 16);
-            */
-            //Rendering Tab Name
-            /*
-            if( field_146123_n ) {
-            	ArrayList stringList = new ArrayList();
-            	stringList.add(this.displayString);
-            	this.drawHoveringText(stringList, p_146112_2_, p_146112_3_, fontrenderer);
+            //Rendering Button display string
+            int l = 14737632;
+            if (packedFGColour != 0) {
+                l = packedFGColour;
             }
-            */
+            else if (!this.enabled) {
+                l = 10526880;
+            }
+            else if (this.field_146123_n) {
+                l = 16777120;
+            }
+            this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, l);
+
+            //Rendering Tooltip
+            if( this.field_146123_n && this.displayTooltip) {
+            	this.drawHoveringText(this.getDescriptionList(), p_146112_2_, p_146112_3_, fontrenderer);
+            }
         }
     }
 	
@@ -223,4 +237,16 @@ public class BattleClassesGuiButton extends GuiButton {
         }
     }
 	
+	// 3.  You'll need to write your own version of the Gui.drawTexturedModalRect() method
+	//  This method can go into your own Gui class:
+	public void myDrawTexturedModalRect(int x, int y, int width, int height)
+	{
+		 Tessellator tessellator = Tessellator.instance;
+		 tessellator.startDrawingQuads();    
+		 tessellator.addVertexWithUV(x        , y + height, (double)this.zLevel, 0.0, 1.0);
+		 tessellator.addVertexWithUV(x + width, y + height, (double)this.zLevel, 1.0, 1.0);
+		 tessellator.addVertexWithUV(x + width, y         , (double)this.zLevel, 1.0, 0.0);
+		 tessellator.addVertexWithUV(x        , y         , (double)this.zLevel, 0.0, 0.0);
+		 tessellator.draw();
+	}
 }

@@ -1,10 +1,17 @@
 package mods.battleclasses.gui.tab;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.core.BattleClassesPlayerClass;
 import mods.battleclasses.core.BattleClassesTalentMatrix;
 import mods.battleclasses.core.BattleClassesTalentTree;
+import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import mods.battleclasses.gui.BattleClassesGUIHandler;
+import mods.battleclasses.gui.controlls.BattleClassesGuiButtonClassSelector;
+import mods.battleclasses.gui.controlls.BattleClassesGuiButtonTalentReset;
+import mods.battleclasses.gui.controlls.BattleClassesGuiButtonTalentTree;
 import mods.battlegear2.Battlegear;
 import mods.battlegear2.client.BattlegearClientEvents;
 import mods.battlegear2.client.ClientProxy;
@@ -27,6 +34,12 @@ public class BattleClassesTabTalents extends BattleClassesAbstractTab {
 	public static final ResourceLocation resource = new ResourceLocation("battleclasses", "textures/gui/InterfaceTalent.png");
 	public ResourceLocation[] resourceBackground = new ResourceLocation[3];
 
+	public static List<BattleClassesGuiButtonTalentTree> treeButtonList = new ArrayList<BattleClassesGuiButtonTalentTree>();
+	static {
+		treeButtonList.add(new BattleClassesGuiButtonTalentTree(0, 0, 0));
+		treeButtonList.add(new BattleClassesGuiButtonTalentTree(1, 0, 0));
+		treeButtonList.add(new BattleClassesGuiButtonTalentTree(2, 0, 0));
+	}
 
     public BattleClassesTabTalents(EntityPlayer entityPlayer, boolean isRemote) {
         super(entityPlayer, isRemote, new BattleClassesContainerEmpty(entityPlayer.inventory, !isRemote, entityPlayer));
@@ -45,6 +58,19 @@ public class BattleClassesTabTalents extends BattleClassesAbstractTab {
         	resourceBackground[i] = new ResourceLocation("battleclasses", talentTree.getResoureLocationString());
         	++i;
         }
+        
+        //Init Buttons
+        BattleClassesGuiButtonTalentReset resetButton = new BattleClassesGuiButtonTalentReset(5, this.guiLeft + 115, this.guiTop + 139);
+        resetButton.setOrigin(0, 196);
+        this.buttonList.add(resetButton);
+        int j = 0;
+		for (BattleClassesGuiButtonTalentTree button : BattleClassesTabTalents.treeButtonList) {
+			this.buttonList.add(button);
+			button.setOrigin(0, 196);
+			button.setPosition(this.guiLeft + 7 + j*TALENT_TREE_VIEW_W, this.guiTop + 7);
+			button.setTalentTree(talentMatrix.talentTrees.get(j));
+			++j;
+		}
     }
 
     /**

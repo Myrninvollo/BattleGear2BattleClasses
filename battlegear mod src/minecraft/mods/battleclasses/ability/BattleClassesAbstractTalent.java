@@ -10,6 +10,10 @@ public class BattleClassesAbstractTalent extends BattleClassesAbstractAbilityPas
 	
 	int currentState = 0;
 	
+	public int getCurrentState() {
+		return this.currentState;
+	}
+	
 	public int getMaximalState() {
 		return 1;
 	}
