@@ -25,6 +25,9 @@
 !battlegear dist/
 !battlegear dist/*
 
+!battleclasses image sources/
+!battleclasses image sources/*
+
 !mods/
 
 #Also don't ignore the install scripts

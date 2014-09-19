@@ -104,24 +104,6 @@ public class BattleClassesTabTalents extends BattleClassesAbstractTab {
     	this.mc.renderEngine.bindTexture(resource);
     	this.drawTexturedModalRect(x, y, 176, 0, TALENT_TREE_VIEW_W, TALENT_TREE_VIEW_H);
     	//DRAW ARROWS
-    	
-    	
-    	
-    	/* GUICONTAINER.CLASS
-        if (this.isMouseOverSlot(slot, par1, par2) && slot.func_111238_b())
-        {
-            this.theSlot = slot;
-            GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(GL11.GL_DEPTH_TEST);
-            int j1 = slot.xDisplayPosition;
-            k1 = slot.yDisplayPosition;
-            GL11.glColorMask(true, true, true, false);
-            this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, -2130706433, -2130706433);
-            GL11.glColorMask(true, true, true, true);
-            GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glEnable(GL11.GL_DEPTH_TEST);
-        }
-        */
     }
 
     /**
