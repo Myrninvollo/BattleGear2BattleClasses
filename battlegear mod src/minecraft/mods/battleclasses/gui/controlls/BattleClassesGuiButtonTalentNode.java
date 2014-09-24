@@ -31,36 +31,35 @@ public class BattleClassesGuiButtonTalentNode extends BattleClassesGuiButton {
             this.field_146123_n = p_146112_2_ >= this.xPosition && p_146112_3_ >= this.yPosition && p_146112_2_ < this.xPosition + this.width && p_146112_3_ < this.yPosition + this.height;
             int k = this.getHoverState(this.field_146123_n);
             
-            
+            //Draw talent icon (alpha by availability)
+            if(talent.isLitOnUI()) {
+            	GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            }
+            else {
+            	GL11.glColor4f(0.5F, 0.5F, 0.5F, 1.0F);
+            }
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             mc.getTextureManager().bindTexture(talent.getIconResourceLocation());
             this.myDrawTexturedModalRect(this.xPosition, this.yPosition, 16, 16);
-            //this.drawTexturedModalRect(this.xPosition, this.yPosition, this.origin_x, this.origin_y + k*this.height, this.width, this.height);
             
-            
-            //Draw colored frame by state
-            float state = ((float) talent.getCurrentState()) / ((float) talent.getMaximalState());
-            //Draw talent icon (alpha by availability)
-            
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             //Draw hover-over square
-            /* GUICONTAINER.CLASS
-            if (this.isMouseOverSlot(slot, par1, par2) && slot.func_111238_b())
+            if (this.field_146123_n)
             {
-                this.theSlot = slot;
-                GL11.glDisable(GL11.GL_LIGHTING);
-                GL11.glDisable(GL11.GL_DEPTH_TEST);
-                int j1 = slot.xDisplayPosition;
-                k1 = slot.yDisplayPosition;
+            	GL11.glPushMatrix();
+                //GL11.glDisable(GL11.GL_LIGHTING);
+                //GL11.glDisable(GL11.GL_DEPTH_TEST);
+                int j1 = this.xPosition;
+                int k1 = this.yPosition;
                 GL11.glColorMask(true, true, true, false);
                 this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, -2130706433, -2130706433);
                 GL11.glColorMask(true, true, true, true);
-                GL11.glEnable(GL11.GL_LIGHTING);
-                GL11.glEnable(GL11.GL_DEPTH_TEST);
+                //GL11.glEnable(GL11.GL_LIGHTING);
+                //GL11.glEnable(GL11.GL_DEPTH_TEST);
+                GL11.glPopMatrix();
             }
-            */
-            
             
             //Draw hover-over Tooltip
             /*

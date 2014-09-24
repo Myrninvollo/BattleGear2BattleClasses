@@ -80,9 +80,24 @@ public class BattleClassesAbstractTalent extends BattleClassesAbstractAbilityPas
 		//ADD OR REMOVE CONTAINED ABILITY TO SPELLBOOK
 	}
 	
-	public boolean isAvailable() {
-		//TODO
-		return true;
+	public boolean isLitOnUI() {
+		return isAvailableToGet() || isAlreadyOn();
+	}
+	
+	
+	public boolean isAvailableToGet() {
+		if(!this.playerHooks.playerClass.talentMatrix.hasPointsToSpend()) {
+			return false;
+		}
+		return (this.talentLevel == 0) ||  (this.getPreviousTalentTreeElement().isAlreadyOn());
+	}
+	
+	public BattleClassesAbstractTalent getPreviousTalentTreeElement() {
+		return this.parentTree.talentList.get(this.parentTree.talentList.indexOf(this) - 1);
+	}
+	
+	public boolean isAlreadyOn() {
+		return this.getCurrentState() == this.getMaximalState();
 	}
 	
     @SideOnly(Side.CLIENT)

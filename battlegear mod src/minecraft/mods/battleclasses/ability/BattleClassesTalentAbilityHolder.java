@@ -2,9 +2,12 @@ package mods.battleclasses.ability;
 
 public class BattleClassesTalentAbilityHolder extends BattleClassesAbstractTalent {
 
-	public BattleClassesTalentAbilityHolder(int parAbilityID, int parTalentLevel) {
+	public BattleClassesTalentAbilityHolder(int parAbilityID, int parTalentLevel, BattleClassesAbstractAbilityActive parAbility) {
 		super(parAbilityID, parTalentLevel);
-		// TODO Auto-generated constructor stub
+		containedAbility = parAbility;
 	}
+	
+	BattleClassesAbstractAbilityActive containedAbility;
+	
 
 }
