@@ -81,22 +81,25 @@ public class BattleClassesAbstractTalent extends BattleClassesAbstractAbilityPas
 	}
 	
 	public boolean isLitOnUI() {
-		return isAvailableToGet() || isAlreadyOn();
+		return isAvailableToLearn() || isAlreadyLearned();
 	}
 	
 	
-	public boolean isAvailableToGet() {
+	public boolean isAvailableToLearn() {
 		if(!this.playerHooks.playerClass.talentMatrix.hasPointsToSpend()) {
 			return false;
 		}
-		return (this.talentLevel == 0) ||  (this.getPreviousTalentTreeElement().isAlreadyOn());
+		if(this.isAlreadyLearned()) {
+			return false;
+		}
+		return (this.talentLevel == 0) ||  (this.getPreviousTalentTreeElement().isAlreadyLearned());
 	}
 	
 	public BattleClassesAbstractTalent getPreviousTalentTreeElement() {
 		return this.parentTree.talentList.get(this.parentTree.talentList.indexOf(this) - 1);
 	}
 	
-	public boolean isAlreadyOn() {
+	public boolean isAlreadyLearned() {
 		return this.getCurrentState() == this.getMaximalState();
 	}
 	

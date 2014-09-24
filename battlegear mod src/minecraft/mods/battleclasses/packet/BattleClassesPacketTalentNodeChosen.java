@@ -49,15 +49,15 @@ public class BattleClassesPacketTalentNodeChosen  extends AbstractMBPacket {
             if(entityPlayer!=null){
             	BattleClassesPlayerHooks playerHooks = BattleClassesUtils.getPlayerHooks(entityPlayer);
             	if(talentID == RESET_TALENTS_ID) {
-            		//TODO RESET
+            		playerHooks.playerClass.talentMatrix.resetTalentPoints();
             	}
             	else if(talentID >= TALENT_TREE_BUTTON_ID_OFFSET) {
             		int treeIndex = talentID - TALENT_TREE_BUTTON_ID_OFFSET;
-            		//TODO SET TREE
+            		playerHooks.playerClass.talentMatrix.learnFullTreeAtIndex(treeIndex);
             	}
             	else {
             		BattleClassesAbstractTalent talentAbility = playerHooks.playerClass.talentMatrix.talentHashMap.get(talentID);
-                	if(talentAbility.isAvailableToGet()) {
+                	if(talentAbility.isAvailableToLearn()) {
                 		talentAbility.incrementState();
                 	}
             	}
