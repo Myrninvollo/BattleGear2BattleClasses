@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mods.battleclasses.BattleClassesUtils;
+import mods.battleclasses.ability.BattleClassesAbstractTalent;
 import mods.battleclasses.core.BattleClassesPlayerClass;
 import mods.battleclasses.core.BattleClassesTalentMatrix;
 import mods.battleclasses.core.BattleClassesTalentTree;
@@ -12,6 +13,7 @@ import mods.battleclasses.gui.BattleClassesGUIHandler;
 import mods.battleclasses.gui.controlls.BattleClassesGuiButtonClassSelector;
 import mods.battleclasses.gui.controlls.BattleClassesGuiButtonTalentReset;
 import mods.battleclasses.gui.controlls.BattleClassesGuiButtonTalentTree;
+import mods.battleclasses.gui.controlls.BattleClassesGuiButtonTalentNode;
 import mods.battlegear2.Battlegear;
 import mods.battlegear2.client.BattlegearClientEvents;
 import mods.battlegear2.client.ClientProxy;
@@ -35,6 +37,7 @@ public class BattleClassesTabTalents extends BattleClassesAbstractTab {
 	public ResourceLocation[] resourceBackground = new ResourceLocation[3];
 
 	public static List<BattleClassesGuiButtonTalentTree> treeButtonList = new ArrayList<BattleClassesGuiButtonTalentTree>();
+	public ArrayList< ArrayList<BattleClassesGuiButtonTalentNode> > treeList =  new ArrayList< ArrayList<BattleClassesGuiButtonTalentNode> >();
 	static {
 		treeButtonList.add(new BattleClassesGuiButtonTalentTree(0, 0, 0));
 		treeButtonList.add(new BattleClassesGuiButtonTalentTree(1, 0, 0));
@@ -58,6 +61,19 @@ public class BattleClassesTabTalents extends BattleClassesAbstractTab {
         	resourceBackground[i] = new ResourceLocation("battleclasses", talentTree.getResoureLocationString());
         	++i;
         }
+        //Init Talent nodes
+        int talentNodeID = 10;
+        for(BattleClassesTalentTree talentTree : talentMatrix.talentTrees) {
+        	ArrayList<BattleClassesGuiButtonTalentNode> treeNodes = new ArrayList<BattleClassesGuiButtonTalentNode>();
+        	for(BattleClassesAbstractTalent talentAbility : talentTree.talentList ) {
+        		BattleClassesGuiButtonTalentNode talentNode = new BattleClassesGuiButtonTalentNode(talentNodeID, talentAbility);
+        		treeNodes.add(talentNode);
+        		
+        		this.buttonList.add(talentNode);
+        		++talentNodeID;
+        	}
+        	treeList.add(treeNodes);
+        }
         
         //Init Buttons
         BattleClassesGuiButtonTalentReset resetButton = new BattleClassesGuiButtonTalentReset(5, this.guiLeft + 115, this.guiTop + 139);
@@ -71,6 +87,8 @@ public class BattleClassesTabTalents extends BattleClassesAbstractTab {
 			button.setTalentTree(talentMatrix.talentTrees.get(j));
 			++j;
 		}
+
+		
     }
 
     /**
@@ -91,14 +109,21 @@ public class BattleClassesTabTalents extends BattleClassesAbstractTab {
     	//ResourceLocation resourceBackground = new ResourceLocation("battleclasses", talentTree.getResoureLocationString());
     	//this.mc.renderEngine.bindTexture(resourceBackground);
     	this.mc.renderEngine.bindTexture(resourceBackground[treeIndex]);
+    	   	
     	//Draws a textured rectangle at the stored z-value. Args: x, y, u, v, width, height
     	//this.drawTexturedModalRect(x, y, 0, 0, TALENT_TREE_VIEW_W, TALENT_TREE_VIEW_H);
     	myDrawTexturedModalRect( x,  y,  TALENT_TREE_VIEW_W,  TALENT_TREE_VIEW_H);
-    	/*
-    	IIcon testicon = BattleClassesPlayerClass.getClassIcon(BattleClassesUtils.getPlayerClass(mc.thePlayer));
-        mc.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
-    	this.drawTexturedModelRectFromIcon(x, y, testicon, 16, 16);
-    	*/
+
+    	int talentNodeOffsetX = 19;
+    	int talentNodeOffsetY = 10;
+    	int talentNodeDistanceH = 36; 
+    	int i = 0;
+    	for(BattleClassesGuiButtonTalentNode talentNode : treeList.get(treeIndex)) {
+    		
+    		talentNode.setPosition(x + talentNodeOffsetX, y + talentNodeOffsetY + i*talentNodeDistanceH);
+    		
+    		++i;
+    	}
     	
     	//DRAW FRAME
     	this.mc.renderEngine.bindTexture(resource);

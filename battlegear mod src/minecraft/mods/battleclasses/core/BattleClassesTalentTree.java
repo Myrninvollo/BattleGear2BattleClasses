@@ -10,9 +10,14 @@ public class BattleClassesTalentTree {
 	
 	public void setOwnerTalentMatrix(BattleClassesTalentMatrix parTalentMatrix) {
 		this.ownerTalentMatrix = parTalentMatrix;
+		
+		for(BattleClassesAbstractTalent talent : talentList) {
+			talent.setParentTree(this);
+			talent.setPlayerHooks(parTalentMatrix.playerHooks);
+		}
 	}
 	
-	public ArrayList<BattleClassesAbstractTalent> talentList;
+	public ArrayList<BattleClassesAbstractTalent> talentList = new ArrayList<BattleClassesAbstractTalent>();
 	
 	/**
 	 * Returns the index of the talent tree

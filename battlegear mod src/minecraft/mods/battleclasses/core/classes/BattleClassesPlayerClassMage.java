@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 
 import mods.battleclasses.ability.BattleClassesAbilityTest;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
+import mods.battleclasses.ability.BattleClassesTalentTest;
 import mods.battleclasses.core.BattleClassesPlayerClass;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.BattleClassesTalentTree;
@@ -31,13 +32,23 @@ public class BattleClassesPlayerClassMage extends BattleClassesPlayerClass {
 	public ArrayList<BattleClassesTalentTree> getClassTalents() {
 		ArrayList<BattleClassesTalentTree> talentTrees = new ArrayList<BattleClassesTalentTree>();
 		BattleClassesTalentTree talentTree1 = new BattleClassesTalentTree();
+		talentTree1.talentList.add(new BattleClassesTalentTest(1100, 0));
+		talentTree1.talentList.add(new BattleClassesTalentTest(1101, 1));
 		BattleClassesTalentTree talentTree2 = new BattleClassesTalentTree();
+		talentTree2.talentList.add(new BattleClassesTalentTest(1110, 0));
+		talentTree2.talentList.add(new BattleClassesTalentTest(1111, 1));
 		BattleClassesTalentTree talentTree3 = new BattleClassesTalentTree();
+		talentTree3.talentList.add(new BattleClassesTalentTest(1120, 0));
+		talentTree3.talentList.add(new BattleClassesTalentTest(1121, 1));
+		
+		//TODO : Add talents to the talent trees
+		
+		
 		talentTrees.add(talentTree1);
 		talentTrees.add(talentTree2);
 		talentTrees.add(talentTree3);
 		
-		//TODO : Add talents to the talent trees
+		
 		
 		return talentTrees;
 	}
