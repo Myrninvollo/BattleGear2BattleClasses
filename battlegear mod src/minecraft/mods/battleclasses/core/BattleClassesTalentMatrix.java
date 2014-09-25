@@ -3,6 +3,8 @@ package mods.battleclasses.core;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import mods.battleclasses.BattleClassesUtils;
+import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.ability.BattleClassesAbilityTest;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
 import mods.battleclasses.ability.BattleClassesAbstractTalent;
@@ -58,11 +60,23 @@ public class BattleClassesTalentMatrix {
 	}
 	
 	public void learnFullTreeAtIndex(int index) {
-		//TODO
+		BattleClassesUtils.Log("Trying to learn full talent tree at index: " + index, LogType.CORE);
+		this.resetTalentPoints();
+		BattleClassesTalentTree talentTree = this.talentTrees.get(index);
+		for(BattleClassesAbstractTalent talentAbility : talentTree.talentList ) {
+    		while(!talentAbility.isAlreadyLearned() && talentPoints != 0) {
+    			this.learnTalent(talentAbility);
+    		}
+    	}
 	}
 	
 	public void resetTalentPoints() {
-		//TODO
+		for(BattleClassesTalentTree talentTree : this.talentTrees) {
+        	for(BattleClassesAbstractTalent talentAbility : talentTree.talentList ) {
+        		talentAbility.setCurrentState(0);
+        	}
+        }
+		talentPoints = TALENT_POINTS_TO_SPEND;
 	}
 	
 	public void learnTalent(BattleClassesAbstractTalent talentAbility) {
