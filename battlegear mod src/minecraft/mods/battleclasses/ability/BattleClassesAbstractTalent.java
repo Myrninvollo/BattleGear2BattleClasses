@@ -20,6 +20,14 @@ public class BattleClassesAbstractTalent extends BattleClassesAbstractAbilityPas
 	int talentLevel = 0;
 	int currentState = 0;
 	
+	/**
+	 * Should only be used by PacketTalentSync while applying talentStateMap
+	 * @param state
+	 */
+	public void setCurrentState(int state) {
+		this.currentState = state;
+	}
+	
 	public int getCurrentState() {
 		return this.currentState;
 	}

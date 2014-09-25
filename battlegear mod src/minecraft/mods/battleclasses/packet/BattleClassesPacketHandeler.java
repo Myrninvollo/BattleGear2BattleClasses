@@ -22,6 +22,8 @@ public class BattleClassesPacketHandeler extends BattlegearPacketHandeler {
 		map.put(BattleClassesPacketPlayerClassSnyc.packetName, new BattleClassesPacketPlayerClassSnyc());
 		map.put(BattleClassesPacketCooldownSet.packetName, new BattleClassesPacketCooldownSet());
 		map.put(BattleClassesPacketChosenAbilityIDSync.packetName, new BattleClassesPacketChosenAbilityIDSync());
+		map.put(BattleClassesPacketTalentNodeChosen.packetName, new BattleClassesPacketTalentNodeChosen());
+		map.put(BattleClassesPacketTalentSync.packetName, new BattleClassesPacketTalentSync());
 	}
 	
 	public void sendPacketToPlayerWithSideCheck(FMLProxyPacket packet, EntityPlayerMP player){

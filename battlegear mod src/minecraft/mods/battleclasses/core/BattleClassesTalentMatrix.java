@@ -39,6 +39,12 @@ public class BattleClassesTalentMatrix {
         }
 	}
 	
+	public void setTalentPoints(int n) {
+		if(n <= TALENT_POINTS_TO_SPEND) {
+			talentPoints = n;
+		}
+	}
+	
 	public int getTalentPoints() {
 		return talentPoints;
 	}
@@ -57,5 +63,12 @@ public class BattleClassesTalentMatrix {
 	
 	public void resetTalentPoints() {
 		//TODO
+	}
+	
+	public void learnTalent(BattleClassesAbstractTalent talentAbility) {
+		if(talentAbility.isAvailableToLearn()) {
+    		talentAbility.incrementState();
+    		--talentPoints;
+    	}
 	}
 }

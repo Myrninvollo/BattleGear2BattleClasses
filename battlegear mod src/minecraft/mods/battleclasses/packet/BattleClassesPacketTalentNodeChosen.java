@@ -6,9 +6,12 @@ import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.ability.BattleClassesAbstractTalent;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
+import mods.battlegear2.Battlegear;
 import mods.battlegear2.packet.AbstractMBPacket;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 
 public class BattleClassesPacketTalentNodeChosen  extends AbstractMBPacket {
 
@@ -57,11 +60,15 @@ public class BattleClassesPacketTalentNodeChosen  extends AbstractMBPacket {
             	}
             	else {
             		BattleClassesAbstractTalent talentAbility = playerHooks.playerClass.talentMatrix.talentHashMap.get(talentID);
-                	if(talentAbility.isAvailableToLearn()) {
-                		talentAbility.incrementState();
-                	}
+            		playerHooks.playerClass.talentMatrix.learnTalent(talentAbility);
             	}
-            	//TODO Send Full synch to player
+            	
+            	//Talent sync to player
+            	FMLProxyPacket p = new BattleClassesPacketTalentSync(entityPlayer).generatePacket();
+            	if(entityPlayer instanceof EntityPlayerMP) {
+            		EntityPlayerMP entityPlayerMP = (EntityPlayerMP) entityPlayer;
+            		Battlegear.packetHandler.sendPacketToPlayer(p, entityPlayerMP);
+            	}
             }
         }
 	}
