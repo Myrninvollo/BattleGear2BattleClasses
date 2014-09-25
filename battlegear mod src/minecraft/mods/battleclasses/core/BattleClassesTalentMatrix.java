@@ -47,6 +47,10 @@ public class BattleClassesTalentMatrix {
 		return talentPoints > 0;
 	}
 	
+	public boolean hasPointsSpentAlready() {
+		return talentPoints < TALENT_POINTS_TO_SPEND;
+	}
+	
 	public void learnFullTreeAtIndex(int index) {
 		//TODO
 	}

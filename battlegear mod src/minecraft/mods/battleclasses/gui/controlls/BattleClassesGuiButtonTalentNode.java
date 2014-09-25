@@ -1,19 +1,24 @@
 package mods.battleclasses.gui.controlls;
 
 import mods.battleclasses.ability.BattleClassesAbstractTalent;
+import mods.battleclasses.packet.BattleClassesPacketPlayerClassSnyc;
+import mods.battleclasses.packet.BattleClassesPacketTalentNodeChosen;
+import mods.battlegear2.Battlegear;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+
 public class BattleClassesGuiButtonTalentNode extends BattleClassesGuiButton {
 	
-	public BattleClassesAbstractTalent talent;
+	public BattleClassesAbstractTalent talentAbility;
 
 	public BattleClassesGuiButtonTalentNode(int id, BattleClassesAbstractTalent talentAbility) {
 		super(id, 0, 0, 20, 20, "talentNode");
-		this.talent = talentAbility;
+		this.talentAbility = talentAbility;
 	}
 
 	/**
@@ -21,7 +26,7 @@ public class BattleClassesGuiButtonTalentNode extends BattleClassesGuiButton {
      */
     public void drawButton(Minecraft mc, int p_146112_2_, int p_146112_3_)
     {
-        if (this.visible && talent != null)
+        if (this.visible && talentAbility != null)
         {	
             FontRenderer fontrenderer = mc.fontRenderer;
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -32,7 +37,7 @@ public class BattleClassesGuiButtonTalentNode extends BattleClassesGuiButton {
             int k = this.getHoverState(this.field_146123_n);
             
             //Draw talent icon (alpha by availability)
-            if(talent.isLitOnUI()) {
+            if(talentAbility.isLitOnUI()) {
             	GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             }
             else {
@@ -41,7 +46,7 @@ public class BattleClassesGuiButtonTalentNode extends BattleClassesGuiButton {
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            mc.getTextureManager().bindTexture(talent.getIconResourceLocation());
+            mc.getTextureManager().bindTexture(talentAbility.getIconResourceLocation());
             this.myDrawTexturedModalRect(this.xPosition, this.yPosition, 16, 16);
             
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -69,4 +74,15 @@ public class BattleClassesGuiButtonTalentNode extends BattleClassesGuiButton {
             */
         }
     }
+    
+    @Override
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+		boolean inWindow = super.mousePressed(mc, mouseX, mouseY);
+		boolean press = inWindow && talentAbility.isAvailableToLearn();
+		if (press) {
+			FMLProxyPacket p = new BattleClassesPacketTalentNodeChosen(mc.thePlayer, talentAbility.getAbilityID()).generatePacket();
+			Battlegear.packetHandler.sendPacketToServer(p);
+		}
+		return press;
+	}
 }

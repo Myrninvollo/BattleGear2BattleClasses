@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.packet.BattleClassesPacketPlayerClassSnyc;
+import mods.battleclasses.packet.BattleClassesPacketTalentNodeChosen;
 import mods.battlegear2.Battlegear;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -23,10 +24,11 @@ public class BattleClassesGuiButtonTalentReset extends BattleClassesGuiButton {
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 		boolean inWindow = super.mousePressed(mc, mouseX, mouseY);
-		if (inWindow) {
-			BattleClassesUtils.Log("Reset button clicked", LogType.GUI);
-			//TODO
+		boolean press = inWindow && BattleClassesUtils.getPlayerTalentMatrix(mc.thePlayer).hasPointsSpentAlready();
+		if (press) {
+			FMLProxyPacket p = new BattleClassesPacketTalentNodeChosen(mc.thePlayer, BattleClassesPacketTalentNodeChosen.RESET_TALENTS_ID).generatePacket();
+			Battlegear.packetHandler.sendPacketToServer(p);
 		}
-		return inWindow;
+		return press;
 	}
 }
