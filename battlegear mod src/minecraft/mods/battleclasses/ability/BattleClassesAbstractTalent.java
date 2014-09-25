@@ -26,6 +26,7 @@ public class BattleClassesAbstractTalent extends BattleClassesAbstractAbilityPas
 	 */
 	public void setCurrentState(int state) {
 		this.currentState = state;
+		this.onStateChanged();
 	}
 	
 	public int getCurrentState() {

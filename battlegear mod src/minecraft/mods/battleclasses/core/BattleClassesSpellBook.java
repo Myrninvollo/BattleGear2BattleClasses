@@ -88,12 +88,30 @@ public class BattleClassesSpellBook {
 		return hasClass && cooldownFreeClass && battleMode;
 	}
 	
-	public void initWithAbilities(LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> parAbilities) {
-		this.activeAbilities = parAbilities;
-		updateChosenAbilityID();
-		for(BattleClassesAbstractAbilityActive ability : getAbilitiesInArray()){
-		    ability.setPlayerHooks(this.playerHooks);
+	public void learnAbility(BattleClassesAbstractAbilityActive ability) {
+		ability.setPlayerHooks(this.playerHooks);
+		this.playerHooks.mainCooldownMap.put(ability.getCooldownHashCode(), ability);
+		this.activeAbilities.put(ability.getAbilityID(), ability);
+	}
+	
+	public void unLearnAbility(BattleClassesAbstractAbilityActive ability) {
+		this.playerHooks.mainCooldownMap.remove(ability);
+		this.activeAbilities.remove(ability);
+	}
+	
+	public void clearSpellBook() {
+		for(BattleClassesAbstractAbilityActive ability : getAbilitiesInArray()) {
+			this.unLearnAbility(ability);
 		}
+		this.activeAbilities.clear();
+	}
+	
+	public void initWithAbilities(LinkedHashMap<Integer, BattleClassesAbstractAbilityActive> parAbilities) {
+		clearSpellBook();
+		for(BattleClassesAbstractAbilityActive ability : parAbilities.values()){
+		    this.learnAbility(ability);
+		}
+		updateChosenAbilityID();
 	}
 		
 	@SideOnly(Side.CLIENT)

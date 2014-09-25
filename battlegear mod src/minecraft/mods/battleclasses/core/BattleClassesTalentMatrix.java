@@ -73,7 +73,7 @@ public class BattleClassesTalentMatrix {
 	public void resetTalentPoints() {
 		for(BattleClassesTalentTree talentTree : this.talentTrees) {
         	for(BattleClassesAbstractTalent talentAbility : talentTree.talentList ) {
-        		talentAbility.setCurrentState(0);
+        		talentAbility.resetState();
         	}
         }
 		talentPoints = TALENT_POINTS_TO_SPEND;

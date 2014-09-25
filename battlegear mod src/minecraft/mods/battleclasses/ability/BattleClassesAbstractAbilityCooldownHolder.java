@@ -20,7 +20,6 @@ public abstract class BattleClassesAbstractAbilityCooldownHolder extends BattleC
 	@Override
 	public void setPlayerHooks(BattleClassesPlayerHooks parPlayerHooks) {
 		this.playerHooks = parPlayerHooks;
-		parPlayerHooks.mainCooldownMap.put(this.getCooldownHashCode(), this);
 	}
 
 	// -------------------- ICooldownHolder implementation --------------------
