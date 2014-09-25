@@ -33,14 +33,17 @@ public class BattleClassesPlayerClassMage extends BattleClassesPlayerClass {
 	public ArrayList<BattleClassesTalentTree> getClassTalents() {
 		ArrayList<BattleClassesTalentTree> talentTrees = new ArrayList<BattleClassesTalentTree>();
 		BattleClassesTalentTree talentTree1 = new BattleClassesTalentTree();
+		talentTree1.setName("Arcane");
 		talentTree1.talentList.add(new BattleClassesTalentTest(1100, 0));
 		talentTree1.talentList.add(new BattleClassesTalentTest(1101, 1));
 		talentTree1.talentList.add(new BattleClassesTalentAbilityContainer(1002, 2, new PolimorphTestAbility()));
 		BattleClassesTalentTree talentTree2 = new BattleClassesTalentTree();
+		talentTree2.setName("Fire");
 		talentTree2.talentList.add(new BattleClassesTalentTest(1110, 0));
 		talentTree2.talentList.add(new BattleClassesTalentTest(1111, 1));
 		talentTree2.talentList.add(new BattleClassesTalentAbilityContainer(1012, 2, new DragonsBreathTestAbility()));
 		BattleClassesTalentTree talentTree3 = new BattleClassesTalentTree();
+		talentTree3.setName("Frost");
 		talentTree3.talentList.add(new BattleClassesTalentTest(1120, 0));
 		talentTree3.talentList.add(new BattleClassesTalentTest(1121, 1));
 		talentTree3.talentList.add(new BattleClassesTalentAbilityContainer(1022, 2, new IceBlockTestAbility()));

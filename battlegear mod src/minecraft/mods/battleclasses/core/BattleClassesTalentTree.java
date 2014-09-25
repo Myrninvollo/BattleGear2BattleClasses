@@ -17,6 +17,12 @@ public class BattleClassesTalentTree {
 		}
 	}
 	
+	public String name = "";
+	
+	public void setName(String parName) {
+		name = parName;
+	}
+	
 	public ArrayList<BattleClassesAbstractTalent> talentList = new ArrayList<BattleClassesAbstractTalent>();
 	
 	/**

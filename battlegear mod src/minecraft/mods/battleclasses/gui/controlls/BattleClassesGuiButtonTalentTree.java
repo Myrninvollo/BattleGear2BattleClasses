@@ -14,12 +14,15 @@ public class BattleClassesGuiButtonTalentTree extends BattleClassesGuiButton {
 	public BattleClassesGuiButtonTalentTree(int id, int x, int y) {
 		super(id, x, y, 54, 20, "talentTree");
 		this.resource = new ResourceLocation("battleclasses", "textures/gui/InterfaceTalent.png");
+		//TODO
+		//displayTooltip = true;
 	}
 
 	public BattleClassesTalentTree talentTree;
 
 	public void setTalentTree(BattleClassesTalentTree parTalentTree) {
 		talentTree = parTalentTree;
+		this.displayString = talentTree.name;
 		//TODO : Set Title(displayString), description here, etc...
 	}
 	
