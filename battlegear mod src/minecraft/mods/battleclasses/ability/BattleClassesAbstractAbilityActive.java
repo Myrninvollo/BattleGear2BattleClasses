@@ -33,7 +33,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 
 	public BattleClassesAbstractAbilityActive(int parAbilityID) {
 		super(parAbilityID);
-		abilityIconResourceLocation = new ResourceLocation("battleclasses", getAbilityIconPath() + getAbilityIconName() + ".png");
+		abilityIconResourceLocation = new ResourceLocation("battleclasses", getAbilityIconPath() + getAbilityIconName() );
 	}
 	
 	protected IIcon abilityIcon;
@@ -265,7 +265,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	
 	@SideOnly(Side.CLIENT)
 	protected String getAbilityIconName() {
-		return "ability_" + this.abilityID;
+		return "ability_" + this.abilityID + ".png";
 	}
 	
     @SideOnly(Side.CLIENT)

@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import mods.battleclasses.BattleClassesUtils;
+import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.ability.BattleClassesAbilityTest;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityActive;
 import mods.battleclasses.ability.BattleClassesAbstractAbilityPassive;
@@ -89,14 +90,23 @@ public class BattleClassesSpellBook {
 	}
 	
 	public void learnAbility(BattleClassesAbstractAbilityActive ability) {
-		ability.setPlayerHooks(this.playerHooks);
-		this.playerHooks.mainCooldownMap.put(ability.getCooldownHashCode(), ability);
-		this.activeAbilities.put(ability.getAbilityID(), ability);
+		if(!this.activeAbilities.containsValue(ability)) {
+			ability.setPlayerHooks(this.playerHooks);
+			this.playerHooks.mainCooldownMap.put(ability.getCooldownHashCode(), ability);
+			this.activeAbilities.put(ability.getAbilityID(), ability);
+		}
 	}
 	
 	public void unLearnAbility(BattleClassesAbstractAbilityActive ability) {
-		this.playerHooks.mainCooldownMap.remove(ability);
-		this.activeAbilities.remove(ability);
+		if(hasAbility(ability)) {
+			BattleClassesUtils.Log("Unlearning ability (ID: " + ability.getAbilityID() + ")", LogType.ABILITY);
+			this.playerHooks.mainCooldownMap.remove(ability.getAbilityID());
+			this.activeAbilities.remove(ability.getAbilityID());
+		}
+	}
+	
+	public boolean hasAbility(BattleClassesAbstractAbilityActive ability) {
+		return this.activeAbilities.containsKey(ability.getAbilityID());
 	}
 	
 	public void clearSpellBook() {
