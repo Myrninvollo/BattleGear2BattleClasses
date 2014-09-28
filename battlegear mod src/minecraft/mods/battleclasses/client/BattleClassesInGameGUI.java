@@ -15,6 +15,7 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.BossStatus;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -133,6 +134,17 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
                 }
 
                 ItemStack mainhand = mc.thePlayer.getCurrentEquippedItem();
+               
+                /*
+                EntityLivingBase target = BattleClassesClientTargeting.getClientTarget(40);
+                if(target != null) {
+                	String targetName = target.getClass().toString();
+                	//int lastDot = targetName.lastIndexOf(".");
+                	String[] strings = targetName.split(".");
+                	
+                	displayWarning("Targeting: " +  targetName );
+                }
+                */
                 
                 /*
                 if(mainhand != null){
@@ -144,6 +156,8 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
                     }
                 }
 				*/
+                
+                BattleClassesClientTargeting.generateTargetingInfo();
             }
         }
     }
@@ -448,8 +462,9 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 	public static GuiHighLightLabel warningDisplay_HLL = new GuiHighLightLabel();
 	
 	public void initHighLightLabels() {
-        targetDisplay_HLL.horizontalAlignmentMode = 0;
-		warningDisplay_HLL.horizontalAlignmentMode = 2;
+        targetDisplay_HLL.horizontalAlignmentMode = 1;
+        targetDisplay_HLL.setVisibleDuration(0.5F);
+		warningDisplay_HLL.horizontalAlignmentMode = 1;
 		warningDisplay_HLL.setColorHEX(0xFF0000);
 		chosenAbilit_HLL.horizontalAlignmentMode = 1;
 	}
@@ -457,9 +472,9 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 	public void drawHighLightedLabels() {
 		ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         int centerGap = 5;
-		targetDisplay_HLL.posX = scaledresolution.getScaledWidth() / 2 + centerGap;
-		targetDisplay_HLL.posY = scaledresolution.getScaledHeight() / 2 - centerGap - mc.fontRenderer.FONT_HEIGHT/2;
-		warningDisplay_HLL.posX = scaledresolution.getScaledWidth() / 2 - centerGap;
+		targetDisplay_HLL.posX = scaledresolution.getScaledWidth() / 2; // + centerGap;
+		targetDisplay_HLL.posY = scaledresolution.getScaledHeight() / 2 - centerGap - mc.fontRenderer.FONT_HEIGHT;
+		warningDisplay_HLL.posX = scaledresolution.getScaledWidth() / 2; // - centerGap;
 		warningDisplay_HLL.posY = scaledresolution.getScaledHeight() / 2 + centerGap;
 		
 		int y = 12 + BattleClassesInGameGUI.ABILITY_ACTIONBAR_HEIGHT;
@@ -473,11 +488,6 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 		targetDisplay_HLL.draw(mc.fontRenderer);
 		warningDisplay_HLL.draw(mc.fontRenderer);
 		chosenAbilit_HLL.draw(mc.fontRenderer);
-	}
-	
-	public static void displayTargetingInfo(String message) {
-		targetDisplay_HLL.setText(message);
-		targetDisplay_HLL.show();
 	}
 
 	public static final String HUD_W_CLASS_REQUIRED = "You need to choose a class to use that!";
@@ -496,5 +506,10 @@ public class BattleClassesInGameGUI extends BattlegearInGameGUI {
 	public static void displayChosenAbilityName(String message) {
 		chosenAbilit_HLL.setText(message);
 		chosenAbilit_HLL.show();
+	}
+	
+	public static void displayTargetInfo(String message) {
+		targetDisplay_HLL.setText(message);
+		targetDisplay_HLL.show();
 	}
 }
