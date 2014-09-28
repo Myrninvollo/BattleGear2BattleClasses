@@ -31,30 +31,62 @@ public class BattleClassesClientTargeting {
 			return;
 		}
 		
-		//TODO : Range
-		float range = 40.0F;
-		//chosenAbility.getRange() ...
-		String targetInfo = null;
-		EntityLivingBase target = BattleClassesClientTargeting.getClientTarget(range);
-		if(target != null) {
-			targetInfo = "Targeting: " + getEntityName(target);
-		}
-		else if (BattleClassesClientTargeting.lastTarget != null) {
-			targetInfo = "Target lost!";
-		}
 		
-		if(targetInfo != null) {
-			BattleClassesInGameGUI.displayTargetInfo(targetInfo);			
+		if(chosenAbility != null) {
+			//TODO : Range
+			float range = 40.0F;
+			//chosenAbility.getRange() ...
+			String targetInfo = null;
+			
+			if(chosenAbility.requiresRayTracingForTarget()) {
+				EntityLivingBase target = BattleClassesClientTargeting.getClientTarget(range);
+				EntityLivingBase finalTarget = chosenAbility.getFinalTargetFromRaytracedEntity(target);
+				if(finalTarget != null) {
+					if(BattleClassesUtils.isTargetFriendly(mc.thePlayer, finalTarget)) {
+						targetInfo = "Healing " + getEntityName( finalTarget );
+					}
+					else {
+						targetInfo = "Targeting " + getEntityName( finalTarget );
+					}
+				}
+				else if (BattleClassesClientTargeting.lastTarget != null) {
+					targetInfo = "Target lost!";
+				}
+				
+				//Saving latest target
+				BattleClassesClientTargeting.lastTarget = finalTarget;
+			}
+			/*
+			else {
+				switch(chosenAbility.getTargetingType()) {
+					case TargetType_AREAEFFECT_OFFENSIVE: {
+						targetInfo = "Targeting enemies around";
+					}
+						break;
+					case TargetType_AREAEFFECT_SUPPORTIVE: {
+						targetInfo = "Targeting allies around";
+					}
+						break;
+					default:
+						break;
+				}
+				
+				BattleClassesClientTargeting.lastTarget = null;
+			}
+			*/
+			
+			
+			if(targetInfo != null) {
+				BattleClassesInGameGUI.displayTargetInfo(targetInfo);			
+			}
 		}
-		
-		//Saving latest target
-		BattleClassesClientTargeting.lastTarget = target;
 	}
 	
 	public static String getEntityName(EntityLivingBase entity) {
-		//String targetFullClassPath = entity.toString();
-		//String[] pathParts = targetFullClassPath.split("\\.");
-		//return pathParts[pathParts.length-1];
+		Minecraft mc = Minecraft.getMinecraft();
+		if(entity == mc.thePlayer) {
+			return "Self";
+		}
 		return entity.getCommandSenderName();
 	}
 }

@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -110,6 +111,10 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		BattleClassesUtils.setEntityPlayerItemInUseInSeconds(entityPlayer, itemStack, this.castTime);
 	}
 	
+	public EnumBattleClassesTargetType getTargetingType() {
+		return targetType;
+	}
+	
 	public EnumBattleClassesAbilitySchool getSchool() {
 		return this.school;
 	}
@@ -185,6 +190,52 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 			return false;
 		}
 		//return false;
+	}
+	
+	public boolean isSupportive() {
+		return (this.targetType == EnumBattleClassesTargetType.TargetType_AREAEFFECT_SUPPORTIVE ||
+				this.targetType == EnumBattleClassesTargetType.TargetType_OPTIONAL_SUPPORTIVE || 
+				this.targetType == EnumBattleClassesTargetType.TargetType_REQUIRED_SUPPORTIVE );
+	}
+	
+	public boolean isOffesnive() {
+		return (this.targetType == EnumBattleClassesTargetType.TargetType_AREAEFFECT_OFFENSIVE ||
+				this.targetType == EnumBattleClassesTargetType.TargetType_OPTIONAL_OFFENSIVE || 
+				this.targetType == EnumBattleClassesTargetType.TargetType_REQUIRED_OFFENSIVE );
+	}
+	
+	public boolean isUniversal() {
+		return (this.targetType == EnumBattleClassesTargetType.TargetType_AREAEFFECT_UNIVERSAL ||
+				this.targetType == EnumBattleClassesTargetType.TargetType_OPTIONAL_UNIVERSAL || 
+				this.targetType == EnumBattleClassesTargetType.TargetType_UNNECESSARY_UNIVERSAL );
+	}
+	
+	public EntityLivingBase getFinalTargetFromRaytracedEntity(EntityLivingBase entity) {
+		if(this.requiresRayTracingForTarget()) {
+			boolean targetIsFriendly = BattleClassesUtils.isTargetFriendly(this.playerHooks.getOwnerPlayer(), entity);
+			if(this.isSupportive()) {
+				if(targetIsFriendly) {
+					return entity;
+				}
+				else {
+					return this.playerHooks.getOwnerPlayer();
+				}
+			}
+			else if(this.isOffesnive()) {
+				if(!targetIsFriendly) {
+					return entity;
+				}
+			}
+			else if(this.isUniversal()) {
+				if(entity == null) {
+					return this.playerHooks.getOwnerPlayer();
+				}
+				else {
+					return entity;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public boolean isInstant() {

@@ -7,6 +7,7 @@ import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.enumhelper.EnumBattleClassesAbilitySchool;
+import mods.battleclasses.enumhelper.EnumBattleClassesTargetType;
 
 public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive {
 	
@@ -33,6 +34,9 @@ public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive
 		int pick = new Random().nextInt(EnumBattleClassesAbilitySchool.values().length);
 		this.school = EnumBattleClassesAbilitySchool.values()[pick];
 		
+		int pick2 = new Random().nextInt(EnumBattleClassesTargetType.values().length);
+		this.targetType = EnumBattleClassesTargetType.values()[pick2];
+		
 		if(this.abilityID == 100) {
 			this.channeled = true;
 			this.channelTickCount = 3;
@@ -47,6 +51,6 @@ public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive
 	}
 	
 	public String getName() {
-		return "Random " + school + " school ability";
+		return "Testing " + school + " " + targetType;
 	}
 }

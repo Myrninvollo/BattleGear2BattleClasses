@@ -12,6 +12,9 @@ import mods.battleclasses.core.ICooldownHolder;
 import mods.battleclasses.enumhelper.EnumBattleClassesPlayerClass;
 import mods.battlegear2.api.core.InventoryPlayerBattle;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -84,4 +87,18 @@ public static Logger battleClassesLogger = LogManager.getLogger("Battle Classes"
 		return BattleClassesUtils.getPlayerHooks(entityPlayer).playerClass.talentMatrix;
 	}
 		
+	public static boolean isTargetFriendly(EntityPlayer entityPlayerTargeting, EntityLivingBase target) {
+		//TODO : !!!
+		if(target instanceof EntityPlayer) {
+			return true;
+		}
+		if(target instanceof EntityTameable) {
+			return true;
+		}
+		if(target instanceof EntityHorse) {
+			return true;
+		}
+		
+		return false;
+	}
 }
