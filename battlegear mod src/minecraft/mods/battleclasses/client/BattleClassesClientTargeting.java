@@ -56,24 +56,6 @@ public class BattleClassesClientTargeting {
 				//Saving latest target
 				BattleClassesClientTargeting.lastTarget = finalTarget;
 			}
-			/*
-			else {
-				switch(chosenAbility.getTargetingType()) {
-					case TargetType_AREAEFFECT_OFFENSIVE: {
-						targetInfo = "Targeting enemies around";
-					}
-						break;
-					case TargetType_AREAEFFECT_SUPPORTIVE: {
-						targetInfo = "Targeting allies around";
-					}
-						break;
-					default:
-						break;
-				}
-				
-				BattleClassesClientTargeting.lastTarget = null;
-			}
-			*/
 			
 			
 			if(targetInfo != null) {

@@ -8,6 +8,7 @@ import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.enumhelper.EnumBattleClassesAbilitySchool;
 import mods.battleclasses.enumhelper.EnumBattleClassesAbilityDirectTargetRequirement;
+import mods.battleclasses.enumhelper.EnumBattleClassesAbilityIntent;
 
 public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive {
 	
@@ -33,8 +34,11 @@ public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive
 		int pick = new Random().nextInt(EnumBattleClassesAbilitySchool.values().length);
 		this.school = EnumBattleClassesAbilitySchool.values()[pick];
 		
-		int pick2 = new Random().nextInt(EnumBattleClassesAbilityDirectTargetRequirement.values().length);
-		this.targetType = EnumBattleClassesAbilityDirectTargetRequirement.values()[pick2];
+		pick = new Random().nextInt(EnumBattleClassesAbilityDirectTargetRequirement.values().length);
+		this.targetType = EnumBattleClassesAbilityDirectTargetRequirement.values()[pick];
+		
+		pick = new Random().nextInt(EnumBattleClassesAbilityIntent.values().length);
+		this.intent = EnumBattleClassesAbilityIntent.values()[pick];
 		
 		if(this.abilityID == 100) {
 			this.channeled = true;
@@ -50,6 +54,6 @@ public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive
 	}
 	
 	public String getName() {
-		return "Testing " + school + " " + targetType;
+		return "Testing " + school + " intent:" + intent + " target:" + targetType;
 	}
 }

@@ -197,26 +197,50 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 			boolean targetIsFriendly = BattleClassesUtils.isTargetFriendly(this.playerHooks.getOwnerPlayer(), entity);
 			switch(this.intent) {
 			case OFFENSIVE: {
-				if(targetIsFriendly) {
-					return entity;
-				}
-				else {
-					return this.playerHooks.getOwnerPlayer();
-				}
-			}
-				//break;
-			case SUPPORTIVE: {
 				if(!targetIsFriendly) {
 					return entity;
 				}
 			}
 				break;
-			case UNIVERSAL: {
-				if(entity == null) {
-					return this.playerHooks.getOwnerPlayer();
+			case SUPPORTIVE: {
+				switch(this.targetType) {
+					case OPTIONAL: {
+						if(targetIsFriendly) {
+							return entity;
+						}
+						else {
+							return this.playerHooks.getOwnerPlayer();
+						}
+					}
+						//break;
+					case REQUIRED: {
+						if(targetIsFriendly) {
+							return entity;
+						}
+					}
+						break;
+					default:
+						break;
 				}
-				else {
-					return entity;
+			}
+				break;
+			case UNIVERSAL: {
+				switch(this.targetType) {
+					case OPTIONAL: {
+						if(entity == null) {
+							return this.playerHooks.getOwnerPlayer();
+						}
+						else {
+							return entity;
+						}
+					}
+						//break;
+					case REQUIRED: {
+						return entity;
+					}
+						//break;
+					default:
+						break;
 				}
 			}
 				//break;
