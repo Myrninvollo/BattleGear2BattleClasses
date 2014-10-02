@@ -50,7 +50,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	/**
 	 * Amplifyable ability attributes
 	 */
-	protected BattleClassesAttributesAbility attributes = new BattleClassesAttributesAbility();
+	protected BattleClassesAttributesAbility baseAttributes = new BattleClassesAttributesAbility();
 	
 	protected int channelTickCount = 1;
 	protected boolean channeled = false;
@@ -114,14 +114,28 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		}	
 	}
 	
-	//Helper
-	public void getCastTimeBase() {
-		
+	public BattleClassesAttributesAbility getAttributesBase() {
+		return this.baseAttributes;
+	}
+	
+	public BattleClassesAttributesAbility getAttributesAmplified() {
+		//TODO
+		return this.baseAttributes;
+	}
+	
+	public float getAbilityDamageBase() {
+		//TODO
+		return 0;
+	}
+	
+	public float getAbilityDamageAmplified() {
+		//TODO
+		return 0;
 	}
 	
 	protected void startCasting(EntityPlayer entityPlayer, ItemStack itemStack) {
 		BattleClassesUtils.Log("Casting started!", LogType.ABILITY);
-		BattleClassesUtils.setEntityPlayerItemInUseInSeconds(entityPlayer, itemStack, this.attributes.castTime);
+		BattleClassesUtils.setEntityPlayerItemInUseInSeconds(entityPlayer, itemStack, this.baseAttributes.castTime);
 	}
 	
 	public EnumBattleClassesAbilityDirectTargetRequirement getTargetingType() {
@@ -252,11 +266,11 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	}
 	
 	public boolean isInstant() {
-		return this.attributes.castTime == 0;
+		return this.baseAttributes.castTime == 0;
 	}
 	
 	public int getCastTimeInTicks() {
-		return (int) (this.attributes.castTime * 20);
+		return (int) (this.baseAttributes.castTime * 20);
 	}
 	
 	public void cancelCasting(EntityPlayer entityPlayer) {
@@ -319,7 +333,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 				break;
 			case CastType_INSTANT: {
 				this.channeled = false;
-				this.attributes.castTime = 0;
+				this.baseAttributes.castTime = 0;
 			}
 				break;
 			default:

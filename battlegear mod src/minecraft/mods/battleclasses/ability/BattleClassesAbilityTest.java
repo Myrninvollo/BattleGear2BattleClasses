@@ -16,7 +16,7 @@ public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive
 
 	public BattleClassesAbilityTest() {
 		super(TEST_SPELL_ID);
-		this.attributes.castTime = 3;
+		this.baseAttributes.castTime = 3;
 		this.channeled = true;
 		this.channelTickCount = 3;
 		initStuff();
@@ -29,7 +29,7 @@ public class BattleClassesAbilityTest extends BattleClassesAbstractAbilityActive
 	}
 	
 	public void initStuff() {
-		this.attributes.castTime = 3;
+		this.baseAttributes.castTime = 3;
 		
 		int pick = new Random().nextInt(EnumBattleClassesAbilitySchool.values().length);
 		this.school = EnumBattleClassesAbilitySchool.values()[pick];

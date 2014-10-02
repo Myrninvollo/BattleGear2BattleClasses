@@ -1,6 +1,7 @@
 package mods.battleclasses.core;
 
 import java.util.HashMap;
+import java.util.List;
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import mods.battleclasses.BattleClassesUtils;
@@ -76,4 +77,33 @@ public class BattleClassesPlayerHooks {
 		return this.ownerPlayer;
 	}
 	
+	public BattleClassesAttributesGeneral getTotalAttributesBase() {
+		//TODO
+		return null;
+	}
+	
+	public BattleClassesAttributesGeneral getTotalAttributesAmplified() {
+		//TODO
+		return null;
+	}
+	
+	public BattleClassesAttributesDamageIO getTotalDamageIOAmplifierSumm() {
+		//TODO
+		return null;
+	}
+	
+	public List<BattleClassesAttributesGeneral> getAttributeGeneralAmplifiers() {
+		//TODO
+		return null;
+	}
+	
+	public List<BattleClassesAttributesAbility> getAttributeAbilityAmplifiers() {
+		//TODO
+		return null;
+	}
+	
+	public List<BattleClassesAttributesDamageIO> getAttributeDamageIOAmplifiers() {
+		//TODO
+		return null;
+	}
 }
