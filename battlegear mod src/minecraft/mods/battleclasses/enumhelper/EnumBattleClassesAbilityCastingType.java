@@ -1,6 +1,6 @@
 package mods.battleclasses.enumhelper;
 
-public enum EnumBattleClassesCastType {
+public enum EnumBattleClassesAbilityCastingType {
 	CastType_CASTED,
 	CastType_CHANNELED,
 	CastType_INSTANT,

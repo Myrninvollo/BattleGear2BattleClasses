@@ -20,12 +20,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 import mods.battleclasses.BattleClassesUtils;
 import mods.battleclasses.BattleClassesUtils.LogType;
 import mods.battleclasses.client.BattleClassesInGameGUI;
+import mods.battleclasses.core.BattleClassesAttributesAbility;
 import mods.battleclasses.core.BattleClassesPlayerHooks;
 import mods.battleclasses.core.ICooldownHolder;
+import mods.battleclasses.enumhelper.EnumBattleClassesAbilityIntent;
 import mods.battleclasses.enumhelper.EnumBattleClassesAbilitySchool;
-import mods.battleclasses.enumhelper.EnumBattleClassesCastType;
+import mods.battleclasses.enumhelper.EnumBattleClassesAbilityCastingType;
 import mods.battleclasses.enumhelper.EnumBattleClassesCooldownType;
-import mods.battleclasses.enumhelper.EnumBattleClassesTargetType;
+import mods.battleclasses.enumhelper.EnumBattleClassesAbilityDirectTargetRequirement;
 import mods.battleclasses.items.BattleClassesItemWeapon;
 import mods.battleclasses.packet.BattleClassesPacketCooldownSet;
 import mods.battlegear2.Battlegear;
@@ -40,10 +42,16 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	protected IIcon abilityIcon;
 	public ResourceLocation abilityIconResourceLocation;
 	
+	//Basic ability parameters
 	protected EnumBattleClassesAbilitySchool school = EnumBattleClassesAbilitySchool.UNKNOWN;
-	protected EnumBattleClassesTargetType targetType = EnumBattleClassesTargetType.TargetType_UNNECESSARY_UNIVERSAL;
-	protected EnumBattleClassesCastType castingType = EnumBattleClassesCastType.CastType_UNKNOWN;
-	protected float castTime = 0;
+	protected EnumBattleClassesAbilityDirectTargetRequirement targetType = EnumBattleClassesAbilityDirectTargetRequirement.NEEDLESS;
+	protected EnumBattleClassesAbilityIntent intent = EnumBattleClassesAbilityIntent.UNIVERSAL;
+	protected EnumBattleClassesAbilityCastingType castingType = EnumBattleClassesAbilityCastingType.CastType_UNKNOWN;
+	/**
+	 * Amplifyable ability attributes
+	 */
+	protected BattleClassesAttributesAbility attributes = new BattleClassesAttributesAbility();
+	
 	protected int channelTickCount = 1;
 	protected boolean channeled = false;
 	public boolean ignoresGlobalCooldown = false;
@@ -106,12 +114,17 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		}	
 	}
 	
-	protected void startCasting(EntityPlayer entityPlayer, ItemStack itemStack) {
-		BattleClassesUtils.Log("Casting started!", LogType.ABILITY);
-		BattleClassesUtils.setEntityPlayerItemInUseInSeconds(entityPlayer, itemStack, this.castTime);
+	//Helper
+	public void getCastTimeBase() {
+		
 	}
 	
-	public EnumBattleClassesTargetType getTargetingType() {
+	protected void startCasting(EntityPlayer entityPlayer, ItemStack itemStack) {
+		BattleClassesUtils.Log("Casting started!", LogType.ABILITY);
+		BattleClassesUtils.setEntityPlayerItemInUseInSeconds(entityPlayer, itemStack, this.attributes.castTime);
+	}
+	
+	public EnumBattleClassesAbilityDirectTargetRequirement getTargetingType() {
 		return targetType;
 	}
 	
@@ -168,52 +181,22 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 		
 	public boolean requiresRayTracingForTarget() {
 		switch (this.targetType) {
-		case TargetType_AREAEFFECT_OFFENSIVE:
+		case NEEDLESS:
 			return false;
-		case TargetType_AREAEFFECT_SUPPORTIVE:
-			return false;
-		case TargetType_AREAEFFECT_UNIVERSAL:
-			return false;
-		case TargetType_OPTIONAL_OFFENSIVE:
+		case OPTIONAL:
 			return true;
-		case TargetType_OPTIONAL_SUPPORTIVE:
+		case REQUIRED:
 			return true;
-		case TargetType_OPTIONAL_UNIVERSAL:
-			return true;
-		case TargetType_REQUIRED_OFFENSIVE:
-			return true;
-		case TargetType_REQUIRED_SUPPORTIVE:
-			return true;
-		case TargetType_UNNECESSARY_UNIVERSAL:
-			return false;
 		default:
 			return false;
 		}
-		//return false;
-	}
-	
-	public boolean isSupportive() {
-		return (this.targetType == EnumBattleClassesTargetType.TargetType_AREAEFFECT_SUPPORTIVE ||
-				this.targetType == EnumBattleClassesTargetType.TargetType_OPTIONAL_SUPPORTIVE || 
-				this.targetType == EnumBattleClassesTargetType.TargetType_REQUIRED_SUPPORTIVE );
-	}
-	
-	public boolean isOffesnive() {
-		return (this.targetType == EnumBattleClassesTargetType.TargetType_AREAEFFECT_OFFENSIVE ||
-				this.targetType == EnumBattleClassesTargetType.TargetType_OPTIONAL_OFFENSIVE || 
-				this.targetType == EnumBattleClassesTargetType.TargetType_REQUIRED_OFFENSIVE );
-	}
-	
-	public boolean isUniversal() {
-		return (this.targetType == EnumBattleClassesTargetType.TargetType_AREAEFFECT_UNIVERSAL ||
-				this.targetType == EnumBattleClassesTargetType.TargetType_OPTIONAL_UNIVERSAL || 
-				this.targetType == EnumBattleClassesTargetType.TargetType_UNNECESSARY_UNIVERSAL );
 	}
 	
 	public EntityLivingBase getFinalTargetFromRaytracedEntity(EntityLivingBase entity) {
 		if(this.requiresRayTracingForTarget()) {
 			boolean targetIsFriendly = BattleClassesUtils.isTargetFriendly(this.playerHooks.getOwnerPlayer(), entity);
-			if(this.isSupportive()) {
+			switch(this.intent) {
+			case OFFENSIVE: {
 				if(targetIsFriendly) {
 					return entity;
 				}
@@ -221,12 +204,14 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 					return this.playerHooks.getOwnerPlayer();
 				}
 			}
-			else if(this.isOffesnive()) {
+				//break;
+			case SUPPORTIVE: {
 				if(!targetIsFriendly) {
 					return entity;
 				}
 			}
-			else if(this.isUniversal()) {
+				break;
+			case UNIVERSAL: {
 				if(entity == null) {
 					return this.playerHooks.getOwnerPlayer();
 				}
@@ -234,16 +219,20 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 					return entity;
 				}
 			}
+				//break;
+			default:
+				break;
+			}
 		}
 		return null;
 	}
 	
 	public boolean isInstant() {
-		return this.castTime == 0;
+		return this.attributes.castTime == 0;
 	}
 	
 	public int getCastTimeInTicks() {
-		return (int) (castTime * 20);
+		return (int) (this.attributes.castTime * 20);
 	}
 	
 	public void cancelCasting(EntityPlayer entityPlayer) {
@@ -293,7 +282,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 	}
 	
 	//Helper method
-	public void setCastingType(EnumBattleClassesCastType parCastType) {
+	public void setCastingType(EnumBattleClassesAbilityCastingType parCastType) {
 		this.castingType = parCastType;
 		switch(this.castingType) {
 			case CastType_CASTED: {
@@ -306,7 +295,7 @@ public abstract class BattleClassesAbstractAbilityActive extends BattleClassesAb
 				break;
 			case CastType_INSTANT: {
 				this.channeled = false;
-				this.castTime = 0;
+				this.attributes.castTime = 0;
 			}
 				break;
 			default:
